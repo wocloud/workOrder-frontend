@@ -1,0 +1,14 @@
+label.tip, span.tip{
+    vertical-align: middle;
+    float: left;
+    color: rgba(195, 0, 17, 0.71);
+}
+.form-horizontal>.form-group>.tip{
+    padding-top: 7px;
+    margin-bottom: 0;
+    float: left;
+    color: rgba(195, 0, 17, 0.71);
+}
+.error{
+    border-color: #c9302c;
+}

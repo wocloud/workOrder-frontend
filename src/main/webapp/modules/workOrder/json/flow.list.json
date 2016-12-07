@@ -1,0 +1,24 @@
+{ "data": {
+    "content" : [{
+      "id": "31013",
+      "name": "咨询",
+      "mark": "用于咨询类任务",
+      "createDate": "2016-09-10 12:23:11",
+      "lastUpdateDate": "2016-10-12 12:00:03",
+      "status": "open"
+    },
+    {
+      "id": "10",
+      "name": "故障",
+      "mark": "用于故障类任务",
+      "createDate": "2016-09-12 10:23:11",
+      "lastUpdateDate": "2016-09-10 12:23:11",
+      "status": "closed"
+    }],
+    "pageSize": 5,
+    "pageNum": 1,
+    "totalElements": 2
+  },
+  "code": 200,
+  "msg": ""
+}

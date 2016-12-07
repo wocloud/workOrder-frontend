@@ -1,0 +1,16 @@
+{
+  "code": 0,
+  "msg": "list workorder properties successfully!",
+  "data": [
+    {
+      "id": 1,
+      "productType": "1001",
+      "productName": "云主机"
+    },
+    {
+      "id": 2,
+      "productType": "1002",
+      "productName": "云存储"
+    }
+  ]
+}

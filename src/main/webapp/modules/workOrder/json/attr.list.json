@@ -1,0 +1,48 @@
+{ "data": {
+  "content" : [{
+    "id": "20",
+    "propertyKey": "12731298",
+    "propertyName": "租户",
+    "propertyType": "string",
+    "createDate": "2016-10-12 12:00:03",
+    "belonged": "1"
+  },
+    {
+      "id": "15",
+      "propertyKey": "123241298",
+      "propertyName": "保障用户",
+      "propertyType": "boolean",
+      "createDate": "2016-10-12 12:00:03",
+      "belonged": "1"
+    },
+    {
+      "id": "10",
+      "propertyKey": "12731298",
+      "propertyName": "联系电话",
+      "propertyType": "string",
+      "createDate": "2016-10-12 12:00:03",
+      "belonged": "1"
+    },
+    {
+      "id": "5",
+      "propertyKey": "13424298",
+      "propertyName": "内网",
+      "propertyType": "boolean",
+      "createDate": "2016-12-12 12:00:03",
+      "belonged": "1"
+    },
+    {
+      "id": "3",
+      "propertyKey": "3858431298",
+      "propertyName": "资源域",
+      "propertyType": "string",
+      "createDate": "2016-10-22 12:00:03",
+      "belonged": "3"
+    }],
+  "pageSize": 5,
+  "pageNum": 1,
+  "totalElements": 5
+  },
+  "code": 200,
+  "msg": ""
+}

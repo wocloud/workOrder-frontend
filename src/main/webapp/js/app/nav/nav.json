@@ -1,0 +1,20 @@
+{
+	"navs":[
+		{
+			"instancesTitle":"主机",
+			"instancesContent":"wocloud 为您提供一种随时获取的、弹性的计算能力，这种计算能力的体现就是 主机（Instance）。主机就是一台配置好了的服务器，它有您期望的硬件配置、操作系统和网络配置。通常情况下，您的请求可以在10秒到60秒的时间之内 完成，所以您完全可以动态地、按需使用计算能力。",
+			"imagesTitle":"映像",
+			"imagesContent":"映像（Image） 是带有操作系统的主机模板。用户可以基于已有映像创建主机，也可以将自有主机捕获为新映像，以备后用。",
+			"imagesSelfTitle":"映像",
+			"imagesSelfContent":"映像（Image） 是带有操作系统的主机模板。用户可以基于已有映像创建主机，也可以将自有主机捕获为新映像，以备后用。",
+			"mirror":"镜像管理",
+			"mirrorLibraryTitle":"镜像库",
+			"mirrorLibraryContent":"镜像，一种文件形式，可以把许多文件做成一个镜像文件，与GHOST等程序放在一个盘里，用GHOST等软件打开后，又恢复成许多文件，镜像（Mirroring）是冗余的一种类型，一个磁盘上的数据在另一个磁盘上存在一个完全相同的副本。",
+			"resourceImageTitle":"资源池镜像",
+			"resourceImageContent":"资源池镜像描述",
+			"resourcePoolTitle":"镜像池",
+			"resourcePoolContent":"镜像池描述"
+			
+		}
+	]
+}

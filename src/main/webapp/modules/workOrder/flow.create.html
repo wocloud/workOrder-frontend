@@ -1,0 +1,32 @@
+<!-- create new flow -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        新建流程模板
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" name="flowForm" ng-submit="saveItem(flowForm.$valid)">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">名称</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-model="flow.name" required>
+                </div>
+                <span class="tip">*</span>
+                <span class="tip" ng-if="flowForm.name.$touched" ng-hide='!flowForm.name.$error'>必填项</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">备注</label>
+                <div class="col-sm-8">
+                    <textarea ui-jq="wysiwyg" class="form-control" ng-model="flow.mark"
+                              style="overflow:scroll;height:200px;max-height:200px;">
+                    </textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="flowForm.$invalid">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

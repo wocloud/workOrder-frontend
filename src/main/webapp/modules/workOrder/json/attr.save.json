@@ -1,0 +1,12 @@
+{
+  "data": {
+    "id": "24",
+    "key": "5651298",
+    "name": "保障用户",
+    "format": "boolean",
+    "createDate": "2016-10-22 12:00:03",
+    "belonged": "6"
+  },
+  "code": 200,
+  "msg": ""
+}

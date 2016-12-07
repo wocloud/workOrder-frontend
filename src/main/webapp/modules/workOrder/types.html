@@ -1,0 +1,94 @@
+<div class="wrapper-md bg-light" ng-controller="WorkOrderTypesViewCtrl">
+    <!-- tip pop -->
+    <toaster-container></toaster-container>
+    <div class="clearfix m-b">
+        <button class="operate-btn on" ng-click="createItem()">
+            <i class="fa fa-plus"></i>新建</button>
+        <button class="operate-btn" ng-click="updateItem()" ng-disabled="!selectedItem">
+            <i class="fa fa-plus"></i>编辑</button>
+        <button class="operate-btn" ng-click="deleteItem()" ng-disabled="!selectedItem">
+            <i class="fa fa-remove"></i>删除</button>
+        <button class="operate-btn" ng-click="bindWithProcess()" ng-disabled="!selectedItem">
+            <i class="fa fa-plus"></i>绑定流程</button>
+        <button class="operate-btn" ng-click="unbindWithProcess()" ng-disabled="!selectedItem">
+            <i class="fa fa-plus"></i>解绑流程</button>
+    </div>
+    <div class="w-auto-xs bg-light dk bg-auto b-l">
+        <div ui-grid="myGridOptions" style="width: 100%; height: 100%;"
+             ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="createOrUpdateTemplate">
+    <div class="modal-header">
+        <h4 class="modal-title" ng-show="createOrUpdate=='C'">新建工单类型</h4>
+        <h4 class="modal-title" ng-show="createOrUpdate=='U'">编辑工单类型</h4>
+        <div class="modal-body">
+            <form class="form-horizontal form-validation" name="typeForm" novalidate ng-submit="saveItem()">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">编码</label>
+                    <div class="col-sm-7">
+                        <input type="number" name="typeCode" class="form-control" ng-model="workOrderType.typeCode" required ng-maxlength="256" ng-focus>
+                    </div>
+                    <span class="tip">*</span>
+                    <span class="tip" ng-show='typeForm.typeCode.$error.required'>必填项,数字类型</span>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">名称</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="typeName" class="form-control" ng-model="workOrderType.typeName" required ng-maxlength="256" ng-focus>
+                    </div>
+                    <span class="tip">*</span>
+                    <span class="tip" ng-show='typeForm.typeName.$error.required'>必填项</span>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="typeForm.$invalid" ng-click="saveItem()">保存</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="deleteTemplate">
+    <div class="modal-header">
+        <h4 class="modal-title">删除工单类型</h4>
+        <div class="modal-body">
+            <p>你确定要删除 {{currentItem.typeName}} 吗?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-primary" ng-click="removeItem()">保存</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="bindWithProcessTemplate">
+    <div class="modal-header">
+        <h4 class="modal-title">绑定流程</h4>
+        <div class="modal-body">
+            <div ui-grid="flowGridOptions" ui-grid-pagination
+                 ui-grid-selection ui-grid-exporter ui-grid-resize-columns ui-grid-auto-resize>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="!selectedItem" ng-click="bindWorkorderTypeAndProcess()">保存</button>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="unbindWithProcessTemplate">
+    <div class="modal-header">
+        <h4 class="modal-title">解绑流程</h4>
+        <div class="modal-body">
+            <p>您确定要解绑该工单的关联流程 {{processDeploymentId}} 吗?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="relationId<0" ng-click="unbindWorkorderTypeAndProcess()">保存</button>
+        </div>
+    </div>
+</script>

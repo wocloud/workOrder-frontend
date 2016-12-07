@@ -1,0 +1,21 @@
+{
+  "code": 0,
+  "msg": "list workorder properties successfully!",
+  "data": [
+    {
+      "id": 1,
+      "priorityValue": "0",
+      "priorityName": "低"
+    },
+    {
+      "id": 2,
+      "priorityValue": "1",
+      "priorityName": "中"
+    },
+    {
+      "id": 3,
+      "priorityValue": "2",
+      "priorityName": "高"
+    }
+  ]
+}

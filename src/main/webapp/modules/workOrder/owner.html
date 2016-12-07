@@ -1,0 +1,21 @@
+<!-- select customer -->
+<meta charset="UTF-8">
+<!-- <div style="width: 360px; height: 382px; border: 1px solid #708090; margin-top: 5px;"> -->
+<div id="element">
+	<div class="form-panel" style="margin-top:10px">
+		<div class="form-row">
+			<label>用户名</label>
+			<input type="text" style="width: 150px;" ng-model="first">
+			<button ng-click="searchCustomer()">
+				<i class="glyphicon glyphicon-search"></i> <span>查询</span>
+			</button>
+		</div>
+	</div>
+	<div ui-grid="customerOptions"
+		ui-grid-pagination ui-grid-selection ui-grid-exporter
+		ui-grid-resize-columns ui-grid-auto-resize></div>
+	<div style="text-align: center;">
+		<button  style="margin-left: 48px;" ng-click="confirm()">确定</button>
+		<button  ng-click="cancel()">取消</button>
+	</div>
+</div>

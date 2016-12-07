@@ -1,0 +1,38 @@
+{
+  "code": 0,
+  "msg": "select workorder properties successfully!",
+  "data": {
+    "content": [
+      {"id":"aa",
+      "type":"sss",
+        "zhuti":"sss",
+        "jibie":"1",
+        "wenti":"2",
+        "dangqian":"3",
+        "shouli":"ds",
+        "shoulitype":"dsda",
+        "chuangjianren":"sss",
+        "sign":"0"
+      },
+      {
+        "id":"aa",
+        "type":"sss",
+        "zhuti":"sss",
+        "jibie":"1",
+        "wenti":"2",
+        "sign":"1",
+        "dangqian":"3",
+        "shouli":"ds",
+        "chuangjianren":"sss"
+      }
+    ],
+    "sort": null,
+    "totalPages": 1,
+    "firstPage": true,
+    "lastPage": true,
+    "totalElements": 7,
+    "numberOfElements": 7,
+    "size": 10,
+    "number": 0
+  }
+}

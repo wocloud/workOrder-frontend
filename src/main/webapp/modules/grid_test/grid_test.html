@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态列表</title>
+</head>
+<body>
+<div class="pane">
+    <div class="panel panel-default" ng-controller="DridTestCtrl">
+        <div class="row no-padder m-n">
+            <div class="col-sm-6 m-t-xs m-b-xs no-padder " >
+                <script type="text/ng-template" id="grid_test_add">
+                    <div ng-include="'modules/grid_test/grid_test_add.html'"></div>
+                </script>
+                <script type="text/ng-template" id="grid_test_update">
+                    <div ng-include="'modules/grid_test/grid_test_update.html'"></div>
+                </script>
+                <script type="text/ng-template" id="grid_test_delete">
+                    <div class="modal-header">
+                        <h3 class="modal-title">提示</h3>
+                    </div>
+                    <div class="modal-body" id="msgInfo">
+                        确认要删除？
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-blue" ng-click="ok()">OK</button>
+                        <button class="btn btn-dark" ng-click="cancel()">Cancel</button>
+                    </div>
+                </script>
+                <div>
+                    <button class="btn btn-primary" ng-click="addData()">
+                        <i class="fa fa-plus "></i>
+                        <span class="btn-name">添加</span>
+                    </button>
+                    <button class="btn btn-primary" ng-click="updateData()">
+                        <i class="icon-pencil"></i>
+                        <span class="btn-name">修改</span>
+                    </button>
+                    <button class="btn btn-primary" ng-click="delData('sm')">
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <span class="btn-name">删除</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <grid arr="dataArr" col-arr="colArr" call-fn="callFn"></grid>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,192 @@
+{
+  "code": 0,
+  "msg": "select workorder properties successfully!",
+  "data": {
+    "content": [
+      {
+        "propertyKey": "questionType",
+        "propertyName": "问题分类",
+        "propertyType": "select",
+        "optionList": [
+          {
+            "optionName": "云主机",
+            "optionValue": "1001"
+          },
+          {
+            "optionName": "云存储",
+            "optionValue": "1002"
+          }
+        ],
+        "propertyDefaultValue": "1001",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "theme",
+        "propertyName": "主题",
+        "propertyType": "text",
+        "optionList": [],
+        "propertyDefaultValue": "测试",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "description",
+        "propertyName": "描述",
+        "propertyType": "textArea",
+        "optionList": [],
+        "propertyDefaultValue": "sss",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "assign",
+        "propertyName": "指派",
+        "propertyType": "select",
+        "optionList": [
+          {
+            "optionName": "王春发",
+            "optionValue": "100"
+          },
+          {
+            "optionName": "赵丹丹",
+            "optionValue": "101"
+          },
+          {
+            "optionName": "常晓辉",
+            "optionValue": "102"
+          }
+        ],
+        "propertyDefaultValue": "100",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "level",
+        "propertyName": "优先级",
+        "propertyType": "select",
+        "optionList": [
+          {
+            "optionName": "普通",
+            "optionValue": "c"
+          },
+          {
+            "optionName": "高",
+            "optionValue": "b"
+          },
+          {
+          "optionName": "紧急",
+          "optionValue": "a"
+          }
+        ],
+        "propertyDefaultValue": "c",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "status",
+        "propertyName": "状态",
+        "propertyType": "select",
+        "optionList": [
+          {
+            "optionName": "新建",
+            "optionValue": "xinjian"
+          },
+          {
+            "optionName": "已处理",
+            "optionValue": "yichuli"
+          },
+          {
+            "optionName": "处理中",
+            "optionValue": "chulizhong"
+          },
+          {
+            "optionName": "已解决",
+            "optionValue": "yijiejue"
+          },
+          {
+            "optionName": "未归档",
+            "optionValue": "weiguidang"
+          }
+        ],
+        "propertyDefaultValue": "xinjian",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "resource",
+        "propertyName": "资源区域",
+        "propertyType": "select",
+        "optionList": [
+          {
+            "optionName": "内网区",
+            "optionValue": "nei"
+          },
+          {
+            "optionName": "外网区",
+            "optionValue": "wai"
+          }
+        ],
+        "propertyDefaultValue": "",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "zuhu",
+        "propertyName": "租户",
+        "propertyType": "text",
+        "optionList": [],
+        "propertyDefaultValue": "",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "zhanghu",
+        "propertyName": "账户",
+        "propertyType": "text",
+        "optionList": [],
+        "propertyDefaultValue": "",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "prty8",
+        "propertyName": "联系人",
+        "propertyType": "datetime",
+        "optionList": [],
+        "propertyDefaultValue": "",
+        "isRequired": 0,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "lianxiren",
+        "propertyName": "联系人",
+        "propertyType": "text",
+        "optionList": [],
+        "propertyDefaultValue": "",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      }
+
+    ],
+    "sort": null,
+    "totalPages": 1,
+    "firstPage": true,
+    "lastPage": true,
+    "totalElements": 7,
+    "numberOfElements": 7,
+    "size": 10,
+    "number": 0
+  }
+}

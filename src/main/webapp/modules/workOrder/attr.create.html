@@ -1,0 +1,80 @@
+<!-- create new attribute -->
+<div class="panel panel-default" ng-controller="WorkOrderAttrCreateOrUpdateViewCtrl">
+    <div class="panel-heading" ng-show="createOrUpdate=='C'">
+        新建自定义属性
+    </div>
+    <div class="panel-heading" ng-show="createOrUpdate=='U'">
+        编辑自定义属性
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal form-validation" name="attrForm" novalidate ng-submit="saveItem(attrForm.$valid)">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">编码</label>
+                <div class="col-sm-7">
+                    <input type="text" name="propertyKey" class="form-control" ng-model="attr.propertyKey" required ng-maxlength="256" ng-focus>
+                </div>
+                <span class="tip">*</span>
+                <span class="tip" ng-show='attrForm.propertyKey.$error.required'>必填项</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">格式</label>
+                <div class="col-sm-7">
+                    <select name="propertyType" class="form-control" ng-model="attr.propertyType" required ng-focus
+                            ng-options="p|propertyTypeFilter for p in PropertyType track by p">
+                    </select>
+                </div>
+                <span class="tip">*</span>
+                <span class="tip" ng-show='attrForm.propertyType.$error.required'>必填项</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">名称</label>
+                <div class="col-sm-7">
+                    <input type="text" name="propertyName" class="form-control" ng-model="attr.propertyName" required ng-maxlength="256" ng-focus>
+                </div>
+                <span class="tip">*</span>
+                <span class="tip" ng-show='attrForm.propertyName.$error.required'>必填项,且字符长度限制在256以内</span>
+                <span class="tip" ng-show='attrForm.propertyName.$error.ensureUnique'>该名称已被占用,请重新填写</span>
+            </div>
+            <div class="form-group">
+                <div ng-show="f=='select'">
+                    <label class="col-sm-2 control-label">文本格式</label>
+                    <div class="col-sm-7" >
+                        <div ng-repeat="option in optionProperties track by option.optionValue" style="margin: 0 0 10px 0px;">
+                            <input type="text" class="form-control pull-left" ng-model="option.optionValue" value="option.optionValue"
+                                   required ng-maxlength="32" ng-focus style="width: 45%;"/>
+                            <input type="text" class="form-control pull-left" ng-model="option.optionName" value="option.optionName"
+                                   required ng-maxlength="32" ng-focus style="width: 45%;"/>
+                            <i ng-show="optionProperties.length > 1" class="glyphicon glyphicon-minus" ng-click="removeOptionValue($index)" style="margin: 10px auto;"></i>
+                            <i ng-if="$index == (optionProperties.length - 1)" class="glyphicon glyphicon-plus" ng-click="addOptionValue($index)" style="margin: 10px auto;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">默认值</label>
+                <div class="col-sm-7">
+                    <input type="text" name="propertyDefaultValue" class="form-control" ng-model="attr.propertyDefaultValue">
+                </div>
+                <!--<span class="tip">*</span>-->
+                <!--<span class="tip" ng-show='attrForm.propertyDefaultValue.$error.required'>必填项</span>-->
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">描述</label>
+                <div class="col-sm-7">
+                    <textarea ui-jq="wysiwyg" class="form-control" ng-model="attr.propertyDescription"
+                              style="overflow:scroll;height:100px;max-height:200px">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <button type="button" class="btn btn-default" ng-click="backToMain()">取消</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="attrForm.$invalid">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

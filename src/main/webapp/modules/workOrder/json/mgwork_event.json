@@ -1,0 +1,58 @@
+{
+  "code": 0,
+  "msg": "select workorder properties successfully!",
+  "data": [{
+    "id": 53,
+    "properties": [
+      {
+        "propertyKey": "prty1",
+        "propertyName": "问题分类",
+        "propertyType": "select",
+        "optionList": [
+          {
+            "optionName": "云主机",
+            "optionValue": "1001"
+          },
+          {
+            "optionName": "云存储",
+            "optionValue": "1002"
+          }
+        ],
+        "propertyValue": "1002",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 1
+      },
+      {
+        "propertyKey": "prty2",
+        "propertyName": "主题",
+        "propertyType": "text",
+        "optionList": [],
+        "propertyValue": "123",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 1
+      },
+      {
+        "propertyKey": "description",
+        "propertyName": "描述",
+        "propertyType": "textArea",
+        "optionList": [],
+        "propertyValue": "",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 0
+      },
+      {
+        "propertyKey": "prty6",
+        "propertyName": "主题",
+        "propertyType": "text",
+        "optionList": [],
+        "propertyValue": "true",
+        "isRequired": 1,
+        "isVisible": 1,
+        "readOnly": 1
+      }
+    ]
+  }]
+}

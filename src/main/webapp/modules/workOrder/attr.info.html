@@ -1,0 +1,48 @@
+<style>
+    .form-horizontal .control-label {
+        padding-top: 0!important;
+    }
+</style>
+<!-- create new attribute -->
+<div class="panel panel-default" ng-controller="WorkOrderAttrInfoViewCtrl">
+    <div class="panel-heading">
+        自定义属性详情
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
+                <label class="col-sm-2 col-md-2 col-lg-2 control-label">编码</label>
+                <p class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{attr.propertyKey}}</p>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
+                <label class="col-sm-2 col-md-2 col-lg-2 control-label">格式</label>
+                <p class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{attr.propertyType}}</p>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
+                <label class="col-sm-2 col-md-2 col-lg-2 control-label">名称</label>
+                <p class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{attr.propertyName}}</p>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
+                <label class="col-sm-2 col-md-2 col-lg-2 control-label">默认值</label>
+                <p class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{attr.propertyDefaultValue}}</p>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
+                <label class="col-sm-2 col-md-2 col-lg-2 control-label">文本格式</label>
+                <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm" >
+                    <div ng-repeat="option in optionProperties track by option.optionValue" style="margin: 0 0 10px 0px;">
+                        {{option.optionValue}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{option.optionName}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
+                <label class="col-sm-2 col-md-2 col-lg-2 control-label">描述</label>
+                <p class="col-sm-10 col-md-10 col-lg-10 no-padder-sm">{{attr.propertyDescription}}</p>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <button type="button" class="btn btn-primary" style="margin-left: 45%;" ng-click="backToMain()">返回</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+{
+  "data": {
+    "propertyKey": "questionType",
+    "propertyName": "问题分类",
+    "propertyType": "select",
+    "propertyOptions": "[{\"optionName\":\"云主机\",\"optionValue\":\"1001\"},{\"optionName\":\"云存储\",\"optionValue\":\"1002\"}]",
+    "propertyDefaultValue": "1001",
+    "propertyDescription": "描述"
+  },
+  "code": 200,
+  "msg": ""
+}

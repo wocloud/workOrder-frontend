@@ -1,0 +1,235 @@
+.btn-forbidden {
+    cursor: no-drop;
+    color: #b8b8b8;
+    background: #ececec;
+    border-bottom-color: #d4d4d4;
+}
+
+a.btn-forbidden:hover {
+    color: #b8b8b8;
+}
+
+.pane {
+    padding: 0px 20px 10px 20px;
+}
+
+.breadcrumb {
+    padding-left: 0px;
+    margin-bottom: 0;
+    background-color: #f0f3f4;
+}
+
+.page-intro {
+    background: #e4eaec;
+    overflow: hidden;
+    border-radius: 3px 3px 0 0;
+    color: #58666e;
+}
+
+.page-intro .lead {
+    margin: 16px 20px;
+    font-size: 12px;
+    line-height: 18px;
+    color: #a1a1a9;
+}
+
+.panel {
+    padding: 5px 20px;
+    margin-bottom: 0px;
+}
+
+.panel .toolbar .btn-content {
+    padding-left: 5px;
+}
+
+.panel .table-responsive .table {
+    margin-top: 10px !important;
+    border: 1px solid #eaeeea;
+}
+
+.panel .table-responsive .table tbody > tr > td:first-child {
+    text-align: center;
+}
+
+.panel .table-responsive .table .i-checks i {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.panel .table-responsive .table .i-checks input:checked + i:before {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+}
+
+.panel .table-responsive .dataTables_info {
+    margin-left: -15px;
+}
+
+.panel .table-responsive .dataTables_paginate {
+    margin-right: -15px;
+}
+
+/*µ¯¿ò*/
+.modal-header {
+    background: #2a2d2e;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.modal-header .modal-title, .modal-header .close span {
+    color: #fff;
+}
+
+.modal-header .close {
+    opacity: 1;
+}
+
+.modal-footer {
+    background: #eee;
+}
+
+.upload-btn.form-group {
+    position: fixed;
+    bottom: 0px;
+    right: 74px;
+}
+
+.file-brief {
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+
+.file-brief-show {
+    visibility: visible;
+    height: 100%;
+}
+
+.file-brief .form-group {
+    zoom: 1;
+    position: relative;
+}
+
+.file-brief .form-group:after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0;
+}
+
+.file-brief .form-group label {
+    padding-left: 0px;
+    padding-right: 0px;
+    text-align: right;
+}
+
+.file-brief .form-group .form-control {
+    display: inline-block;
+    width: 95%;
+}
+
+.form-control {
+    border-color: #cfdadd;
+    border-radius: 2px;
+}
+
+.form-control, .form-control:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: #23b7e5;
+}
+
+.file-brief .form-group .no-null {
+    display: inline-block;
+    width: 0px;
+    color: red;
+    font-size: 25px;
+    vertical-align: middle;
+}
+
+.file-brief .form-group .prompt {
+    display: none;
+    position: absolute;
+    font-size: 12px;
+    bottom: -15px;
+    left: 15px;
+}
+
+.form-control:focus ~ .prompt {
+    display: block;
+}
+
+.file-brief .form-group .prompt.error {
+    color: red;
+}
+
+.file-brief .form-group select {
+    border-color: #cfdadd;
+    border-radius: 2px;
+    padding: 6px 12px;
+}
+.file-brief .progress-bar {
+    -webkit-transition: width 0s ease;
+    -o-transition: width 0s ease;
+    transition: width 0s ease;
+}
+
+.upload-file {
+    position: relative;
+    height: 120px;
+    text-align: center;
+    border-radius: 4px;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+    font-family: inherit;
+    background: url(../vendor/webuploader/image.png) center 0px no-repeat;
+}
+
+.upload-file .name,
+.upload-file input{
+    position: absolute;
+    left: calc(50% - 78px);
+    left: -webkit-calc(50% - 78px);
+    bottom: 0;
+}
+
+.upload-file .name {
+    padding: 10px 50px;
+    background: #0CAF95;
+    color: white;
+    border-radius: 4px;
+}
+
+.upload-file .name:hover {
+    background: #0CAF95;
+}
+
+.upload-file input {
+    width: 156px;
+    padding: 9px 0;
+    opacity: 0;
+}
+
+.upload-file .fa {
+    padding-right: 4px;
+}
+.uploadFiles,
+.pauseUpload{
+    display: none;
+}
+
+.btn-fixed{
+	position: fixed;
+    bottom: 16px;
+    right: 88px;
+}

@@ -1,0 +1,44 @@
+<meta charset="utf-8">
+<div class="modal-header">
+    <button id="modelCancel" type="button" class="close"
+            ng-click="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">新增</h4>
+</div>
+<div class="modal-body">
+    <form id="rpForm" class="file-brief file-brief-show form-validation" name="rpForm">
+        <div class="form-group">
+            <label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 control-label">名字:</label>
+            <div class="col-md-6 col-sm-6 no-padder-sm">
+                <input type="text" class="form-control" ng-model="grid.name" placeholder=""  required>
+                <span class="no-null">*</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3  control-label">年龄:</label>
+            <div class="col-md-6 col-sm-6 no-padder-sm">
+                <input type="text" class="form-control" ng-model="grid.age" placeholder="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3  control-label">生日:</label>
+            <div class="col-md-6 col-sm-6 no-padder-sm">
+                <input type="text" class="form-control" ng-model="grid.birthday" placeholder="" required>
+                <span class="no-null">*</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3  control-label">薪水:</label>
+            <div class="col-md-6 col-sm-6 no-padder-sm">
+                <input type="text" class="form-control" ng-model="grid.salary" placeholder="" required>
+                <span class="no-null">*</span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-blue btn-fixed" ng-click="ok(rpForm.$valid)" >OK</button>
+    </form>
+    <div class="text-danger text-center">注：*为必填字段，输入边框为红色时，请按提示正确输入！</div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-dark" ng-click="cancel()">Close</button>
+</div>
