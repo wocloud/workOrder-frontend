@@ -37,9 +37,9 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                     '</label>' +
                     '<div class="col-md-6 col-sm-6 no-padder-sm" style="margin-bottom: 10px;">' +
                         '<div  style="width:300px">'+
-                            '<input class="laydate-icon" def-laydate type="text" maxDate="search.endTime" ng-model="search.startTime" style="width:47.5%;height:30px;" />' +
+                            '<input class="laydate-icon" def-laydate type="text" max="search.endTime" ng-model="search.startTime" style="width:47.5%;height:30px;" />' +
                             '<span style="padding: -1px 2.5%">至</span>'+
-                            '<input class="laydate-icon" def-laydate type="text" minDate="search.startTime" ng-model="search.endTime" style="width:47.5%;height:30px;"/>' +
+                            '<input class="laydate-icon" def-laydate type="text" min="search.startTime" ng-model="search.endTime" style="width:47.5%;height:30px;"/>' +
                         '</div>'+
                     '</div>' +
                 '</div>' +
