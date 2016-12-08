@@ -17,11 +17,6 @@
   <link rel="stylesheet" href="<%=serviceUrl%>/css/app.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/vendor/jquery/datatables/dataTables.bootstrap.css">
   <link rel="stylesheet" href="<%=serviceUrl%>/css/alert.css">
-  <link rel="stylesheet" href="css/wo_commom.css" type="text/css" />
-  <link rel="stylesheet" href="css/ng-dialog/ngDialog.min.css">
-  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-default.css">
-  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-plain.css">
-
 </head>
 <body ng-controller="AppCtrl">
   <div class="app" id="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}" ui-view></div>
@@ -92,5 +87,11 @@
   <script src="js/directives/sreach-button.js"></script>
   <script src="js/directives/ui-workSreach.js"></script>
   <script src="js/config.wangpeipei.router.js"></script>
+
+  <link rel="stylesheet" href="css/wo_commom.css" type="text/css" />
+  <link rel="stylesheet" href="css/ng-dialog/ngDialog.min.css">
+  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-default.css">
+  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-plain.css">
+  <link rel="stylesheet" href="vendor/modules/angularjs-toaster/toaster.css"/>
 </body>
 </html>

@@ -182,8 +182,8 @@ $(function(){
      * workOrder attributes create controller
      */
     app.controller('WorkOrderAttrCreateOrUpdateViewCtrl', AttrCreateOrUpdateViewCtrl);
-    AttrCreateOrUpdateViewCtrl.$inject = ['$scope', '$location', '$stateParams', '$log', '$cacheFactory', 'workOrderAttr.RES'];
-    function AttrCreateOrUpdateViewCtrl($scope, $location, $stateParams, $log, $cacheFactory, workOrderAttrRES){
+    AttrCreateOrUpdateViewCtrl.$inject = ['$scope', '$location', '$stateParams', 'toaster', 'workOrderAttr.RES'];
+    function AttrCreateOrUpdateViewCtrl($scope, $location, $stateParams, toaster, workOrderAttrRES){
         var key = $stateParams.key;
         $scope.PropertyType = workOrderAttrRES.baseEnum().propertyType;
 
@@ -221,12 +221,16 @@ $(function(){
                 workOrderAttrRES.create($scope.attr).then(function(result){
                     if(result.code==0){
                         $scope.backToMain();
+                    } else {
+                        toaster.pop("error", "错误", "自定义属性创建失败: " + result.msg);
                     }
                 });
             } else if($scope.createOrUpdate=="U"){
                 workOrderAttrRES.create($scope.attr).then(function(result){
                     if(result.code==0){
                         $scope.backToMain();
+                    } else {
+                        toaster.pop("error", "错误", "自定义属性编辑失败: " + result.msg);
                     }
                 });
             }
@@ -318,9 +322,6 @@ $(function(){
      * render view
      ************************/
     function renderAttrTable($scope, $log, workOrderAttrRES){
-        //i18nService.setCurrentLang("zh-cn");
-
-        var index=0;//默认选中行，下标置为0
         $scope.selectedRows = [];
         $scope.attrGridOptions = {
             columnDefs: [
@@ -353,15 +354,14 @@ $(function(){
             useExternalSorting: false, //是否使用自定义排序规则
             enableGridMenu: true, //是否显示grid 菜单
             showGridFooter: false, //是否显示grid footer
-            enableHorizontalScrollbar: 0, //grid水平滚动条是否显示, 0-不显示  1-显示
-            enableVerticalScrollbar: 0, //grid垂直滚动条是否显示, 0-不显示  1-显示
+            enableHorizontalScrollbar: 1, //grid水平滚动条是否显示, 0-不显示  1-显示
+            enableVerticalScrollbar: 1, //grid垂直滚动条是否显示, 0-不显示  1-显示
             //-------- 分页属性 ----------------
             enablePagination: true, //是否分页，默认为true
             enablePaginationControls: true, //使用默认的底部分页
             paginationPageSizes: [10], //每页显示个数可选项
             paginationCurrentPage: 1, //当前页码
             paginationPageSize: 10, //每页显示个数
-            //paginationTemplate:"<div></div>", //自定义底部分页代码
             totalItems: 0, // 总数量
             //----------- 选中 ----------------------
             enableFooterTotalSelected: false, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
@@ -370,12 +370,6 @@ $(function(){
             enableRowSelection: true, // 行选择是否可用，默认为true;
             enableSelectAll: true, // 选择所有checkbox是否可用，默认为true;
             enableSelectionBatchEvent: true, //默认true
-            isRowSelectable: function (row) { //GridRow
-                index += 1;//下标加1
-                if (index == 1) {
-                    row.grid.api.selection.selectRow(row.entity);
-                }
-            },
             useExternalPagination: true, //是否使用客户端分页,默认false
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;

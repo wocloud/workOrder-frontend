@@ -617,7 +617,6 @@ form{
 	border:1px solid #ccc;
 	color:#585858;
 	font-size:12px;
-	width: 60%;
 }
 input:focus {
 	border: 1px solid #ccc;
@@ -811,4 +810,19 @@ abbr[title]{
 }
 .ui-grid-pager-panel abbr {
     float: left;
+}
+/** validation style **/
+label.tip, span.tip{
+	vertical-align: middle;
+	float: left;
+	color: rgba(195, 0, 17, 0.71);
+}
+.form-horizontal>.form-group>.tip{
+	padding-top: 7px;
+	margin-bottom: 0;
+	float: left;
+	color: rgba(195, 0, 17, 0.71);
+}
+.error{
+	border-color: #c9302c;
 }
