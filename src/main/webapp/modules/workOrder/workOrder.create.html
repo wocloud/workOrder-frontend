@@ -6,7 +6,7 @@
         编辑工单
     </div>
     <div class="modal-body">
-        <form  class="file-brief file-brief-show form-validation" name="createWorkOrder"   id="form-new-style">
+        <form  class="file-brief file-brief-show form-validation" name="createWorkOrder">
             <!--分类-->
                 <div  class="col-sm-6 m-t-xs m-b-xs ">
                     <div class="form-group">
@@ -106,7 +106,7 @@
                     </div>
                 </div>
 
-            <div class="form-group " ng-repeat="items in properties" ng-show="items.isVisible|dit">
+            <div ng-repeat="items in properties" ng-show="items.isVisible|dit">
                 <div ng-if="items.propertyType=='select'" class="col-sm-6 m-t-xs m-b-xs" >
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}" >{{items.propertyName}}</label>
@@ -138,11 +138,11 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="items.propertyType=='textArea'" class="col-sm-12 m-t-xs m-b-xs">
+                <div ng-if="items.propertyType=='textarea'" class="col-sm-12 m-t-xs m-b-xs">
                     <div class="form-group">
                         <label class="col-md-offset-1 col-sm-offset-1 col-md-1 col-sm-2 control-label" title="{{items.propertyName}}" >{{items.propertyName}}</label>
                         <div class="col-md-11 col-sm-10"  >
-                            <textarea class="form-control" style="width: 93.5%" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit">{{items.propertyDefaultValue}}</textarea>
+                            <textarea class="form-control" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit">{{items.propertyDefaultValue}}</textarea>
                             <div ng-if="items.isRequired|dit" >
                                 <span class="no-null" >*</span>
                                 <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >

@@ -275,7 +275,7 @@
         };
 
         $scope.updateItem = function () {
-            $state.go("app.workOrderCreateOrUpdate", {'id' : $scope.selectedRows.id});
+            $state.go("app.workOrderCreateOrUpdate", {'id' : $scope.selectedRows.id, 'linkId': $scope.selectedRows.linkId});
         };
 
         $scope.putItem = function () {
@@ -315,6 +315,7 @@
     CreateOrUpdateViewCtrl.$inject = ['ngDialog','$scope', '$rootScope', '$log', 'MyWorkOrder.RES', '$state', '$stateParams', 'toaster'];
     function CreateOrUpdateViewCtrl(ngDialog,$scope, $rootScope, $log, myWorkOrderRES, $state, $stateParams, toaster) {
         $scope.id = $stateParams.id;
+        $scope.linkId = $stateParams.linkId;
         $scope.currentValue = {};
 
         myWorkOrderRES.list_typeCode().then(function (result) {
@@ -339,12 +340,12 @@
         if($scope.id) {
             var parameters = {
                 "ownerId"   : $rootScope.userInfo.userId,
-                "id"        : $scope.id
+                "linkId"        : $scope.linkId
             };
-            myWorkOrderRES.list_work(parameters).then(function (result) {
-                var workOrders = result.data.content;
-                if(workOrders && workOrders.length > 0) {
-                    $scope.currentValue = workOrders[0];
+            myWorkOrderRES.listMyWorkOrderById(parameters).then(function (result) {
+                var workOrder = result.data;
+                if(workOrder) {
+                    $scope.currentValue = workOrder[0];
                     if($scope.currentValue.workorderTypeId) {
                         $scope.workorderType = $scope.currentValue.workorderTypeId;
                     }
@@ -396,6 +397,7 @@
             $scope.currentValue.productType = $scope.productType;
             delete $scope.currentValue.workorderType;
             delete $scope.currentValue.workorderTypeId;
+            delete $scope.currentValue.createTime;
             return $scope.currentValue;
         }
 

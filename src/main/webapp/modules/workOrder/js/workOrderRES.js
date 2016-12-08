@@ -1,6 +1,6 @@
 app.service('MyWorkOrder.RES', ServiceMyWorkOrderRES);
-ServiceMyWorkOrderRES.$inject = ['$q', '$rootScope', '$resource', 'fakeMapping'];
-function ServiceMyWorkOrderRES($q, $rootScope, $resource, fakeMapping) {
+ServiceMyWorkOrderRES.$inject = ['$q', '$resource', 'fakeMapping', '$rootScope'];
+function ServiceMyWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
     this.CMD = {
         ListWorkOrder    : 'listWorkOrders',
         CreateWorkOrder  : 'createWorkOrder',
@@ -267,9 +267,15 @@ function ServiceMyWorkOrderRES($q, $rootScope, $resource, fakeMapping) {
         return task.promise;
     };
 
+    /*this.create = function(params){
+        var task = $q.defer();
+        res_createWorkOrder_list.post(params,function(response){
+            task.resolve(response.toJSON());
+        });
+        return task.promise;
+    };*/
     this.save = function(params){
         var task = $q.defer();
-        params.loginUserId = $rootScope.userInfo.userId;
         res_saveWorkOrder_list.post(params,function(response){
             task.resolve(response.toJSON());
         });

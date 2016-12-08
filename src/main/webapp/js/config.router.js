@@ -8,7 +8,7 @@ angular.module('app')
     var userInfo,
         loading,
         deferred = $q.defer();
-        var api_user = "/oss/getUserInfo";
+        var api_user = "/wocloud-workOrder-frontend/getUserInfo";
         var res_user = $resource(api_user, {}, {
             get:{
                 method : 'GET'

@@ -21,7 +21,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
         '<form  class="file-brief file-brief-show form-validation" name="businessForm"  id="form-new-style">'+
         '<div class="col-sm-6 m-t-xs m-b-xs" >' +
                 '<div class="form-group"  ng-if="flag">'+
-                    '<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-2 control-label">' +
+                    '<label class="col-md-3 col-sm-2 control-label">' +
                         '<span>受理状态</span>:' +
                     '</label>' +
                     '<div class="col-md-9 col-sm-9">' +
@@ -34,7 +34,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                     '</div>' +
                 '</div>' +
                 '<div class="form-group" ">'+
-                    '<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-2 control-label">' +
+                    '<label class="col-md-3 col-sm-2 control-label">' +
                         '<span>创建时间</span>:' +
                     '</label>' +
                     '<div class="col-md-9 col-sm-9">' +
@@ -44,7 +44,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                     '</div>' +
                 '</div>' +
                 '<div class="form-group" ">'+
-                    '<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-2 control-label">' +
+                    '<label class="col-md-3 col-sm-2 control-label">' +
                         '<span>工单类型</span>:' +
                     '</label>' +
                     '<div class="col-md-9 col-sm-9" ">' +
@@ -55,7 +55,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                     '</div>' +
                 '</div>' +
             '<div class="form-group" >'+
-                '<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-2 control-label">' +
+                '<label class="col-md-3 col-sm-2 control-label">' +
                     '<span>工单状态</span>:' +
                 '</label>' +
                 '<div class="col-md-9 col-sm-9" ">' +
@@ -68,7 +68,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                 '</div>' +
             '</div>' +
                 '<div class="form-group" >'+
-                    '<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-2 control-label">' +
+                    '<label class="col-md-3 col-sm-2 control-label">' +
                         '<span>问题分类</span>:' +
                     '</label>' +
                     '<div class="col-md-9 col-sm-9" >' +
@@ -79,7 +79,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                     '</div>' +
                 '</div>' +
                 '<div class="form-group" >'+
-                    '<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-2 control-label">' +
+                    '<label class="col-md-3 col-sm-2 control-label">' +
                         '<span>优先级</span>:' +
                     '</label>' +
                     '<div class="col-md-9 col-sm-9" >' +
@@ -91,7 +91,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                 '</div>' +
 
                 '<div class="form-group" >'+
-                    '<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-2 control-label">' +
+                    '<label class="col-md-3 col-sm-2 control-label">' +
                         '<span>主题</span>:' +
                     '</label>' +
                         '<div class="col-md-9 col-sm-9" >' +
@@ -101,7 +101,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                 '</div>' +
 
                 '<div class="form-group" ng-repeat="items in properties" >'+
-                    '<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-2 control-label" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">' +
+                    '<label class="col-md-3 col-sm-2 control-label" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">' +
                         '<input class="form-control" type="checkbox" checked="true" ng-click="prCheck({$event:$event,items:items})"/>' +
                         '<span title="{{items.propertyName}}" ng-bind="items.propertyName"></span>:' +
                     '</label>' +

@@ -61,7 +61,7 @@ angular.module('app')
                     url: '/workOrderCreateOrUpdate',
                     controller:'WorkOrderCreateOrUpdateCtrl',
                     templateUrl: 'modules/workOrder/workOrder.create.html',
-                    params : {'id' : null},
+                    params : {'id' : null, 'linkId': null},
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
