@@ -5,203 +5,173 @@
     <div class="panel-heading" ng-show="id">
         编辑工单
     </div>
-    <div class="panel-body">
-        <form  class="file-brief file-brief-show form-validation" name="createWorkOrder" ng-submit="saveItem()">
+    <div class="modal-body">
+        <form  class="file-brief file-brief-show form-validation" name="createWorkOrder"   id="form-new-style">
             <!--分类-->
-            <div class="form-group ">
-                <div  class="col-sm-6 m-t-xs m-b-xs no-padder ">
+                <div  class="col-sm-6 m-t-xs m-b-xs ">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2 control-label" style="margin-left:3%;text-align:right;line-height: 37px;">分类</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:80%;">
-                            <select class="form-control" name="typeCode" ng-model="workorderType" required style="width:70%;display:inline;margin-top: 0px">
+                        <label class="control-label" >分类</label>
+                        <div class="col-md-9 col-sm-9">
+                            <select class="form-control" name="typeCode" ng-model="workorderType" required >
                                 <option ng-repeat="item in typeCodeList" value="{{item.id}}">{{item.typeName}}</option>
                             </select>
-                            <div  style="display:inline;color:red;">
-                                <span  class="no-null" style="margin-left:2%;">*</span>
-                                <div ng-messages="createWorkOrder.typeCode.$error" ng-if="createWorkOrder.typeCode.$touched" style="display:inline">
-                                    <div ng-message="required" style="display:inline">必填项不能为空</div>
-                                </div>
+                            <span  class="no-null" >*</span>
+                            <div  class="no-null-message " ng-messages="createWorkOrder.typeCode.$error" ng-if="createWorkOrder.typeCode.$touched" >
+                                <div ng-message="required" >必填项不能为空</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <!--主题-->
-            <div class="form-group ">
-                <div  class="col-sm-6 m-t-xs m-b-xs no-padder ">
+                <div  class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2 control-label" style="margin-left:3%;text-align:right;line-height: 37px;">主题</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:80%;">
-                            <input class="form-control" type="text"  name="title" ng-model="currentValue.title" style="width:70%;display:inline;margin-top: 0px"  required/>
-                            <div  style="display:inline;color:red;">
-                                <span class="no-null" style="margin-left: 2%;">*</span>
-                                <div ng-messages="createWorkOrder.title.$error" ng-if="createWorkOrder.title.$touched" style="display:inline;">
-                                    <div ng-message="required" style="display:inline;">必填项不能为空</div>
-                                </div>
+                        <label class="control-label">主题</label>
+                        <div class="col-md-9 col-sm-9">
+                            <input class="form-control" type="text"  name="title" ng-model="currentValue.title"   required/>
+                            <span class="no-null" >*</span>
+                            <div class="no-null-message " ng-messages="createWorkOrder.title.$error" ng-if="createWorkOrder.title.$touched">
+                                <div ng-message="required" >必填项不能为空</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <!--优先级-->
-            <div class="form-group ">
-                <div  class="col-sm-6 m-t-xs m-b-xs no-padder ">
+                <div  class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2 control-label" style="margin-left:3%;text-align:right;line-height: 37px;">优先级</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:80%;">
-                            <select class="form-control"  name="priority" ng-model="priority" required style="width:70%;display:inline;margin-top: 0px">
+                        <label class="control-label">优先级</label>
+                        <div class="col-md-9 col-sm-9"  >
+                            <select class="form-control"  name="priority" ng-model="priority" required >
                                 <option ng-repeat="item in priorityList" value="{{item.priorityValue}}">{{item.priorityName}}</option>
                             </select>
-                            <div  style="display:inline;color:red;">
-                                <span  class="no-null" style="margin-left:2%;">*</span>
-                                <div ng-messages="createWorkOrder.priority.$error" ng-if="createWorkOrder.priority.$touched" style="display:inline">
-                                    <div ng-message="required" style="display:inline">必填项不能为空</div>
-                                </div>
+                            <span  class="no-null" >*</span>
+                            <div class="no-null-message "  ng-messages="createWorkOrder.priority.$error" ng-if="createWorkOrder.priority.$touched" >
+                                <div ng-message="required" >必填项不能为空</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <!--产品分类-->
-            <div class="form-group ">
-                <div  class="col-sm-6 m-t-xs m-b-xs no-padder ">
+                <div  class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2 control-label" style="margin-left:3%;text-align:right;line-height: 37px;">问题分类</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:80%;">
-                            <select class="form-control"  name="productType" ng-model="productType" required style="width:70%;display:inline;margin-top: 0px">
+                        <label class="control-label">问题分类</label>
+                        <div class="col-md-9 col-sm-9"  >
+                            <select class="form-control"  name="productType" ng-model="productType" required >
                                 <option ng-repeat="item in productTypeList" value="{{item.productType}}">{{item.productName}}</option>
                             </select>
-                            <div  style="display:inline;color:red;">
-                                <span  class="no-null" style="margin-left:2%;">*</span>
-                                <div ng-messages="createWorkOrder.productType.$error" ng-if="createWorkOrder.productType.$touched" style="display:inline">
-                                    <div ng-message="required" style="display:inline">必填项不能为空</div>
-                                </div>
+                            <span  class="no-null" >*</span>
+                            <div class="no-null-message " ng-messages="createWorkOrder.productType.$error" ng-if="createWorkOrder.productType.$touched" >
+                                <div ng-message="required" >必填项不能为空</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <!--联系人-->
-            <div class="form-group ">
-                <div  class="col-sm-6 m-t-xs m-b-xs no-padder ">
+                <div  class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2 control-label" style="margin-left:3%;text-align:right;line-height: 37px;">联系人</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:80%;">
-                            <input class="form-control" type="text"  name="contactName" ng-model="currentValue.contactName" style="width:70%;display:inline;margin-top: 0px"  required/>
-                            <div  style="display:inline;color:red;">
-                                <span class="no-null" style="margin-left: 2%;">*</span>
-                                <div ng-messages="createWorkOrder.contactName.$error" ng-if="createWorkOrder.contactName.$touched" style="display:inline;">
-                                    <div ng-message="required" style="display:inline;">必填项不能为空</div>
-                                </div>
+                        <label class="control-label">联系人</label>
+                        <div class="col-md-9 col-sm-9"  >
+                            <input class="form-control" type="text"  name="contactName" ng-model="currentValue.contactName"  required/>
+                            <span class="no-null">*</span>
+                            <div  class="no-null-message " ng-messages="createWorkOrder.contactName.$error" ng-if="createWorkOrder.contactName.$touched" >
+                                <div ng-message="required" >必填项不能为空</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <!--联系电话-->
-            <div class="form-group ">
-                <div  class="col-sm-6 m-t-xs m-b-xs no-padder ">
+                <div  class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2 control-label" style="margin-left:3%;text-align:right;line-height: 37px;">联系电话</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:80%;">
-                            <input class="form-control" type="text"  name="contactPhone" ng-model="currentValue.contactPhone" style="width:70%;display:inline;margin-top: 0px"  validatephone required/>
-                            <div  style="display:inline;color:red;">
-                                <span class="no-null" style="margin-left: 2%;">*</span>
-                                <div ng-messages="createWorkOrder.contactPhone.$error" ng-if="createWorkOrder.contactPhone.$touched" style="display:inline;">
-                                    <div ng-message="required" style="display:inline;">必填项不能为空</div>
-                                    <div ng-message="validatephone" style="display:inline;">格式不正确号</div>
-                                </div>
+                        <label class="control-label">联系电话</label>
+                        <div class="col-md-9 col-sm-9"  >
+                            <input class="form-control" type="text"  name="contactPhone" ng-model="currentValue.contactPhone"  validatephone required/>
+                            <span class="no-null" >*</span>
+                            <div class="no-null-message " ng-messages="createWorkOrder.contactPhone.$error" ng-if="createWorkOrder.contactPhone.$touched" >
+                                <div ng-message="required" >必填项不能为空</div>
+                                <div ng-message="validatephone" >格式不正确号</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <!--描述-->
-            <div class="form-group ">
-                <div  class="col-sm-12 m-t-xs m-b-xs no-padder " >
+                <div  class="col-sm-12 m-t-xs m-b-xs" >
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-1 col-sm-2 control-label" style="margin-left:1.333333%;text-align:right;line-height: 37px;">描述</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:90%;">
-                            <textarea class="form-control" name="description" ng-model="currentValue.description"  required style="width:87.2%;display:inline;margin-left: 2px;margin-top: 0px"></textarea>
-                            <div  style="display:inline;color:red;">
-                                <span class="no-null" style="margin-left: 1%;">*</span>
-                                <div ng-messages="createWorkOrder.description.$error" ng-if="createWorkOrder.description.$touched" style="display:inline;">
-                                    <div ng-message="required" style="display:inline;">必填项不能为空</div>
-                                </div>
+                        <label class="control-label" >描述</label>
+                        <div class="col-md-11 col-sm-10">
+                            <textarea class="form-control" style="width: 93.5%" name="description" ng-model="currentValue.description"  required ></textarea>
+                            <span class="no-null" >*</span>
+                            <div class="no-null-message " ng-messages="createWorkOrder.description.$error" ng-if="createWorkOrder.description.$touched" >
+                                <div ng-message="required" >必填项不能为空</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
             <div class="form-group " ng-repeat="items in properties" ng-show="items.isVisible|dit">
-                <div ng-if="items.propertyType=='select'" class="col-sm-6 m-t-xs m-b-xs no-padder " >
+                <div ng-if="items.propertyType=='select'" class="col-sm-6 m-t-xs m-b-xs" >
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2 control-label" title="{{items.propertyName}}" style="margin-left:3%;text-align: right;line-height: 37px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:80%;">
-                            <select class="form-control"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit" style="width:70%;display:inline;margin-top: 0px">
+                        <label class="control-label" title="{{items.propertyName}}" >{{items.propertyName}}</label>
+                        <div class="col-md-9 col-sm-9" >
+                            <select class="form-control"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit" >
                                 <option  value="" ng-if="items.propertyDefaultValue==''" >-请选择-</option>
                                 <option ng-repeat="item in items.propertyOptions" value="{{item.optionValue}}">{{item.optionName}}</option>
                             </select>
-                            <div ng-if="items.isRequired|dit" style="display:inline;color:red;">
-                                <span  class="no-null" style="margin-left:2%;">*</span>
-                                <div ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" style="display:inline">
-                                    <div ng-message="required" style="display:inline">必填项不能为空</div>
+                            <div ng-if="items.isRequired|dit">
+                                <span  class="no-null" >*</span>
+                                <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >
+                                    <div ng-message="required" >必填项不能为空</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div ng-if="items.propertyType=='text'" class="col-sm-6 m-t-xs m-b-xs no-padder ">
+                <div ng-if="items.propertyType=='text'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2 control-label" title="{{items.propertyName}}" style="margin-left:3%;text-align:right;line-height: 37px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:80%;">
-                            <input class="form-control" ng-disabled="items.readOnly|dit" type="text"  name="{{items.propertyKey}}" ng-model="items.propertyValue" style="width:70%;display:inline;margin-top: 0px" value="{{items.propertyDefaultValue}}" ng-required="items.isRequired|dit"/>
-                            <div ng-if="items.isRequired|dit" style="display:inline;color:red;">
-                                <span class="no-null" style="margin-left: 2%;">*</span>
-                                <div ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" style="display:inline;">
-                                    <div ng-message="required" style="display:inline;">必填项不能为空</div>
+                        <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
+                        <div class="col-md-9 col-sm-9" >
+                            <input class="form-control" ng-disabled="items.readOnly|dit" type="text"  name="{{items.propertyKey}}" ng-model="items.propertyValue"  value="{{items.propertyDefaultValue}}" ng-required="items.isRequired|dit"/>
+                            <div ng-if="items.isRequired|dit" >
+                                <span class="no-null" >*</span>
+                                <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >
+                                    <div ng-message="required" >必填项不能为空</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div ng-if="items.propertyType=='textArea'" class="col-sm-12 m-t-xs m-b-xs no-padder ">
+                <div ng-if="items.propertyType=='textArea'" class="col-sm-12 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-1 col-sm-2 control-label" title="{{items.propertyName}}" style="margin-left:1.333333%;text-align:right;line-height: 37px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:90%;">
-                            <textarea class="form-control" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit" style="width:87.2%;display:inline;margin-left: 2px;margin-top: 0px">{{items.propertyDefaultValue}}</textarea>
-                            <div ng-if="items.isRequired|dit" style="display:inline;color:red;">
-                                <span class="no-null" style="margin-left: 1%;">*</span>
-                                <div ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" style="display:inline;">
-                                    <div ng-message="required" style="display:inline;">必填项不能为空</div>
+                        <label class="col-md-offset-1 col-sm-offset-1 col-md-1 col-sm-2 control-label" title="{{items.propertyName}}" >{{items.propertyName}}</label>
+                        <div class="col-md-11 col-sm-10"  >
+                            <textarea class="form-control" style="width: 93.5%" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit">{{items.propertyDefaultValue}}</textarea>
+                            <div ng-if="items.isRequired|dit" >
+                                <span class="no-null" >*</span>
+                                <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >
+                                    <div ng-message="required" >必填项不能为空</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div ng-if="items.propertyType=='datetime'" class="col-sm-6 m-t-xs m-b-xs no-padder ">
+                <div ng-if="items.propertyType=='datetime'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-2 col-sm-2 control-label" title="{{items.propertyName}}" style="margin-left:3%;text-align:right;line-height: 37px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
-                        <div class="col-md-6 col-sm-6 no-padder-sm"  style="width:80%;">
-                            <input  class="form-control laydate-icon" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" def-laydate  type="text"  ng-model="items.propertyValue"  style="width:70%;display:inline;margin-top: 0px" ng-required="items.isRequired|dit" />
-                            <div ng-if="items.isRequired|dit" style="display:inline;color:red;">
-                                <span class="no-null" style="margin-left: 2%;">*</span>
-                                <div ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" style="display:inline;">
-                                    <div ng-message="required" style="display:inline;">必填项不能为空</div>
+                        <label class="control-label" title="{{items.propertyName}}" style="margin-left:3%;text-align:right;line-height: 37px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
+                        <div class="col-md-9 col-sm-9" >
+                            <input  class="form-control laydate-icon" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" def-laydate  type="text"  ng-model="items.propertyValue"   ng-required="items.isRequired|dit" />
+                            <div ng-if="items.isRequired|dit" >
+                                <span class="no-null">*</span>
+                                <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >
+                                    <div ng-message="required" >必填项不能为空</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="line line-dashed b-b line-lg pull-in"></div>
-            <div class="form-group">
-                <div class="col-sm-12 col-sm-offset-2" style="margin-left: 45%;">
-                    <button type="submit" class="btn btn-primary" ng-disabled="createWorkOrder.$invalid">保存</button>
-                    <button type="button" class="btn btn-default" ng-click="backToMain()">取消</button>
                 </div>
             </div>
         </form>
+        <div class="text-danger text-center">注：*为必填字段，输入边框为红色时，请按提示正确输入！</div>
     </div>
+    <div class="modal-footer" style="text-align: center;background:#fff;">
+        <button type="button" class="btn btn-default" ng-click="backToMain()">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="saveItem()" ng-disabled="createWorkOrder.$invalid">保存</button>
+</div>
 </div>
