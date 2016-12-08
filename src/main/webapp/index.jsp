@@ -10,7 +10,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <link rel="stylesheet" href="<%=serviceUrl%>/modules/grid_test/css/ui-grid.min.css"/>
   <link rel="stylesheet" href="<%=serviceUrl%>/css/bootstrap.css" type="text/css" />
-  
   <link rel="stylesheet" href="<%=serviceUrl%>/css/animate.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/css/font-awesome.min.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/css/simple-line-icons.css" type="text/css" />
@@ -18,12 +17,11 @@
   <link rel="stylesheet" href="<%=serviceUrl%>/css/app.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/vendor/jquery/datatables/dataTables.bootstrap.css">
   <link rel="stylesheet" href="<%=serviceUrl%>/css/alert.css">
-  <link rel="stylesheet" href="vendor/jquery/jeDate/jedate.css" type="text/css" />
-  <link rel="stylesheet" href="css/treeview.css" type="text/css" />
-<link rel="stylesheet" href="css/tree/tree-control-attribute.css">
-  <link rel="stylesheet" href="css/tree/tree-control.css">
- <!-- <link rel="stylesheet" href="css/particles.css"> -->
-  
+  <link rel="stylesheet" href="css/wo_commom.css" type="text/css" />
+  <link rel="stylesheet" href="css/ng-dialog/ngDialog.min.css">
+  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-default.css">
+  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-plain.css">
+
 </head>
 <body ng-controller="AppCtrl">
   <div class="app" id="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}" ui-view></div>
@@ -58,7 +56,6 @@
   <script src="<%=serviceUrl%>/vendor/angular/angular-translate/storage-local.js"></script>
   <script src="vendor/modules/angular-dialog/angular-dialog.js"></script>
   <script src="js/directives/fake-backend.js"></script>
-
   <script src="js/directives/skyform-validate.js"></script>
   <script src="js/app.js"></script>
   <script src="js/config.js"></script>
@@ -86,15 +83,8 @@
   <!-- Lazy loading -->
   <script src="<%=serviceUrl%>/vendor/jquery/datatables/jquery.dataTables.min.js"></script>
   <script src="<%=serviceUrl%>/vendor/jquery/datatables/dataTables.bootstrap.js"></script>
-
   <script src="<%=serviceUrl%>/modules/grid_test/js/ui-grid.min.js"></script>
   <script src="<%=serviceUrl%>/modules/grid_test/js/grid-directive.js"></script>
-  <link rel="stylesheet" href="css/wo_commom.css" type="text/css" />
-  <link rel="stylesheet" href="css/ng-dialog/ngDialog.min.css">
-  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-default.css">
-  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-plain.css">
-
-
   <script src="vendor/modules/angularjs-toaster/toaster.js"></script>
   <script src="js/directives/ui-laydate.js"></script>
   <script src="vendor/jquery/laydate/laydate.js"></script>
