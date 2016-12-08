@@ -7,7 +7,7 @@ angular.module("sreach-button",[]).directive("sreachButton", function () {
                 '<div ng-transclude></div>'+
             '</div>' +
         '<div>' +
-        '<button style="position: relative;width:100%;bottom:18px;margin-bottom: 10px;"><button ng-click="show()" style="position: relative; margin-left: 45%;    top: -29px"><i class="fa {{istyle}}" aria-hidden="true"></i>{{title}}</button></div>'+
+        '<button class="footer_list_collect" ng-click="show()"><i class="fa {{istyle}}" aria-hidden="true"></i>{{title}}</button></div>'+
         '</div>' +
         '</div>',
         transclude:true,

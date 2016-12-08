@@ -71,8 +71,10 @@
             <div class="line line-dashed b-b line-lg pull-in"></div>
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-2">
-                    <button type="button" class="btn btn-default" ng-click="backToMain()">取消</button>
-                    <button type="submit" class="btn btn-primary" ng-disabled="attrForm.$invalid">保存</button>
+                    <div class="modal-footer" style="text-align: center;background:#fff;">
+                        <button type="button" class="btn btn-default" ng-click="backToMain()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="attrForm.$invalid">保存</button>
+                    </div>
                 </div>
             </div>
         </form>

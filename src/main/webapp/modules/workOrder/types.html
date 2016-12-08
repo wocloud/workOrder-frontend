@@ -21,7 +21,7 @@
 </div>
 
 <script type="text/ng-template" id="createOrUpdateTemplate">
-    <div class="modal-header">
+    <div class="modal-header" style="background: #fff">
         <h4 class="modal-title" ng-show="createOrUpdate=='C'">新建工单类型</h4>
         <h4 class="modal-title" ng-show="createOrUpdate=='U'">编辑工单类型</h4>
         <div class="modal-body">
@@ -44,7 +44,7 @@
                 </div>
             </form>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="background: #fff">
             <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
             <button type="submit" class="btn btn-primary" ng-disabled="typeForm.$invalid" ng-click="saveItem()">保存</button>
         </div>
@@ -52,12 +52,12 @@
 </script>
 
 <script type="text/ng-template" id="deleteTemplate">
-    <div class="modal-header">
+    <div class="modal-header" style="background: #fff">
         <h4 class="modal-title">删除工单类型</h4>
         <div class="modal-body">
             <p>你确定要删除 {{currentItem.typeName}} 吗?</p>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="background: #fff">
             <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
             <button type="submit" class="btn btn-primary" ng-click="removeItem()">保存</button>
         </div>
@@ -65,14 +65,14 @@
 </script>
 
 <script type="text/ng-template" id="bindWithProcessTemplate">
-    <div class="modal-header">
+    <div class="modal-header" style="background: #fff">
         <h4 class="modal-title">绑定流程</h4>
         <div class="modal-body">
             <div ui-grid="flowGridOptions" ui-grid-pagination
                  ui-grid-selection ui-grid-exporter ui-grid-resize-columns ui-grid-auto-resize>
             </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="background: #fff">
             <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
             <button type="submit" class="btn btn-primary" ng-disabled="!selectedItem" ng-click="bindWorkorderTypeAndProcess()">保存</button>
         </div>
@@ -81,12 +81,12 @@
 
 
 <script type="text/ng-template" id="unbindWithProcessTemplate">
-    <div class="modal-header">
+    <div class="modal-header" style="background: #fff">
         <h4 class="modal-title">解绑流程</h4>
         <div class="modal-body">
             <p>您确定要解绑该工单的关联流程 {{processDeploymentId}} 吗?</p>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="background: #fff">
             <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
             <button type="submit" class="btn btn-primary" ng-disabled="relationId<0" ng-click="unbindWorkorderTypeAndProcess()">保存</button>
         </div>
