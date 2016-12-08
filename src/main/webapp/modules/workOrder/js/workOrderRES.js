@@ -267,15 +267,9 @@ function ServiceMyWorkOrderRES($q, $rootScope, $resource, fakeMapping) {
         return task.promise;
     };
 
-    /*this.create = function(params){
-        var task = $q.defer();
-        res_createWorkOrder_list.post(params,function(response){
-            task.resolve(response.toJSON());
-        });
-        return task.promise;
-    };*/
     this.save = function(params){
         var task = $q.defer();
+        params.loginUserId = $rootScope.userInfo.userId;
         res_saveWorkOrder_list.post(params,function(response){
             task.resolve(response.toJSON());
         });

@@ -24,16 +24,6 @@ angular.module('app')
                             }]
                     }
                 })
-                .state('app.workOrderAttrCreateOrUpdate', {
-                    url: '/workOrderAttrCreateOrUpdate?key',
-                    templateUrl: 'modules/workOrder/attr.create.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['modules/workOrder/js/attributes.js']);
-                            }]
-                    }
-                })
                 .state('app.workOrderAttrInfo', {
                     url: '/workOrderAttrInfo?key',
                     templateUrl: 'modules/workOrder/attr.info.html',

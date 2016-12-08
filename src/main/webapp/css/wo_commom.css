@@ -811,7 +811,7 @@ abbr[title]{
 .ui-grid-pager-panel abbr {
     float: left;
 }
-/** validation style **/
+/** style **/
 label.tip, span.tip{
 	vertical-align: middle;
 	float: left;
@@ -825,4 +825,17 @@ label.tip, span.tip{
 }
 .error{
 	border-color: #c9302c;
+}
+.workorder .form-group{
+	margin: 0!important;
+}
+.workorder .form-group .control-label{
+	padding: 0!important;
+}
+.btn-disabled-true {
+	cursor: not-allowed;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	opacity: 0.65;
+	color: grey;
 }

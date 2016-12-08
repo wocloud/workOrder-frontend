@@ -7,8 +7,8 @@ $(function(){
      * workOrder attributes service
      */
     app.service('workOrderAttr.RES', ServiceWorkOrderAttrRES);
-    ServiceWorkOrderAttrRES.$inject = ['$q', '$resource', 'fakeMapping','i18nService'];
-    function ServiceWorkOrderAttrRES($q, $resource, fakeMapping,i18nService) {
+    ServiceWorkOrderAttrRES.$inject = ['$q', '$resource', 'fakeMapping','i18nService', '$rootScope'];
+    function ServiceWorkOrderAttrRES($q, $resource, fakeMapping,i18nService,$rootScope) {
     	i18nService.setCurrentLang("zh-cn");
         this.baseEnum = function() {
             return {
@@ -47,21 +47,10 @@ $(function(){
             return task.promise;
         };
 
-        this.isNameUnique = function(name){
-            var task = $q.defer();
-            var cmd = this.CMD.IsNameUnique;
-            var params = name == undefined ? {} : {propertyName: name};
-            $resource(cmd).save(params, function (response) {
-                task.resolve(response.toJSON().data);
-            }, function(response){
-                task.reject("调用失败,未查找到属性名称是否唯一信息!");
-            });
-            return task.promise;
-        };
-
         this.create = function(params){
             var task = $q.defer();
             var cmd = this.CMD.CreateOrUpdateAttr;
+            //params.loginUserId = $rootScope.userInfo.userId;
             $resource(cmd).save(params,function(response){
                 task.resolve(response.toJSON());
             }, function(response){
@@ -73,6 +62,7 @@ $(function(){
         this.removeById = function(id){
             var task = $q.defer();
             var cmd = this.CMD.DeleteAttr;
+            //params.loginUserId = $rootScope.userInfo.userId;
             $resource(cmd).save({id:id},function(response){
                 task.resolve(response.toJSON());
             }, function(response){
@@ -123,21 +113,45 @@ $(function(){
 
         //create new attr
         $scope.createItem = function () {
-            $location.url("/app/workOrderAttrCreateOrUpdate");
+            var modalInstance = $modal.open({
+                backdrop: false,
+                templateUrl: 'createOrUpdateTemplate',
+                controller: 'WorkOrderAttrCreateOrUpdateViewCtrl'
+            });
+            modalInstance.result.then(function (result) {
+                if(result.code=="0"){
+                    toaster.pop('info', "提示", "自定义属性新建成功!");
+                } else {
+                    toaster.pop('error', "提示", "自定义属性新建失败: " + result.msg);
+                }
+                $scope.loadData();
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
         };
 
         //edit attr
         $scope.updateItem = function() {
-            if($scope.selectedRows.length==0){
-                toaster.pop('info', "提示", "请选择要操作的条目!");
-                return;
-            }
-            if($scope.selectedRows.length>1){
-                toaster.pop('info', "提示", "只能选择一条操作的条目!");
-                return;
-            }
-            var key = $scope.selectedRows[0].propertyKey;
-            $location.url("/app/workOrderAttrCreateOrUpdate?key="+key);
+            var modalInstance = $modal.open({
+                backdrop: false,
+                templateUrl: 'createOrUpdateTemplate',
+                controller: 'WorkOrderAttrCreateOrUpdateViewCtrl',
+                resolve: {
+                    params: function () {
+                        return $scope.selectedRows[0];
+                    }
+                }
+            });
+            modalInstance.result.then(function (result) {
+                if(result.code=="0"){
+                    toaster.pop('info', "提示", "自定义属性编辑成功!");
+                } else {
+                    toaster.pop('error', "提示", "自定义属性编辑失败: " + result.msg);
+                }
+                $scope.loadData();
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
         };
 
         //delete an attribute
@@ -182,9 +196,9 @@ $(function(){
      * workOrder attributes create controller
      */
     app.controller('WorkOrderAttrCreateOrUpdateViewCtrl', AttrCreateOrUpdateViewCtrl);
-    AttrCreateOrUpdateViewCtrl.$inject = ['$scope', '$location', '$stateParams', 'toaster', 'workOrderAttr.RES'];
-    function AttrCreateOrUpdateViewCtrl($scope, $location, $stateParams, toaster, workOrderAttrRES){
-        var key = $stateParams.key;
+    AttrCreateOrUpdateViewCtrl.$inject = ['$scope', '$modalInstance', '$stateParams', 'toaster', 'workOrderAttr.RES'];
+    function AttrCreateOrUpdateViewCtrl($scope, $modalInstance, $stateParams, toaster, workOrderAttrRES){
+        var key = $stateParams.propertyKey;
         $scope.PropertyType = workOrderAttrRES.baseEnum().propertyType;
 
         if ($scope.attr == undefined || $scope.attr == null){
@@ -219,27 +233,19 @@ $(function(){
             $scope.attr.propertyOptions = JSON.stringify($scope.optionProperties);
             if($scope.createOrUpdate=="C"){
                 workOrderAttrRES.create($scope.attr).then(function(result){
-                    if(result.code==0){
-                        $scope.backToMain();
-                    } else {
-                        toaster.pop("error", "错误", "自定义属性创建失败: " + result.msg);
-                    }
+                    $modalInstance.close(result);
                 });
             } else if($scope.createOrUpdate=="U"){
                 workOrderAttrRES.create($scope.attr).then(function(result){
-                    if(result.code==0){
-                        $scope.backToMain();
-                    } else {
-                        toaster.pop("error", "错误", "自定义属性编辑失败: " + result.msg);
-                    }
+                    $modalInstance.close(result);
                 });
             }
         };
 
-        //return to the main page
-        $scope.backToMain = function () {
-            $location.url("/app/workOrderAttrs");
-        };
+        //cancel the modal
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        }
 
         //watch the propertyType change
         $scope.$watch("attr.propertyType", function(newValue, oldValue){

@@ -4,13 +4,13 @@
     <div class="clearfix m-b">
         <button class="operate-btn on" ng-click="createItem()">
             <i class="fa fa-plus"></i>新建</button>
-        <button class="operate-btn" ng-click="updateItem()" ng-disabled="!selectedItem">
+        <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="updateItem()" ng-disabled="!selectedItem">
             <i class="fa fa-plus"></i>编辑</button>
-        <button class="operate-btn" ng-click="deleteItem()" ng-disabled="!selectedItem">
+        <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="deleteItem()" ng-disabled="!selectedItem">
             <i class="fa fa-remove"></i>删除</button>
-        <button class="operate-btn" ng-click="bindWithProcess()" ng-disabled="!selectedItem">
+        <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="bindWithProcess()" ng-disabled="!selectedItem">
             <i class="fa fa-plus"></i>绑定流程</button>
-        <button class="operate-btn" ng-click="unbindWithProcess()" ng-disabled="!selectedItem">
+        <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="unbindWithProcess()" ng-disabled="!selectedItem">
             <i class="fa fa-plus"></i>解绑流程</button>
     </div>
     <div class="w-auto-xs bg-light dk bg-auto b-l">
