@@ -179,13 +179,16 @@
                     row.grid.api.selection.selectRow(row.entity);
                 }
             },
+            modifierKeysToMultiSelect: true,//默认false,为true时只能 按ctrl或shift键进行多选, multiSelect 必须为true;
+            multiSelect: true,// 是否可以选择多个,默认为true;
+            noUnselect: true,//默认false,选中后是否可以取消选中
             useExternalPagination: true, //是否使用客户端分页,默认false
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
                 //分页按钮事件
                 gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                     if (getPage) {
-                        $scope.sreach(newPage,pageSize)
+                        $scope.queryByCondition(newPage,pageSize)
                     }
                 });
                 //行选中事件
@@ -297,7 +300,7 @@
                         }
                         $scope.ok = function(){
                             $scope.closeThisDialog(); //关闭弹窗
-                            $scope.sreach();
+                            $scope.queryByCondition();
                         };
                         $scope.close=function(){
                             $scope.closeThisDialog();

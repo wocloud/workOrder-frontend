@@ -135,6 +135,9 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
                 row.grid.api.selection.selectRow(row.entity);
             }
         },
+        modifierKeysToMultiSelect: true,//默认false,为true时只能 按ctrl或shift键进行多选, multiSelect 必须为true;
+        multiSelect: true,// 是否可以选择多个,默认为true;
+        noUnselect: true,//默认false,选中后是否可以取消选中
         useExternalPagination: true, //是否使用客户端分页,默认false
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;

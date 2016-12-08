@@ -38,8 +38,8 @@ function performerStatus (){
         }
     };
 };
-LKworkOrder.$inject = ['$scope', 'MyWorkOrder.RES','$state','i18nService'];
-function LKworkOrder($scope, myWorkOrderRES,$state,i18nService) {
+LKworkOrder.$inject = ['$rootScope','$scope', 'MyWorkOrder.RES','$state','i18nService'];
+function LKworkOrder($rootScope,$scope, myWorkOrderRES,$state,i18nService) {
 	i18nService.setCurrentLang("zh-cn");
 	$scope.search={};
     $scope.yel=true;
@@ -133,6 +133,9 @@ function LKworkOrder($scope, myWorkOrderRES,$state,i18nService) {
                 row.grid.api.selection.selectRow(row.entity);
             }
         },
+        modifierKeysToMultiSelect: true,//默认false,为true时只能 按ctrl或shift键进行多选, multiSelect 必须为true;
+        multiSelect: true,// 是否可以选择多个,默认为true;
+        noUnselect: true,//默认false,选中后是否可以取消选中
         useExternalPagination: true, //是否使用客户端分页,默认false
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
