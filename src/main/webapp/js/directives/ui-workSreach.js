@@ -110,7 +110,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                             '<option ng-repeat="item in items.propertyOptions track by $index" value="{{item.optionValue}}">{{item.optionName}}</option>' +
                         '</select>' +
                         '<input class="form-control" type="text" ng-if=items.propertyType=="text" ng-model="items.propertyValue" value="{{items.propertyDefaultValue}}" "/>' +
-                        '<textarea class="form-control" ng-if=items.propertyType=="textArea" ng-model="items.propertyValue" style="height:20px;">{{items.propertyDefaultValue}}</textarea>' +
+                        '<textarea class="form-control" ng-if=items.propertyType=="textarea" ng-model="items.propertyValue" style="height:20px;">{{items.propertyDefaultValue}}</textarea>' +
                         '<div ng-if=items.propertyType=="datetime" >'+
                             '<input class=" form-control laydate-icon" def-laydate type="text" min-date="items.propertyValue.endTime" ng-model="items.propertyValue.startTime" style="width:45.5%;"/>' +
                             '<span style="padding: -1px 2.5%">至</span>'+

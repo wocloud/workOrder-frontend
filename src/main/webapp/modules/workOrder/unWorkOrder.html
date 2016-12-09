@@ -16,11 +16,11 @@
             <div style="border: 1px solid #ccc;margin: 17px 0;padding:10px 17px;">
 		        <div class="row no-padder m-n">
 		            <div class="col-sm-6 m-t-xs m-b-xs no-padder " >
-	                    <button class="operate-btn on" ng-disabled="disposeflag" ng-click="disposeItem()">
+	                    <button class="operate-btn on btn-disabled-{{disposeflag}}" ng-disabled="disposeflag" ng-click="disposeItem()">
 	                        <i class="fa fa-plus"></i>
 	                        <span>处理工单</span>
 	                    </button>
-	                    <button class="operate-btn" ng-disabled="singflag" ng-click="signItem()">
+	                    <button class="operate-btn on btn-disabled-{{singflag}}" ng-disabled="singflag" ng-click="signItem()">
 	                        <i class="fa fa-edit"></i>
 	                        <span>签收工单</span>
 	                    </button>

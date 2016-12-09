@@ -148,6 +148,9 @@ function UNworkOrder($scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nServ
                 row.grid.api.selection.selectRow(row.entity);
             }
         },
+        modifierKeysToMultiSelect: true,//默认false,为true时只能 按ctrl或shift键进行多选, multiSelect 必须为true;
+        multiSelect: true,// 是否可以选择多个,默认为true;
+        noUnselect: true,//默认false,选中后是否可以取消选中
         useExternalPagination: true, //是否使用客户端分页,默认false
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
@@ -202,6 +205,7 @@ function UNworkOrder($scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nServ
             delete $scope.search.endTime;
         }
         $scope.search.instanceLinkPropertyList=$scope.properties;
+        $scope.search.performerId=$rootScope.userInfo.userId;
         $scope.search.page=page!=undefined?page:1;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         myWorkOrderRES.list_unwork($scope.search).then(function (result) {
