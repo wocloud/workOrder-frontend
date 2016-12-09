@@ -168,14 +168,25 @@ function LKworkOrder($rootScope,$scope, myWorkOrderRES,$state,i18nService) {
     myWorkOrderRES.list_ProductType().then(function (result) {
         $scope.searchParams.productTypeList= result.data;  //每次返回结果都是最新的
     });
+    $scope.selectInstanceLinkPropertyList=function(instanceLinkPropertyList){
+        angular.forEach(instanceLinkPropertyList,function(data,index){
+            for(var i in data){
+                if(i!=null&&i=="propertyOptions"){
+                    data[i]=JSON.stringify(data[i])
+                }
+            }
+        });
+        return instanceLinkPropertyList;
+    }
     $scope.sreach = function (page,pageSize) {
-        if($scope.search.startTime==""){
+        /*if($scope.search.startTime==""){
             delete $scope.search.startTime;
         }
         if($scope.search.endTime==""){
             delete $scope.search.endTime;
-        }
-        $scope.search.instanceLinkPropertyList=$scope.properties;
+        }*/
+        var instanceLinkPropertyList=$scope.properties
+        $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.page=page!=undefined?page:1;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         myWorkOrderRES.list_work($scope.search).then(function (result) {

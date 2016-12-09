@@ -233,8 +233,19 @@
                 }
             });
         };
+        $scope.selectInstanceLinkPropertyList=function(instanceLinkPropertyList){
+            angular.forEach(instanceLinkPropertyList,function(data,index){
+                for(var i in data){
+                    if(i!=null&&i=="propertyOptions"){
+                        data[i]=JSON.stringify(data[i])
+                    }
+                }
+            });
+            return instanceLinkPropertyList;
+        }
         $scope.queryByCondition = function (page,pageSize) {
-            $scope.search.instanceLinkPropertyList=$scope.properties;
+            var instanceLinkPropertyList=$scope.properties;
+            $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
             $scope.search.page=page!=undefined?page:1;
             $scope.search.size=pageSize!=undefined?pageSize:10;
             $scope.search.ownerId = $rootScope.userInfo.userId;
@@ -401,7 +412,7 @@
                 $scope.currentValue.properties=JSON.stringify($scope.properties);
             }
             $scope.currentValue.ownerId = $rootScope.userInfo.userId;
-            $scope.currentValue.contactId=$rootScope.userInfo.userId;/*owner.userId*/
+            $scope.currentValue.contactId=$rootScope.userInfo.userId;
             $scope.currentValue.typeId = $scope.workorderType;
             $scope.currentValue.priority = $scope.priority;
             $scope.currentValue.productType = $scope.productType;

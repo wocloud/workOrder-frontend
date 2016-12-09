@@ -160,14 +160,25 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
         $scope.myGridOptions.totalItems = totalSize;
         $scope.myGridOptions.data = workOrders;
     };
+    $scope.selectInstanceLinkPropertyList=function(instanceLinkPropertyList){
+        angular.forEach(instanceLinkPropertyList,function(data,index){
+            for(var i in data){
+                if(i!=null&&i=="propertyOptions"){
+                    data[i]=JSON.stringify(data[i])
+                }
+            }
+        });
+        return instanceLinkPropertyList;
+    }
     $scope.sreach = function (page,pageSize) {
-        if($scope.search.startTime==""){
+        /*if($scope.search.startTime==""){
             delete $scope.search.startTime;
         }
         if($scope.search.endTime==""){
             delete $scope.search.endTime;
-        }
-        $scope.search.instanceLinkPropertyList=$scope.properties;
+        }*/
+        var instanceLinkPropertyList=$scope.properties;
+        $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.page=page!=undefined?page:1;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         $scope.search.performerId = $rootScope.userInfo.userId;
