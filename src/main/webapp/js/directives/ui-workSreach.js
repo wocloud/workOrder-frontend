@@ -54,19 +54,19 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                         '</select>' +
                     '</div>' +
                 '</div>' +
-            '<div class="form-group" >'+
-                '<label class="col-md-3 col-sm-2 control-label">' +
-                    '<span>工单状态</span>:' +
-                '</label>' +
-                '<div class="col-md-9 col-sm-9" ">' +
-                    '<select class="form-control"  ng-model="search.workorderStatus" ng-selected="$index==0" >' +
-                        '<option value="">全部</option>' +
-                        '<option value="0">已保存</option>' +
-                        '<option value="1">已提交</option>' +
-                        '<option value="2">处理完成</option>' +
-                    '</select>' +
+                '<div class="form-group" >'+
+                    '<label class="col-md-3 col-sm-2 control-label">' +
+                        '<span>工单状态</span>:' +
+                    '</label>' +
+                    '<div class="col-md-9 col-sm-9" ">' +
+                        '<select class="form-control"  ng-model="search.workorderStatus" ng-selected="$index==0" >' +
+                            '<option value="">全部</option>' +
+                            '<option value="0">已保存</option>' +
+                            '<option value="1">已提交</option>' +
+                            '<option value="2">处理完成</option>' +
+                        '</select>' +
+                    '</div>' +
                 '</div>' +
-            '</div>' +
                 '<div class="form-group" >'+
                     '<label class="col-md-3 col-sm-2 control-label">' +
                         '<span>问题分类</span>:' +
@@ -94,15 +94,14 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                     '<label class="col-md-3 col-sm-2 control-label">' +
                         '<span>主题</span>:' +
                     '</label>' +
-                        '<div class="col-md-9 col-sm-9" >' +
-                            '<input  class="form-control" type="text"  ng-model="search.title"  />' +
-                        '</div>'+
-                    '</div>' +
+                    '<div class="col-md-9 col-sm-9" >' +
+                        '<input  class="form-control" type="text"  ng-model="search.title"  />' +
+                    '</div>'+
                 '</div>' +
 
                 '<div class="form-group" ng-repeat="items in properties" >'+
                     '<label class="col-md-3 col-sm-2 control-label" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">' +
-                        '<input class="form-control" type="checkbox" checked="true" ng-click="prCheck({$event:$event,items:items})"/>' +
+                        '<input  type="checkbox" checked="true" ng-click="prCheck({$event:$event,items:items})"/>' +
                         '<span title="{{items.propertyName}}" ng-bind="items.propertyName"></span>:' +
                     '</label>' +
                     '<div class="col-md-9 col-sm-9" ">' +
@@ -118,11 +117,13 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                         '</div>'+
                     '</div>' +
                 '</div>' +
-        '<div class="form-group common-group" style="position: absolute;bottom:19px;">' +
-        '<label class="lable-name" > <a class="__btn__" ng-click="prClick()">' +
-        ' <i class="glyphicon glyphicon-search"></i> ' +
-        '<span class="btn-name">查找</span> ' +
-        '</a> </label> ' +
+            '<div class="form-group common-group" style="position: absolute;bottom:19px;right: -100px;">' +
+                '<label class="lable-name" > <a class="__btn__" ng-click="prClick()">' +
+                    ' <i class="glyphicon glyphicon-search"></i> ' +
+                    '<span class="btn-name">查找</span> ' +
+                    '</a>' +
+                ' </label> ' +
+            '</div>'+
         '</div>'+
            /* '<button ng-click="prClick()" style="position: absolute;bottom:25px;">查询</button>' +*/
         '<div class="col-sm-6 m-t-xs m-b-xs" style="height: 100%">' +

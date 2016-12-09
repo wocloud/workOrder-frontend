@@ -6,7 +6,7 @@
         编辑工单
     </div>
     <div class="modal-body">
-        <form  class="file-brief file-brief-show form-validation" name="createWorkOrder">
+        <form  class="file-brief file-brief-show form-validation" name="createWorkOrder"  id="form-new-style">
             <!--分类-->
                 <div  class="col-sm-6 m-t-xs m-b-xs ">
                     <div class="form-group">
@@ -109,7 +109,7 @@
             <div ng-repeat="items in properties" ng-show="items.isVisible|dit">
                 <div ng-if="items.propertyType=='select'" class="col-sm-6 m-t-xs m-b-xs" >
                     <div class="form-group">
-                        <label class="control-label" title="{{items.propertyName}}" >{{items.propertyName}}</label>
+                        <label class="control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9" >
                             <select class="form-control"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit" >
                                 <option  value="" ng-if="items.propertyDefaultValue==''" >-请选择-</option>
@@ -126,7 +126,7 @@
                 </div>
                 <div ng-if="items.propertyType=='text'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
+                        <label class="control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9" >
                             <input class="form-control" ng-disabled="items.readOnly|dit" type="text"  name="{{items.propertyKey}}" ng-model="items.propertyValue"  value="{{items.propertyDefaultValue}}" ng-required="items.isRequired|dit"/>
                             <div ng-if="items.isRequired|dit" >
@@ -140,7 +140,7 @@
                 </div>
                 <div ng-if="items.propertyType=='textarea'" class="col-sm-12 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-1 col-sm-2 control-label" title="{{items.propertyName}}" >{{items.propertyName}}</label>
+                        <label class="col-md-offset-1 col-sm-offset-1 col-md-1 col-sm-2 control-label" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" title="{{items.propertyName}}" >{{items.propertyName}}</label>
                         <div class="col-md-11 col-sm-10"  >
                             <textarea class="form-control" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit">{{items.propertyDefaultValue}}</textarea>
                             <div ng-if="items.isRequired|dit" >
@@ -154,7 +154,7 @@
                 </div>
                 <div ng-if="items.propertyType=='datetime'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="control-label" title="{{items.propertyName}}" style="margin-left:3%;text-align:right;line-height: 37px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
+                        <label class="control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9" >
                             <input  class="form-control laydate-icon" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" def-laydate  type="text"  ng-model="items.propertyValue"   ng-required="items.isRequired|dit" />
                             <div ng-if="items.isRequired|dit" >
