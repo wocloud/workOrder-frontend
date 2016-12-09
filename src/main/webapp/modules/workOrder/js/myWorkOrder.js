@@ -324,7 +324,9 @@
         myWorkOrderRES.list_typeCode().then(function (result) {
             $scope.typeCodeList = result.data;
             if(!$scope.workorderType) {
-                $scope.workorderType=result.data[0].id;
+                if(!$scope.id){
+                    $scope.workorderType=result.data[0].id;
+                }
             }
         });
         myWorkOrderRES.list_priority().then(function (result) {
@@ -358,6 +360,7 @@
                     if($scope.currentValue.productType) {
                         $scope.productType = $scope.currentValue.productType;
                     }
+                    $scope.properties=$scope.currentValue.instanceLinkPropertyList;
                 } else {
                     toaster.pop('error', "错误", "工单查询失败,请稍后再试!");
                 }
@@ -369,18 +372,22 @@
                 var params={
                     id: newValue
                 };
-                myWorkOrderRES.list_create_attr(params).then(function(result){
-                    for(var i=0;i<result.data.length;i++){
-                        if (result.data[i].propertyType == "select") {
-                            result.data[i].propertyOptions = jQuery.parseJSON(result.data[i].propertyOptions);
+                if($scope.workorderType==$scope.currentValue.workorderTypeId){
+                    $scope.properties=$scope.currentValue.instanceLinkPropertyList;
+                }else {
+                    myWorkOrderRES.list_create_attr(params).then(function (result) {
+                        for (var i = 0; i < result.data.length; i++) {
+                            if (result.data[i].propertyType == "select") {
+                                result.data[i].propertyOptions = jQuery.parseJSON(result.data[i].propertyOptions);
+                            }
+                            if (result.data[i].propertyDefaultValue == null) {
+                                result.data[i].propertyDefaultValue = '';
+                            }
+                            result.data[i].propertyValue = result.data[i].propertyDefaultValue;
                         }
-                        if(result.data[i].propertyDefaultValue==null){
-                            result.data[i].propertyDefaultValue='';
-                        }
-                        result.data[i].propertyValue=result.data[i].propertyDefaultValue;
-                    }
-                    $scope.properties=result.data;
-                });
+                        $scope.properties = result.data;
+                    });
+                }
             }
         });
 
