@@ -2,112 +2,56 @@
 	<div class="panel panel-default" ng-controller="WorkOrderAttrsViewCtrl">
 	    <!-- tip pop -->
 	    <toaster-container></toaster-container>
+		<div class="content-query clear workorder">
+			<div class="form-group col-sm-3 col-md-3">
+				<label class="col-md-3 col-sm-3 control-label">编码</label>
+				<div class="col-md-8 col-sm-8 no-padder-sm">
+					<input type="text" name="propertyKey" class="form-control" ng-model="query.propertyKey" ng-maxlength="256" ng-focus>
+				</div>
+			</div>
+			<div class="form-group col-sm-3 col-md-3">
+				<label class="col-md-3 col-sm-3 control-label">名称</label>
+				<div class="col-md-8 col-sm-8 no-padder-sm">
+					<input type="text" name="propertyName" class="form-control" ng-model="query.propertyName" ng-maxlength="256" ng-focus>
+				</div>
+			</div>
+			<div class="form-group col-sm-3 col-md-3">
+				<button type="button" class="operate-btn on" ng-click="loadData()"><i class="fa fa-search"></i><span>查询</span></button>
+				<button type="button" class="operate-btn on" ng-click="reset()"><i class="fa fa-back"></i><span>重置</span></button>
+			</div>
+		</div>
 	    <!--- attributes -->
-	    <div style="border: 1px solid #ccc;margin: 17px 0;padding:10px 17px;">
-		        <div class="row no-padder m-n">
-		            <div class="col-sm-6 m-t-xs m-b-xs no-padder " >
-	                    <button class="operate-btn on" ng-click="createItem()">
-	                        <i class="fa fa-plus"></i>
-	                        <span>新建属性</span>
-	                    </button>
-	                    <button class="operate-btn on btn-disabled-{{selectedRows.length!=1}}" ng-click="updateItem()" ng-disabled="selectedRows.length!=1">
-	                        <i class="fa fa-plus"></i>
-	                        <span>编辑属性</span>
-	                    </button>
-	                    <button class="operate-btn on btn-disabled-{{selectedRows.length!=1}}" ng-click="deleteItem()" ng-disabled="selectedRows.length!=1">
-	                        <i class="fa fa-remove"></i>
-	                        <span>删除属性</span>
-	                    </button>
-		            </div>
-		        </div>
-		        <div ui-grid="attrGridOptions"
-	             ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
-	        	</div>
-	      </div>
+	    <div class="content-list">
+			<div class="row">
+				<button class="operate-btn on" ng-click="createItem()">
+					<i class="fa fa-plus"></i>
+					<span>新建</span>
+				</button>
+				<button class="operate-btn on btn-disabled-{{selectedRows.length!=1}}" ng-click="updateItem()" ng-disabled="selectedRows.length!=1">
+					<i class="fa fa-edit"></i>
+					<span>编辑</span>
+				</button>
+				<button class="operate-btn on btn-disabled-{{selectedRows.length!=1}}" ng-click="deleteItem()" ng-disabled="selectedRows.length!=1">
+					<i class="fa fa-remove"></i>
+					<span>删除</span>
+				</button>
+			</div>
+			<div ui-grid="attrGridOptions" ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
+			</div>
+		</div>
 	</div>
 </div>
 
-<script type="text/ng-template" id="createOrUpdateTemplate">
-	<div class="modal-header">
-		<button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title" ng-show="createOrUpdate=='C'">新建自定义属性</h4>
-		<h4 class="modal-title" ng-show="createOrUpdate=='U'">编辑自定义属性</h4>
+<script type="text/ng-template" id="deleteTemplate.html">
+	<div class="wocloud-dialog-header">
+		<button type="button" class="close" ng-click="close()"><span aria-hidden="true">×</span></button>
+		<span>删除自定义属性</span>
 	</div>
-	<div class="modal-body">
-		<form class="form-validation form-horizontal workorder" name="attrForm" novalidate ng-submit="saveItem(attrForm.$valid)">
-			<div class="col-md-12 col-sm-12 m-t-xs m-b-xs">
-				<div class="form-group">
-					<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 control-label">编码</label>
-					<div class="col-md-6 col-sm-6 no-padder-sm">
-						<input type="text" name="propertyKey" class="form-control" ng-model="attr.propertyKey" required ng-maxlength="256" ng-focus>
-					</div>
-					<span class="tip">*</span>
-				</div>
-				<div class="form-group">
-					<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 control-label">格式</label>
-					<div class="col-md-6 col-sm-6 no-padder-sm">
-						<select name="propertyType" class="form-control" ng-model="attr.propertyType" required ng-focus
-								ng-options="p|propertyTypeFilter for p in PropertyType track by p">
-						</select>
-					</div>
-					<span class="tip">*</span>
-				</div>
-				<div class="form-group">
-					<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 control-label">名称</label>
-					<div class="col-md-6 col-sm-6 no-padder-sm">
-						<input type="text" name="propertyName" class="form-control" ng-model="attr.propertyName" required ng-maxlength="256" ng-focus>
-					</div>
-					<span class="tip">*</span>
-				</div>
-				<div class="form-group">
-					<div ng-show="f=='select'">
-						<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 control-label">文本格式</label>
-						<div class="col-md-6 col-sm-6 no-padder-sm" >
-							<div ng-repeat="option in optionProperties track by option.optionValue" style="margin: 0 0 10px 0px;">
-								<input type="text" class="form-control pull-left" ng-model="option.optionValue" value="option.optionValue"
-									   required ng-maxlength="32" ng-focus style="width: 45%;"/>
-								<input type="text" class="form-control pull-left" ng-model="option.optionName" value="option.optionName"
-									   required ng-maxlength="32" ng-focus style="width: 45%;"/>
-								<i ng-show="optionProperties.length > 1" class="glyphicon glyphicon-minus" ng-click="removeOptionValue($index)" style="margin: 10px auto;"></i>
-								<i ng-if="$index == (optionProperties.length - 1)" class="glyphicon glyphicon-plus" ng-click="addOptionValue($index)" style="margin: 10px auto;"></i>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 control-label">默认值</label>
-					<div class="col-md-6 col-sm-6 no-padder-sm">
-						<input type="text" name="propertyDefaultValue" class="form-control" ng-model="attr.propertyDefaultValue">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 control-label">描述</label>
-					<div class="col-md-6 col-sm-6 no-padder-sm">
-                    <textarea ui-jq="wysiwyg" class="form-control" ng-model="attr.propertyDescription"
-							  style="overflow:scroll;max-height:200px">
-                    </textarea>
-					</div>
-				</div>
-			</div>
-		</form>
-		<div class="text-danger text-center">注：*为必填字段，输入边框为红色时，请按提示正确输入！</div>
-	</div>
-	<div class="modal-footer">
-		<button type="submit" class="btn" ng-disabled="attrForm.$invalid">保存</button>
-		<button type="button" class="btn btn-dark" ng-click="cancel()">取消</button>
-	</div>
-</script>
-
-<script type="text/ng-template" id="deleteTemplate">
-    <div class="modal-header">
-		<button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">删除自定义属性</h4>
-    </div>
-	<div class="modal-body">
+	<div class="wocloud-dialog-body">
 		<p>你确定要删除 {{items[0].propertyName}} 吗?</p>
 	</div>
-	<div class="modal-footer">
-		<button type="submit" class="btn" ng-click="removeItem()">确定</button>
-		<button type="button" class="btn btn-dark" ng-click="cancel()">取消</button>
+	<div class="wocloud-dialog-footer">
+		<button type="button" class="btn btn-primary" ng-click="removeItem()">确定</button>
+		<button type="button" class="btn" ng-click="close()">取消</button>
 	</div>
 </script>

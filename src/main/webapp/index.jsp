@@ -17,11 +17,11 @@
   <link rel="stylesheet" href="<%=serviceUrl%>/css/app.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/vendor/jquery/datatables/dataTables.bootstrap.css">
   <link rel="stylesheet" href="<%=serviceUrl%>/css/alert.css">
-  <link rel="stylesheet" href="css/wocloud.css" type="text/css" />
   <link rel="stylesheet" href="css/ng-dialog/ngDialog.min.css">
   <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-default.css">
   <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-plain.css">
   <link rel="stylesheet" href="vendor/modules/angularjs-toaster/toaster.css"/>
+  <link rel="stylesheet" href="css/wocloud.css" type="text/css" />
 
 </head>
 <body ng-controller="AppCtrl">
