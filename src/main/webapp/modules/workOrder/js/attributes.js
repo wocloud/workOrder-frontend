@@ -123,6 +123,7 @@ $(function(){
 
         //create new attr
         $scope.createItem = function () {
+            $scope.selectedRows = [];
             ngDialog.open({
                 template: 'modules/workOrder/attr.create.html',
                 className:'ngdialog-theme-default wocloud-ngdialog-blue',
@@ -174,7 +175,7 @@ $(function(){
         }
 
         $scope.createOrUpdate = 'C';
-        if(key!=undefined && key!=null && key!=''){
+        if(key!=undefined && key!=null && key!=""){
             $scope.createOrUpdate = 'U';
             workOrderAttrRES.list({"propertyKey":key}).then(function(result){
                 $scope.attr = result.content[0];
