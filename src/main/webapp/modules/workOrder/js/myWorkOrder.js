@@ -283,7 +283,6 @@
                 if (a[i].propertyType == "select") {
                     a[i].propertyOptions = jQuery.parseJSON(a[i].propertyOptions);
                 }
-                a[i].propertyValue = a[i].propertyDefaultValue;
             }
             $scope.properties = [];
             $scope.allproperties = a;
@@ -436,6 +435,7 @@
                     className:'ngdialog-theme-default ngdialog-theme-dadao',
                     controller:function($scope){
                         $scope.yn=true;
+                        $state.go("app.myWorkOrder");
                         if(result.code==0){
                             $scope.titel="成功";
                             $scope.content="保存成功,是否提交？";
@@ -449,7 +449,6 @@
                         };
                         $scope.close=function(){
                             $scope.closeThisDialog();
-                            $state.go("app.myWorkOrder");
                         }
                         $scope.ok = function(){
                             $scope.closeThisDialog();
@@ -469,11 +468,9 @@
 
                                         $scope.ok = function(){
                                             $scope.closeThisDialog(); //关闭弹窗
-                                            $state.go("app.myWorkOrder");
                                         }
                                         $scope.close=function(){
                                             $scope.closeThisDialog();
-                                            $state.go("app.myWorkOrder");
                                         }
                                     }
                                 });

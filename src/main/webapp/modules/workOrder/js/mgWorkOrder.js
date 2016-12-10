@@ -79,6 +79,7 @@
                     className:'ngdialog-theme-default ngdialog-theme-dadao',
                     scope:$scope,
                     controller:function($scope){
+                        $state.go("app.unworkOrder");
                         if(result.code==0){
                             $scope.titel="成功";
                             $scope.content="处理成功";
@@ -88,7 +89,6 @@
                         }
                         $scope.ok = function(){
                             $scope.closeThisDialog(); //关闭弹窗
-                            $state.go("app.unworkOrder");
                         };
                         $scope.close=function(){
                             $scope.closeThisDialog();
