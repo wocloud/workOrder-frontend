@@ -53,6 +53,7 @@
         var flag = $stateParams.flag;
         if(flag=="my") {
             params.ownerId = $rootScope.userInfo.userId;
+            params.loginUserId =$rootScope.userInfo.userId;
             myWorkOrderRES.listMyWorkOrderById(params).then(function (result) {
                 $scope.workOrder = result.data[0];
                 processData();
