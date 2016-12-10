@@ -156,14 +156,6 @@ $(function(){
 
         //delete an attribute
         $scope.deleteItem = function() {
-            if($scope.selectedRows.length==0){
-                toaster.pop('info', "提示", "请选择要操作的条目!");
-                return;
-            }
-            if($scope.selectedRows.length>1){
-                toaster.pop('info', "提示", "只能选择一条操作的条目!");
-                return;
-            }
             var modalInstance = $modal.open({
                 backdrop: false,
                 templateUrl: 'deleteTemplate',

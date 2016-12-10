@@ -8,7 +8,7 @@
   <title>沃云</title>
   <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <link rel="stylesheet" href="modules/grid_test/css/ui-grid.min.css"/>
+  <link rel="stylesheet" href="<%=serviceUrl%>/modules/grid_test/css/ui-grid.min.css"/>
   <link rel="stylesheet" href="<%=serviceUrl%>/css/bootstrap.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/css/animate.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/css/font-awesome.min.css" type="text/css" />
