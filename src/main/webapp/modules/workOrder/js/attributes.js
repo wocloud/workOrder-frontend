@@ -157,7 +157,7 @@ $(function(){
     AttrCreateOrUpdateViewCtrl.$inject = ['$scope', 'toaster', 'workOrderAttr.RES'];
     function AttrCreateOrUpdateViewCtrl($scope, toaster, workOrderAttrRES){
         var key = "";
-        if($scope.selectedRows) {
+        if($scope.selectedRows && $scope.selectedRows.length>0) {
             key = $scope.selectedRows[0].propertyKey;
         }
         $scope.PropertyType = workOrderAttrRES.baseEnum().propertyType;
