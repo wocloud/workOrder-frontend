@@ -50,7 +50,7 @@ $(function(){
         this.create = function(params){
             var task = $q.defer();
             var cmd = this.CMD.CreateOrUpdateAttr;
-            //params.loginUserId = $rootScope.userInfo.userId;
+            params.loginUserId = $rootScope.userInfo.userId;
             $resource(cmd).save(params,function(response){
                 task.resolve(response.toJSON());
             }, function(response){
@@ -62,8 +62,11 @@ $(function(){
         this.removeById = function(id){
             var task = $q.defer();
             var cmd = this.CMD.DeleteAttr;
-            //params.loginUserId = $rootScope.userInfo.userId;
-            $resource(cmd).save({id:id},function(response){
+            var params = {
+                "loginUserId" : $rootScope.userInfo.userId,
+                "id" : id
+            };
+            $resource(cmd).save(params,function(response){
                 task.resolve(response.toJSON());
             }, function(response){
                 task.reject("调用失败,属性信息删除失败!");
@@ -106,75 +109,38 @@ $(function(){
      * workOrder attributes controller
      */
     app.controller('WorkOrderAttrsViewCtrl', AttrViewCtrl);
-    AttrViewCtrl.$inject = ['$scope', '$modal', '$location', '$log', '$cacheFactory', 'workOrderAttr.RES', 'toaster','i18nService'];
-    function AttrViewCtrl($scope, $modal, $location, $log, $cacheFactory, workOrderAttrRES, toaster,i18nService) {
+    AttrViewCtrl.$inject = ['$scope', '$modal', '$location', '$log', 'ngDialog', 'workOrderAttr.RES', 'toaster','i18nService'];
+    function AttrViewCtrl($scope, $modal, $location, $log, ngDialog, workOrderAttrRES, toaster,i18nService) {
         i18nService.setCurrentLang("zh-cn");
         var render = renderAttrTable($scope, $log, workOrderAttrRES);
 
         //create new attr
         $scope.createItem = function () {
-            var modalInstance = $modal.open({
-                backdrop: false,
-                templateUrl: 'createOrUpdateTemplate',
-                controller: 'WorkOrderAttrCreateOrUpdateViewCtrl'
-            });
-            modalInstance.result.then(function (result) {
-                if(result.code=="0"){
-                    toaster.pop('info', "提示", "自定义属性新建成功!");
-                } else {
-                    toaster.pop('error', "提示", "自定义属性新建失败: " + result.msg);
-                }
-                $scope.loadData();
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+            ngDialog.open({
+                template: 'modules/workOrder/attr.create.html',
+                className:'ngdialog-theme-default wocloud-ngdialog-blue',
+                controller: 'WorkOrderAttrCreateOrUpdateViewCtrl',
+                scope: $scope
             });
         };
 
         //edit attr
         $scope.updateItem = function() {
-            var modalInstance = $modal.open({
-                backdrop: false,
-                templateUrl: 'createOrUpdateTemplate',
+            ngDialog.open({
+                template: 'modules/workOrder/attr.create.html',
+                className:'ngdialog-theme-default wocloud-ngdialog-blue',
                 controller: 'WorkOrderAttrCreateOrUpdateViewCtrl',
-                resolve: {
-                    params: function () {
-                        return $scope.selectedRows[0];
-                    }
-                }
-            });
-            modalInstance.result.then(function (result) {
-                if(result.code=="0"){
-                    toaster.pop('info', "提示", "自定义属性编辑成功!");
-                } else {
-                    toaster.pop('error', "提示", "自定义属性编辑失败: " + result.msg);
-                }
-                $scope.loadData();
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+                scope: $scope
             });
         };
 
         //delete an attribute
         $scope.deleteItem = function() {
-            var modalInstance = $modal.open({
-                backdrop: false,
-                templateUrl: 'deleteTemplate',
+            ngDialog.open({
+                template: 'deleteTemplate.html',
+                className:'ngdialog-theme-default wocloud-ngdialog-blue',
                 controller: 'WorkOrderAttrDeleteViewCtrl',
-                resolve: {
-                    params: function () {
-                        return $scope.selectedRows;
-                    }
-                }
-            });
-            modalInstance.result.then(function (result) {
-                if(result.code=="0"){
-                    toaster.pop('info', "提示", "自定义属性删除成功!");
-                } else {
-                    toaster.pop('error', "提示", "自定义属性删除失败!");
-                }
-                $scope.loadData();
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+                scope: $scope
             });
         };
 
@@ -188,9 +154,12 @@ $(function(){
      * workOrder attributes create controller
      */
     app.controller('WorkOrderAttrCreateOrUpdateViewCtrl', AttrCreateOrUpdateViewCtrl);
-    AttrCreateOrUpdateViewCtrl.$inject = ['$scope', '$modalInstance', '$stateParams', 'toaster', 'workOrderAttr.RES'];
-    function AttrCreateOrUpdateViewCtrl($scope, $modalInstance, $stateParams, toaster, workOrderAttrRES){
-        var key = $stateParams.propertyKey;
+    AttrCreateOrUpdateViewCtrl.$inject = ['$scope', 'toaster', 'workOrderAttr.RES'];
+    function AttrCreateOrUpdateViewCtrl($scope, toaster, workOrderAttrRES){
+        var key = "";
+        if($scope.selectedRows) {
+            key = $scope.selectedRows[0].propertyKey;
+        }
         $scope.PropertyType = workOrderAttrRES.baseEnum().propertyType;
 
         if ($scope.attr == undefined || $scope.attr == null){
@@ -225,19 +194,30 @@ $(function(){
             $scope.attr.propertyOptions = JSON.stringify($scope.optionProperties);
             if($scope.createOrUpdate=="C"){
                 workOrderAttrRES.create($scope.attr).then(function(result){
-                    $modalInstance.close(result);
+                    if(result.code=="0"){
+                        toaster.pop('info', "提示", "自定义属性新建成功!");
+                    } else {
+                        toaster.pop('error', "提示", "自定义属性新建失败: " + result.msg);
+                    }
+                    $scope.loadData();
+                    $scope.closeThisDialog();
                 });
             } else if($scope.createOrUpdate=="U"){
                 workOrderAttrRES.create($scope.attr).then(function(result){
-                    $modalInstance.close(result);
+                    if(result.code=="0"){
+                        toaster.pop('info', "提示", "自定义属性编辑成功!");
+                    } else {
+                        toaster.pop('error', "提示", "自定义属性编辑失败: " + result.msg);
+                    }
+                    $scope.loadData();
+                    $scope.closeThisDialog();
                 });
             }
         };
 
-        //cancel the modal
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        }
+        $scope.close=function(){
+            $scope.closeThisDialog();
+        };
 
         //watch the propertyType change
         $scope.$watch("attr.propertyType", function(newValue, oldValue){
@@ -259,26 +239,33 @@ $(function(){
      * workOrder attr delete controller
      */
     app.controller('WorkOrderAttrDeleteViewCtrl', AttrDeleteViewCtrl);
-    AttrDeleteViewCtrl.$inject = ['$scope', '$log', '$modalInstance', 'params', 'workOrderAttr.RES', 'toaster'];
-    function AttrDeleteViewCtrl($scope, $log, $modalInstance, params, workOrderAttrRES, toaster) {
+    AttrDeleteViewCtrl.$inject = ['$scope', 'workOrderAttr.RES', 'toaster'];
+    function AttrDeleteViewCtrl($scope, workOrderAttrRES, toaster) {
         var ids = [];
 
-        $scope.items = params;
-        angular.forEach(params, function(data,index,array){
-            ids.push(data.id);
-        });
+        if($scope.selectedRows) {
+            $scope.items = $scope.selectedRows;
+            angular.forEach($scope.selectedRows, function(data,index,array){
+                ids.push(data.id);
+            });
+        }
 
         //remove attr
         $scope.removeItem = function () {
             workOrderAttrRES.removeById(ids[0]).then(function (result) {
-                $modalInstance.close(result);
+                if(result.code=="0"){
+                    toaster.pop('info', "提示", "自定义属性删除成功!");
+                } else {
+                    toaster.pop('error', "提示", "自定义属性删除失败!");
+                }
+                $scope.loadData();
+                $scope.closeThisDialog();
             });
         };
 
-        //cancel the modal
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        }
+        $scope.close=function(){
+            $scope.closeThisDialog();
+        };
     }
 
     /**

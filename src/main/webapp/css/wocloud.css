@@ -591,14 +591,6 @@ form{
 	border: 1px solid #ccc;
 	padding: 10px 0;
 }
-.form-control{
-	/*height:18px;*/
-	display:inline;
-	/*padding:0 4px !important;*/
-	border:1px solid #ccc;
-	color:#585858;
-	/*font-size:12px;*/
-}
 input:focus {
 	border: 1px solid #ccc;
 	outline: none;
@@ -722,13 +714,14 @@ abbr[title]{
 }
 
 /*选择客户*/
-.ngdialog.ngdialog-theme-default .ngdialog-content{
-	background: none;
-	padding: 0!important;
-}
 .model-body-second{
 	padding: 0 20px;
 	margin: 0 0 20px 0;
+}
+.ui-dialog-title{
+	padding: 10px 15px;
+	background:#5491de;
+	border-radius: 0;
 }
 #element{
 	background: #fff;
@@ -765,10 +758,7 @@ label.tip, span.tip{
 	border-color: #c9302c;
 }
 .workorder .form-group{
-	margin: 0!important;
-}
-.workorder .form-group .control-label{
-	padding: 0!important;
+	margin: 5px auto;
 }
 .btn-disabled-true {
 	cursor: not-allowed;
@@ -778,3 +768,36 @@ label.tip, span.tip{
 	opacity: 0.65;
 	color: grey;
 }
+
+/**  dialog  ***/
+.ngdialog-content{
+	font-size: 14px!important;
+}
+.wocloud-dialog-header span{
+	font-size: 16px;
+}
+.wocloud-dialog-footer{
+	text-align: right;
+}
+.wocloud-dialog-footer .btn.btn-primary{
+	background: #4d91dd;
+	border: 1px solid #4d91dd;
+	color: #fff;
+	padding: 3px 10px;
+	font-size: 12px;
+}
+.wocloud-dialog-footer .btn{
+	color: #fff;
+	padding: 3px 10px;
+	font-size: 12px;
+}
+.form-control{
+	height:27px;
+	display:inline;
+	border:1px solid #ccc;
+	color:#585858;
+}
+.control-label{
+	padding: 2px 5px;
+}
+

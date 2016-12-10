@@ -1,0 +1,68 @@
+<div class="wocloud-dialog-header">
+    <button type="button" class="close" ng-click="close()"><span aria-hidden="true">×</span></button>
+    <span ng-show="createOrUpdate=='C'">新建自定义属性</span>
+    <span ng-show="createOrUpdate=='U'">编辑自定义属性</span>
+</div>
+<div class="wocloud-dialog-body">
+    <form class="form-validation form-horizontal workorder" name="attrForm" novalidate>
+        <div class="col-md-12 col-sm-12 m-t-xs m-b-xs">
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 control-label">编码</label>
+                <div class="col-md-8 col-sm-8 no-padder-sm">
+                    <input type="text" name="propertyKey" class="form-control" ng-model="attr.propertyKey" required ng-maxlength="256" ng-focus>
+                </div>
+                <span class="tip">*</span>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 control-label">格式</label>
+                <div class="col-md-8 col-sm-8 no-padder-sm">
+                    <select name="propertyType" class="form-control" ng-model="attr.propertyType" required ng-focus
+                            ng-options="p|propertyTypeFilter for p in PropertyType track by p">
+                    </select>
+                </div>
+                <span class="tip">*</span>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 control-label">名称</label>
+                <div class="col-md-8 col-sm-8 no-padder-sm">
+                    <input type="text" name="propertyName" class="form-control" ng-model="attr.propertyName" required ng-maxlength="256" ng-focus>
+                </div>
+                <span class="tip">*</span>
+            </div>
+            <div class="form-group">
+                <div ng-show="f=='select'">
+                    <label class="col-md-3 col-sm-3 control-label">文本格式</label>
+                    <div class="col-md-8 col-sm-8 no-padder-sm" >
+                        <div ng-repeat="option in optionProperties track by option.optionValue" style="margin: 0 0 10px 0px;">
+                            <input type="text" class="form-control pull-left" ng-model="option.optionValue" value="option.optionValue"
+                                   required ng-maxlength="32" ng-focus style="width: 40%;"/>
+                            <input type="text" class="form-control pull-left" ng-model="option.optionName" value="option.optionName"
+                                   required ng-maxlength="32" ng-focus style="width: 45%;"/>
+                            <i ng-show="optionProperties.length > 1" class="glyphicon glyphicon-minus" ng-click="removeOptionValue($index)" style="margin: 5px auto;"></i>
+                            <i ng-if="$index == (optionProperties.length - 1)" class="glyphicon glyphicon-plus" ng-click="addOptionValue($index)" style="margin: 5px auto;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 control-label">默认值</label>
+                <div class="col-md-8 col-sm-8 no-padder-sm">
+                    <input type="text" name="propertyDefaultValue" class="form-control" ng-model="attr.propertyDefaultValue">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 col-sm-3 control-label">描述</label>
+                <div class="col-md-8 col-sm-8 no-padder-sm">
+                    <textarea ui-jq="wysiwyg" class="form-control" ng-model="attr.propertyDescription"
+                              style="overflow:scroll;max-height:200px">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="text-danger text-center">注：*为必填字段，输入边框为红色时，请按提示正确输入！</div>
+</div>
+<div class="wocloud-dialog-footer">
+    <button ng-click="saveItem(attrForm.$valid)" type="button btn-primary" class="btn" ng-disabled="attrForm.$invalid">确认</button>
+    <button ng-click="close()" type="button" class="btn">取消</button>
+</div>
