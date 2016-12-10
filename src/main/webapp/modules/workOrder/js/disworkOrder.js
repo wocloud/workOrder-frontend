@@ -161,14 +161,19 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
         $scope.myGridOptions.data = workOrders;
     };
     $scope.selectInstanceLinkPropertyList=function(instanceLinkPropertyList){
+        var a=[];
         angular.forEach(instanceLinkPropertyList,function(data,index){
+            var b={};
             for(var i in data){
                 if(i!=null&&i=="propertyOptions"){
-                    data[i]=JSON.stringify(data[i])
+                    b[i]=JSON.stringify(data[i])
+                }else{
+                    b[i]= data[i];
                 }
             }
+            a.push(b);
         });
-        return instanceLinkPropertyList;
+        return a;
     }
     $scope.sreach = function (page,pageSize) {
         /*if($scope.search.startTime==""){

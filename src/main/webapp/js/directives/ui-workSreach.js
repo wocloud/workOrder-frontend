@@ -106,6 +106,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                     '</label>' +
                     '<div class="col-md-9 col-sm-9" ">' +
                         '<select class="form-control" ng-if=items.propertyType=="select"  ng-model="items.propertyValue" ng-selected="$index==0" ">' +
+                            '<option  ng-if=items.propertyValue==null||items.propertyValue=="" value="">请选择</option>' +
                             '<option ng-repeat="item in items.propertyOptions track by $index" value="{{item.optionValue}}">{{item.optionName}}</option>' +
                         '</select>' +
                         '<input class="form-control" type="text" ng-if=items.propertyType=="text" ng-model="items.propertyValue" value="{{items.propertyDefaultValue}}" "/>' +
