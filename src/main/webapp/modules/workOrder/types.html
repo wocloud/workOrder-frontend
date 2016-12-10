@@ -1,21 +1,23 @@
-<div class="wrapper-md bg-light" ng-controller="WorkOrderTypesViewCtrl">
-    <!-- tip pop -->
-    <toaster-container></toaster-container>
-    <div class="clearfix m-b">
-        <button class="operate-btn on" ng-click="createItem()">
-            <i class="fa fa-plus"></i>新建</button>
-        <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="updateItem()" ng-disabled="!selectedItem">
-            <i class="fa fa-plus"></i>编辑</button>
-        <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="deleteItem()" ng-disabled="!selectedItem">
-            <i class="fa fa-remove"></i>删除</button>
-        <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="bindWithProcess()" ng-disabled="!selectedItem">
-            <i class="fa fa-plus"></i>绑定流程</button>
-        <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="unbindWithProcess()" ng-disabled="!selectedItem">
-            <i class="fa fa-plus"></i>解绑流程</button>
-    </div>
-    <div class="w-auto-xs bg-light dk bg-auto b-l">
-        <div ui-grid="myGridOptions"
-             ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
+<div class="pane">
+    <div class="panel panel-default" ng-controller="WorkOrderTypesViewCtrl">
+        <!-- tip pop -->
+        <toaster-container></toaster-container>
+        <div class="content-list">
+            <div class="row">
+                <button class="operate-btn on" ng-click="createItem()">
+                    <i class="fa fa-plus"></i>新建</button>
+                <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="updateItem()" ng-disabled="!selectedItem">
+                    <i class="fa fa-edit"></i>编辑</button>
+                <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="deleteItem()" ng-disabled="!selectedItem">
+                    <i class="fa fa-remove"></i>删除</button>
+                <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="bindWithProcess()" ng-disabled="!selectedItem">
+                    <i class="fa fa-chain"></i>绑定流程</button>
+                <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="unbindWithProcess()" ng-disabled="!selectedItem">
+                    <i class="fa fa-chain-broken"></i>解绑流程</button>
+            </div>
+            <div ui-grid="myGridOptions"
+                 ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
+            </div>
         </div>
     </div>
 </div>

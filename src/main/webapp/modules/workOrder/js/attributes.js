@@ -112,7 +112,14 @@ $(function(){
     AttrViewCtrl.$inject = ['$scope', '$modal', '$location', '$log', 'ngDialog', 'workOrderAttr.RES', 'toaster','i18nService'];
     function AttrViewCtrl($scope, $modal, $location, $log, ngDialog, workOrderAttrRES, toaster,i18nService) {
         i18nService.setCurrentLang("zh-cn");
+
         var render = renderAttrTable($scope, $log, workOrderAttrRES);
+
+        //查询重置
+        $scope.reset = function(){
+            $scope.query = {};
+            $scope.loadData();
+        };
 
         //create new attr
         $scope.createItem = function () {
@@ -386,10 +393,12 @@ $(function(){
             }
         };
         var attrs=[];
+
         var params={
             "page"   : $scope.attrGridOptions.paginationCurrentPage,
             "size"  : $scope.attrGridOptions.paginationPageSize
         };
+
         var getPage = function (curPage, pageSize,totalSize) {
             $scope.attrGridOptions.paginationCurrentPage = curPage;
             $scope.attrGridOptions.paginationPageSize = pageSize;
@@ -398,6 +407,11 @@ $(function(){
         };
         $scope.loadData = function(){
             $scope.selectedRows = [];
+            if($scope.query){
+                params.propertyKey = $scope.query.propertyKey;
+                params.propertyName = $scope.query.propertyName;
+                params.propertyType = $scope.query.propertyType;
+            }
             workOrderAttrRES.list(params).then(function (result) {
                 attrs = result.content;  //每次返回结果都是最新的
                 getPage(1, params.size, result.totalElements);

@@ -791,6 +791,7 @@ label.tip, span.tip{
 	padding: 3px 10px;
 	font-size: 12px;
 }
+/** form **/
 .form-control{
 	height:27px;
 	display:inline;
@@ -799,5 +800,39 @@ label.tip, span.tip{
 }
 .control-label{
 	padding: 2px 5px;
+}
+
+/**  page **/
+.content-query{
+	border: 1px solid #ccc;
+	margin: 10px 0;
+	padding:5px 0;
+}
+.content-query .control-label{
+	font-size: 13px;
+}
+.content-query .form-control{
+	height: 24px;
+}
+.content-query button{
+	background: #4d91dd;
+	border: 1px solid #4d91dd;
+	color: #fff;
+	padding: 2px 10px;
+	font-size: 12px;
+}
+.content-list{
+	border: 1px solid #ccc;
+	margin: 17px 0;
+	padding:10px 17px;
+}
+.content-list .row{
+	padding:10px 17px;
+	font-size: 13px;
+}
+.content-info{
+	border: 1px solid #ccc;
+	margin: 17px 0;
+	padding:10px 17px;
 }
 
