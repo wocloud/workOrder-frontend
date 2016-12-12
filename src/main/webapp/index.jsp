@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-default.css">
   <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-plain.css">
   <link rel="stylesheet" href="vendor/modules/angularjs-toaster/toaster.css"/>
-  <link rel="stylesheet" href="css/wocloud.css" type="text/css" />
 
 </head>
 <body ng-controller="AppCtrl">
@@ -80,6 +79,8 @@
   <script src="js/controllers/logout.js"></script>
   <script src="js/alert.js"></script>
   <script src="js/dateFormat.js"></script>
+
+  <link rel="stylesheet" href="css/wocloud.css" type="text/css" />
 
   <!-- Lazy loading -->
   <script src="vendor/jquery/datatables/jquery.dataTables.min.js"></script>

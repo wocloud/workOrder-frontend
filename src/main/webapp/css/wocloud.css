@@ -142,7 +142,7 @@ a:hover{
 	color:#585858;
 }
 .file-brief .form-group label{
-	padding-top: 8px!important;
+	padding-top: 5px!important;
 }
 .file-brief .form-group .no-null{
 	color:#CE494E;
@@ -155,7 +155,11 @@ a:hover{
 	text-align: right;
 	float: left;
 }
-
+.file-brief .form-group select {
+	border-color: #cfdadd;
+	border-radius: 2px;
+	padding: 2px 5px;
+}
 /* 查询按钮 */
 .search-btn{
 	background-color:#4d91dd;
@@ -487,13 +491,6 @@ form{
 }
 .nav.nav-sub.dk{background: #6b6b6b;}
 /*index.html*/
-@media (min-width: 768px) {
-	.col-sm-5 {
-		width: 47.9%;
-		height: 338px;
-		border: 1px solid #eaeaea;
-	}
-}
 .index_title{
 	width: 100%;
 	height: 35px;
@@ -767,7 +764,7 @@ label.tip, span.tip{
 }
 /** form **/
 .form-control{
-	height:27px;
+	height:28px;
 	display:inline;
 	border:1px solid #ccc;
 	color:#585858;
