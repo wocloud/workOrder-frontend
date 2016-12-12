@@ -481,11 +481,9 @@ form{
 }
 .navi ul.nav li.nav-first_ > a{
 	background: url("../img/navi-border.png") left bottom no-repeat, url("../img/navi-border.png") left top no-repeat;
-	/*margin-top: 20px;*/
 }
 .navi ul.nav li.nav-first_:hover a{
 	background-color: #6b6b6b;
-	/*background:url("../img/navi-border.png") left bottom no-repeat, url("../img/navi-border.png") left top no-repeat;*/
 }
 .nav.nav-sub.dk{background: #6b6b6b;}
 /*index.html*/
@@ -665,25 +663,6 @@ abbr[title]{
 	height: 20px;
 	line-height: 27px;
 }
-#sys-tab li{
-	height: 100%;
-	margin: 0px 5px 2px 0;
-	position: relative;
-	outline: 0;
-	background-color: #fff;
-	border: 1px solid #a3a3a3;
-	float: left;
-}
-#sys-tab li.active a{
-	background:#4c90dc ;
-}
-#sys-tab li .tab-placement{
-	position: absolute;
-	top: -1.0px;
-	right: -1.0px;
-	width: 8px;
-	height: 20px;
-}
 .add_border_bottom span{
 	color: #000000;
 }
@@ -779,15 +758,10 @@ label.tip, span.tip{
 .wocloud-dialog-footer{
 	text-align: right;
 }
-.wocloud-dialog-footer .btn.btn-primary{
-	background: #4d91dd;
-	border: 1px solid #4d91dd;
-	color: #fff;
-	padding: 3px 10px;
-	font-size: 12px;
-}
 .wocloud-dialog-footer .btn{
 	color: #fff;
+	background: #4d91dd;
+	border: 1px solid #4d91dd;
 	padding: 3px 10px;
 	font-size: 12px;
 }
