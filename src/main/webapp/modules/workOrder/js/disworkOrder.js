@@ -185,6 +185,7 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
         var instanceLinkPropertyList=$scope.properties;
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.page=page!=undefined?page:1;
+        $scope.search.loginUserId =$rootScope.userInfo.userId;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         $scope.search.performerId = $rootScope.userInfo.userId;
         myWorkOrderRES.list_work($scope.search).then(function (result) {
