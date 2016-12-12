@@ -43,7 +43,6 @@ angular.module('app')
                     window.clearTimeout(window.timeId1);
                     window.clearTimeout(window.timeId2);
                 }
-                debugger;
                 if(fromState.name=="app.disworkOrder"||fromState.name=="app.unworkOrder"||fromState.name=="app.lkworkOrder"||fromState.name=="app.myWorkOrder"){
                     if(toState.name!="app.workOrderInfo"){
                         storeService.delObject();

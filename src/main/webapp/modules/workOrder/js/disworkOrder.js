@@ -64,8 +64,14 @@ function performerStatus (){
 DisworkOrder.$inject = ['storeService','$scope', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
 function DisworkOrder(storeService,$scope, $rootScope, myWorkOrderRES,$state,i18nService) {
     i18nService.setCurrentLang("zh-cn");
+    $scope.paginationCurrentPage=storeService.getObject('disStore').paginationCurrentPage!=undefined?storeService.getObject('disStore').paginationCurrentPage:1;
     $scope.search=storeService.getObject('disStore').search!=undefined?storeService.getObject('disStore').search:{};
     $scope.properties = storeService.getObject('disStore').properties!=undefined?storeService.getObject('disStore').properties:[];
+    $scope.disStore={
+        search:$scope.search,
+        properties:$scope.properties||[],
+        paginationCurrentPage:$scope.paginationCurrentPage
+    }
     $scope.yel=false;
     var index = 0;//默认选中行，下标置为0
     $scope.myGridOptions = {
@@ -163,6 +169,7 @@ function DisworkOrder(storeService,$scope, $rootScope, myWorkOrderRES,$state,i18
             //分页按钮事件
             gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                 if (getPage) {
+                    $scope.disStore.paginationCurrentPage=newPage;
                     $scope.sreach(newPage,pageSize);
                 }
             });
@@ -201,14 +208,11 @@ function DisworkOrder(storeService,$scope, $rootScope, myWorkOrderRES,$state,i18
         if($scope.search.endTime==""){
             delete $scope.search.endTime;
         }*/
-        var disStore={
-            search:$scope.search,
-            properties:$scope.properties||[]
-        }
-        storeService.setObject('disStore',disStore);
+        storeService.setObject('disStore',$scope.disStore);
         var instanceLinkPropertyList=$scope.properties;
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.page=page!=undefined?page:1;
+        $scope.myGridOptions.paginationCurrentPage=$scope.search.page;
         $scope.search.loginUserId =$rootScope.userInfo.userId;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         $scope.search.performerId = $rootScope.userInfo.userId;
@@ -239,7 +243,7 @@ function DisworkOrder(storeService,$scope, $rootScope, myWorkOrderRES,$state,i18
         $scope.searchParams.productTypeList= result.data;  //每次返回结果都是最新的
     });
     //the list of flows
-    $scope.sreach();
+    $scope.sreach($scope.paginationCurrentPage);
     // callback function
     $scope.callFn = function (item) {
         $scope.rowItem = item;

@@ -74,8 +74,14 @@ function performerStatus (){
 UNworkOrder.$inject = ['storeService','$rootScope','$scope','ngDialog', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
 function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nService) {
     i18nService.setCurrentLang("zh-cn");
+    $scope.paginationCurrentPage=storeService.getObject('unStore').paginationCurrentPage!=undefined?storeService.getObject('unStore').paginationCurrentPage:1;
     $scope.search=storeService.getObject('unStore').search!=undefined?storeService.getObject('unStore').search:{};
     $scope.properties = storeService.getObject('unStore').properties!=undefined?storeService.getObject('unStore').properties:[];
+    $scope.unStore={
+        search:$scope.search,
+        properties:$scope.properties||[],
+        paginationCurrentPage:$scope.paginationCurrentPage
+    }
     $scope.singflag=true;
     $scope.disposeflag=true;
     $scope.yel=false;
@@ -176,6 +182,7 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
             //分页按钮事件
             gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                 if (getPage) {
+                    $scope.unStore.paginationCurrentPage=newPage;
                     $scope.sreach(newPage,pageSize)
                 }
             });
@@ -242,11 +249,12 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
             search:$scope.search,
             properties:$scope.properties||[]
         }
-        storeService.setObject('unStore',unStore);
+        storeService.setObject('unStore',$scope.unStore);
         var instanceLinkPropertyList=$scope.properties
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.performerId=$rootScope.userInfo.userId;
         $scope.search.page=page!=undefined?page:1;
+        $scope.myGridOptions.paginationCurrentPage=$scope.search.page;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         myWorkOrderRES.list_unwork($scope.search).then(function (result) {
             var workOrders = result.data.content;  //每次返回结果都是最新的
@@ -266,7 +274,7 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
     };
 
     //the list of flows
-    $scope.sreach();
+    $scope.sreach($scope.paginationCurrentPage);
     // callback function
     $scope.callFn = function (item) {
         $scope.rowItem = item;

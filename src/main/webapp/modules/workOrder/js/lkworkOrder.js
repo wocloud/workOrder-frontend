@@ -54,8 +54,14 @@ function performerStatus (){
 LKworkOrder.$inject = ['storeService','$rootScope','$scope', 'MyWorkOrder.RES','$state','i18nService'];
 function LKworkOrder(storeService,$rootScope,$scope, myWorkOrderRES,$state,i18nService) {
 	i18nService.setCurrentLang("zh-cn");
+    $scope.paginationCurrentPage=storeService.getObject('lkStore').paginationCurrentPage!=undefined?storeService.getObject('lkStore').paginationCurrentPage:1;
     $scope.search=storeService.getObject('lkStore').search!=undefined?storeService.getObject('lkStore').search:{};
     $scope.properties = storeService.getObject('lkStore').properties!=undefined?storeService.getObject('lkStore').properties:[];
+    $scope.lkStore={
+        search:$scope.search,
+        properties:$scope.properties||[],
+        paginationCurrentPage:$scope.paginationCurrentPage
+    }
     $scope.yel=true;
     var index = 0;//默认选中行，下标置为0
     $scope.myGridOptions = {
@@ -161,6 +167,7 @@ function LKworkOrder(storeService,$rootScope,$scope, myWorkOrderRES,$state,i18nS
             //分页按钮事件
             gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                 if (getPage) {
+                    $scope.lkStore.paginationCurrentPage=newPage;
                     $scope.sreach(newPage,pageSize);
                 }
             });
@@ -213,10 +220,11 @@ function LKworkOrder(storeService,$rootScope,$scope, myWorkOrderRES,$state,i18nS
             search:$scope.search,
             properties:$scope.properties||[]
         }
-        storeService.setObject('lkStore',lkStore);
+        storeService.setObject('lkStore',$scope.lkStore);
         var instanceLinkPropertyList=$scope.properties
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.page=page!=undefined?page:1;
+        $scope.myGridOptions.paginationCurrentPage=$scope.search.page;
         $scope.search.loginUserId =$rootScope.userInfo.userId;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         myWorkOrderRES.list_work($scope.search).then(function (result) {
@@ -237,7 +245,7 @@ function LKworkOrder(storeService,$rootScope,$scope, myWorkOrderRES,$state,i18nS
     };
 
     //the list of flows
-    $scope.sreach();
+    $scope.sreach($scope.paginationCurrentPage);
     // callback function
     $scope.callFn = function (item) {
         $scope.rowItem = item;
