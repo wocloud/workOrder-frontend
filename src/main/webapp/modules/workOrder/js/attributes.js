@@ -109,8 +109,8 @@ $(function(){
      * workOrder attributes controller
      */
     app.controller('WorkOrderAttrsViewCtrl', AttrViewCtrl);
-    AttrViewCtrl.$inject = ['$scope', '$modal', '$location', '$log', 'ngDialog', 'workOrderAttr.RES', 'toaster','i18nService'];
-    function AttrViewCtrl($scope, $modal, $location, $log, ngDialog, workOrderAttrRES, toaster,i18nService) {
+    AttrViewCtrl.$inject = ['$scope', '$modal', 'ngDialog', 'workOrderAttr.RES', 'i18nService'];
+    function AttrViewCtrl($scope, $log, ngDialog, workOrderAttrRES, i18nService) {
         i18nService.setCurrentLang("zh-cn");
 
         var render = renderAttrTable($scope, $log, workOrderAttrRES);
@@ -313,7 +313,7 @@ $(function(){
     /*************************
      * render view
      ************************/
-    function renderAttrTable($scope, $log, workOrderAttrRES){
+    function renderAttrTable($scope, workOrderAttrRES){
         $scope.selectedRows = [];
         $scope.attrGridOptions = {
             columnDefs: [
