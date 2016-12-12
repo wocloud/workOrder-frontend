@@ -12,6 +12,19 @@ function priorityStatus (){
         }
     };
 };
+app.filter('workorderStatus', workorderStatus);
+function workorderStatus (){
+    return function(input){
+        if ( input == 0) {
+            return  "已保存";
+        } else if(input == 1) {
+            return "已提交";
+        }
+        else {
+            return "处理完成";
+        }
+    };
+};
 app.filter('productTypeStatus', productTypeStatus);
 function productTypeStatus (){
     return function(input){
@@ -38,10 +51,11 @@ function performerStatus (){
         }
     };
 };
-LKworkOrder.$inject = ['$rootScope','$scope', 'MyWorkOrder.RES','$state','i18nService'];
-function LKworkOrder($rootScope,$scope, myWorkOrderRES,$state,i18nService) {
+LKworkOrder.$inject = ['storeService','$rootScope','$scope', 'MyWorkOrder.RES','$state','i18nService'];
+function LKworkOrder(storeService,$rootScope,$scope, myWorkOrderRES,$state,i18nService) {
 	i18nService.setCurrentLang("zh-cn");
-	$scope.search={};
+    $scope.search=storeService.getObject('lkStore').search!=undefined?storeService.getObject('lkStore').search:{};
+    $scope.properties = storeService.getObject('lkStore').properties!=undefined?storeService.getObject('lkStore').properties:[];
     $scope.yel=true;
     var index = 0;//默认选中行，下标置为0
     $scope.myGridOptions = {
@@ -83,6 +97,11 @@ function LKworkOrder($rootScope,$scope, myWorkOrderRES,$state,i18nService) {
                 field: "status",
                 displayName: '受理状态',
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.status|performerStatus}}</div>'
+            },
+            {
+                field: "workorderStatus",
+                displayName: '工单状态',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.workorderStatus|workorderStatus}}</div>'
             },
             {
                 field: "contactName",
@@ -190,6 +209,11 @@ function LKworkOrder($rootScope,$scope, myWorkOrderRES,$state,i18nService) {
         if($scope.search.endTime==""){
             delete $scope.search.endTime;
         }*/
+        var lkStore={
+            search:$scope.search,
+            properties:$scope.properties||[]
+        }
+        storeService.setObject('lkStore',lkStore);
         var instanceLinkPropertyList=$scope.properties
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.page=page!=undefined?page:1;
@@ -228,7 +252,6 @@ function LKworkOrder($rootScope,$scope, myWorkOrderRES,$state,i18nService) {
             a[i].propertyValue = a[i].propertyDefaultValue;
         }
         var arr = [];
-        $scope.properties = arr;
         $scope.allproperties = a;
     });
 

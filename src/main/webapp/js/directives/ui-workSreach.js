@@ -1,4 +1,26 @@
 var at = angular.module("ui-sreach", []);
+at.service('storeService',['$window',function($window){
+    return {        //存储单个属性
+        set: function (key, value) {
+            $window.localStorage[key] = value;
+        },        //读取单个属性
+        get: function (key, defaultValue) {
+            return $window.localStorage[key] || defaultValue;
+        },        //存储对象，以JSON格式存储
+        setObject: function (key, value) {
+            $window.localStorage[key] = JSON.stringify(value);
+        },        //读取对象
+        getObject: function (key) {
+            return JSON.parse($window.localStorage[key] || '{}');
+        },
+        delObject:function(){
+            for(var key in $window.localStorage){
+                delete $window.localStorage[key];
+            }
+            return;
+        }
+    }
+}]);
 at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialog,$q,$resource) {
     return {
         restrict: 'AE',
@@ -18,7 +40,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
         },
         template:''+
             '<div class="row _swithch__board_heard_ search-box clear">' +
-        '<form  class="file-brief file-brief-show form-validation" name="businessForm"  id="form-new-style">'+
+        '<form  class="file-brief file-brief-show form-validation" name="workOrderSearchForm"  id="form-new-style">'+
         '<div class="col-sm-6 m-t-xs m-b-xs" >' +
                 '<div class="form-group"  ng-if="flag">'+
                     '<label class="col-md-3 col-sm-2 control-label">' +
@@ -48,9 +70,9 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                         '<span>工单类型</span>:' +
                     '</label>' +
                     '<div class="col-md-9 col-sm-9" ">' +
-                        '<select class="form-control"  ng-model="search.workorderTypeId" ng-selected="$index==0">' +
+                        '<select class="form-control"  ng-model="search.workorderTypeId">' +
                             '<option  value="">全部</option>' +
-                            '<option ng-repeat="item in searchParams.workOrderTypeList track by $index" value="{{item.id}}">{{item.typeName}}</option>' +
+                            '<option ng-repeat="item in searchParams.workOrderTypeList track by $index" value="{{item.id}}" ng-selected="item.id==search.workorderTypeId">{{item.typeName}}</option>' +
                         '</select>' +
                     '</div>' +
                 '</div>' +
@@ -72,9 +94,9 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                         '<span>问题分类</span>:' +
                     '</label>' +
                     '<div class="col-md-9 col-sm-9" >' +
-                        '<select class="form-control"  ng-model="search.productType" ng-selected="$index==0" >' +
+                        '<select class="form-control"  ng-model="search.productType" >' +
                             '<option  value="">全部</option>' +
-                            '<option ng-repeat="item in searchParams.productTypeList track by $index" value="{{item.productType}}">{{item.productName}}</option>' +
+                            '<option ng-repeat="item in searchParams.productTypeList track by $index" value="{{item.productType}}" ng-selected="item.productType==search.productType">{{item.productName}}</option>' +
                         '</select>' +
                     '</div>' +
                 '</div>' +
@@ -83,9 +105,9 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                         '<span>优先级</span>:' +
                     '</label>' +
                     '<div class="col-md-9 col-sm-9" >' +
-                        '<select class="form-control"  ng-model="search.priority" ng-selected="$index==0" >' +
+                        '<select class="form-control"  ng-model="search.priority" >' +
                             '<option  value="">全部</option>' +
-                            '<option ng-repeat="item in searchParams.priorityList track by $index" value="{{item.priorityValue}}">{{item.priorityName}}</option>' +
+                            '<option ng-repeat="item in searchParams.priorityList track by $index" value="{{item.priorityValue}}" ng-selected="item.priorityValue==search.priority">{{item.priorityName}}</option>' +
                         '</select>' +
                     '</div>' +
                 '</div>' +

@@ -9,6 +9,19 @@ function status (){
         }
     };
 };
+app.filter('workorderStatus', workorderStatus);
+function workorderStatus (){
+    return function(input){
+        if ( input == 0) {
+            return  "已保存";
+        } else if(input == 1) {
+            return "已提交";
+        }
+        else {
+            return "处理完成";
+        }
+    };
+};
 app.filter('dit', dit);
 function dit (){
     return function(input){
@@ -58,10 +71,11 @@ function performerStatus (){
         }
     };
 };
-UNworkOrder.$inject = ['$rootScope','$scope','ngDialog', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
-function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nService) {
+UNworkOrder.$inject = ['storeService','$rootScope','$scope','ngDialog', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
+function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nService) {
     i18nService.setCurrentLang("zh-cn");
-    $scope.search={};
+    $scope.search=storeService.getObject('unStore').search!=undefined?storeService.getObject('unStore').search:{};
+    $scope.properties = storeService.getObject('unStore').properties!=undefined?storeService.getObject('unStore').properties:[];
     $scope.singflag=true;
     $scope.disposeflag=true;
     $scope.yel=false;
@@ -105,6 +119,11 @@ function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$sta
                 field: "status",
                 displayName: '受理状态',
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.status|performerStatus}}</div>'
+            },
+            {
+                field: "workorderStatus",
+                displayName: '工单状态',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.workorderStatus|workorderStatus}}</div>'
             },
             {
                 field: "contactName",
@@ -219,6 +238,11 @@ function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$sta
         if($scope.search.endTime==""){
             delete $scope.search.endTime;
         }*/
+        var unStore={
+            search:$scope.search,
+            properties:$scope.properties||[]
+        }
+        storeService.setObject('unStore',unStore);
         var instanceLinkPropertyList=$scope.properties
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.performerId=$rootScope.userInfo.userId;
@@ -257,7 +281,6 @@ function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$sta
             a[i].propertyValue = a[i].propertyDefaultValue;
         }
         var arr = [];
-        $scope.properties = arr;
         $scope.allproperties = a;
     });
 

@@ -9,6 +9,19 @@ function dit (){
         }
     };
 };
+app.filter('workorderStatus', workorderStatus);
+function workorderStatus (){
+    return function(input){
+        if ( input == 0) {
+            return  "已保存";
+        } else if(input == 1) {
+            return "已提交";
+        }
+        else {
+            return "处理完成";
+        }
+    };
+};
 app.filter('priorityStatus', priorityStatus);
 function priorityStatus (){
     return function(input){
@@ -48,10 +61,11 @@ function performerStatus (){
         }
     };
 };
-DisworkOrder.$inject = ['$scope', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
-function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
+DisworkOrder.$inject = ['storeService','$scope', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
+function DisworkOrder(storeService,$scope, $rootScope, myWorkOrderRES,$state,i18nService) {
     i18nService.setCurrentLang("zh-cn");
-    $scope.search={};
+    $scope.search=storeService.getObject('disStore').search!=undefined?storeService.getObject('disStore').search:{};
+    $scope.properties = storeService.getObject('disStore').properties!=undefined?storeService.getObject('disStore').properties:[];
     $scope.yel=false;
     var index = 0;//默认选中行，下标置为0
     $scope.myGridOptions = {
@@ -93,6 +107,11 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
                 field: "status",
                 displayName: '受理状态',
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.status|performerStatus}}</div>'
+            },
+            {
+                field: "workorderStatus",
+                displayName: '工单状态',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.workorderStatus|workorderStatus}}</div>'
             },
             {
                 field: "contactName",
@@ -182,6 +201,11 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
         if($scope.search.endTime==""){
             delete $scope.search.endTime;
         }*/
+        var disStore={
+            search:$scope.search,
+            properties:$scope.properties||[]
+        }
+        storeService.setObject('disStore',disStore);
         var instanceLinkPropertyList=$scope.properties;
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.page=page!=undefined?page:1;
@@ -230,7 +254,6 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
             a[i].propertyValue = a[i].propertyDefaultValue;
         }
         var arr = [];
-        $scope.properties = arr;
         $scope.allproperties = a;
     });
 

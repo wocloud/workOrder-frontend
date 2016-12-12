@@ -86,11 +86,12 @@
      * myWorkOrder list controller defined
      */
     app.controller('MyWorkOrderCtrl', MyWorkOrderViewCtrl);
-    MyWorkOrderViewCtrl.$inject = ['$scope', '$rootScope', 'ngDialog', '$log', 'MyWorkOrder.RES', '$state','i18nService'];
-    function MyWorkOrderViewCtrl($scope, $rootScope, ngDialog, $log, myWorkOrderRES, $state,i18nService) {
+    MyWorkOrderViewCtrl.$inject = ['storeService','$scope', '$rootScope', 'ngDialog', '$log', 'MyWorkOrder.RES', '$state','i18nService'];
+    function MyWorkOrderViewCtrl(storeService,$scope, $rootScope, ngDialog, $log, myWorkOrderRES, $state,i18nService) {
     	i18nService.setCurrentLang("zh-cn");
     	$scope.status;
-        $scope.search={};
+        $scope.search=storeService.getObject('myStore').search!=undefined?storeService.getObject('myStore').search:{};
+        $scope.properties = storeService.getObject('myStore').properties!=undefined?storeService.getObject('myStore').properties:[];
         $scope.yel=true;
         var index = 0;//默认选中行，下标置为0
         $scope.myGridOptions = {
@@ -249,6 +250,11 @@
             return a;
         }
         $scope.queryByCondition = function (page,pageSize) {
+            var myStore={
+                search:$scope.search,
+                properties:$scope.properties||[]
+            }
+            storeService.setObject('myStore',myStore);
             var instanceLinkPropertyList=$scope.properties;
             $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
             $scope.search.page=page!=undefined?page:1;
@@ -286,7 +292,6 @@
                 }
                 a[i].propertyValue = a[i].propertyDefaultValue;
             }
-            $scope.properties = [];
             $scope.allproperties = a;
         });
 
