@@ -151,11 +151,6 @@ $(function(){
                 scope: $scope
             });
         };
-
-        //return to the main page
-        $scope.backToMain = function () {
-            $location.url("/app/workOrderAttrs");
-        }
     }
 
     /**
@@ -199,7 +194,11 @@ $(function(){
         $scope.saveItem = function (isValid) {
             if (!isValid) return;
             $scope.attrForm.$invalid = false;
-            $scope.attr.propertyOptions = JSON.stringify($scope.optionProperties);
+            if($scope.attr.propertyType!='select') {
+                delete $scope.attr.propertyOptions;
+            } else {
+                $scope.attr.propertyOptions = JSON.stringify($scope.optionProperties);
+            }
             if($scope.createOrUpdate=="C"){
                 workOrderAttrRES.create($scope.attr).then(function(result){
                     if(result.code=="0"){
@@ -331,16 +330,6 @@ $(function(){
                     field: "propertyType",
                     displayName: '格式',
                     cellTemplate:'<div class="ui-grid-cell-contents">{{row.entity.propertyType | propertyTypeFilter}}</div>'
-                //},
-                //{
-                //    field: "belonged",
-                //    displayName: '所属流程',
-                //    cellTemplate:'<div class="ui-grid-cell-contents"><a class="text-info" ui-sref="app.workOrderAttrLinked({key:row.entity.propertyKey})">{{row.entity.belonged}}</a></div>'
-                //},
-                //{
-                //    field: "createDate",
-                //    displayName: '创建时间',
-                //    cellTemplate:'<div class="ui-grid-cell-contents">{{row.entity.createDate | date:"yyyy-MM-dd HH:mm:ss"}}</div>'
                 }],
             enableCellEdit: false, // 是否可编辑
             enableSorting: true, //是否排序
@@ -411,7 +400,6 @@ $(function(){
             if($scope.query){
                 params.propertyKey = $scope.query.propertyKey;
                 params.propertyName = $scope.query.propertyName;
-                params.propertyType = $scope.query.propertyType;
             }
             workOrderAttrRES.list(params).then(function (result) {
                 attrs = result.content;  //每次返回结果都是最新的
@@ -518,38 +506,18 @@ $(function(){
 /***********************
  * validate the unique
  ***********************/
-app.directive('ensureUnique', ['workOrderAttr.RES', function(workOrderAttrRES) {
-        return {
-            require: 'ngModel',
-            link: function(scope, element, attrs, c) {
-                scope.$watch(attrs.ngModel, function () {
-                    workOrderAttrRES.isNameUnique(attrs.ensureUnique).then(function(result){
-                        c.$setValidity('ensureUnique', result);
-                    }, function(e){
-                        c.$setValidity('ensureUnique', false);
-                        alert(e);
-                    })
-                })
-            }
-        }
-    }]);
-
-
-//app.directive('ensureUnique', ['$http', function($http) {
+//app.directive('ensureUnique', ['workOrderAttr.RES', function(workOrderAttrRES) {
 //    return {
 //        require: 'ngModel',
-//        link: function(scope, ele, attrs, c) {
-//            scope.$watch(attrs.ngModel, function() {
-//                $http({
-//                    method: 'POST',
-//                    url: '/api/check/' + attrs.ensureUnique,
-//                    data: {'field': attrs.ensureUnique}
-//                }).success(function(data, status, headers, cfg) {
-//                    c.$setValidity('unique', data.isUnique);
-//                }).error(function(data, status, headers, cfg) {
-//                    c.$setValidity('unique', false);
-//                });
-//            });
+//        link: function(scope, element, attrs, c) {
+//            scope.$watch(attrs.ngModel, function () {
+//                workOrderAttrRES.isNameUnique(attrs.ensureUnique).then(function(result){
+//                    c.$setValidity('ensureUnique', result);
+//                }, function(e){
+//                    c.$setValidity('ensureUnique', false);
+//                    alert(e);
+//                })
+//            })
 //        }
 //    }
 //}]);

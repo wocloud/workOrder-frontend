@@ -26,7 +26,7 @@
                 <label class="col-sm-2 col-md-2 col-lg-2 control-label">默认值</label>
                 <p class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{attr.propertyDefaultValue}}</p>
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder" ng-show="attr.propertyType=='select'">
                 <label class="col-sm-2 col-md-2 col-lg-2 control-label">文本格式</label>
                 <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm" >
                     <div ng-repeat="option in optionProperties track by option.optionValue" style="margin: 0 0 10px 0px;">
