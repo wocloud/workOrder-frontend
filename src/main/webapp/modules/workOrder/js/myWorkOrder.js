@@ -301,7 +301,7 @@
         $scope.putItem = function () {
             var para={
                 id:$scope.selectedRows.id,
-                loginUserId :$rootScope.userInfo.userId,
+                loginUserId :$rootScope.userInfo.userId
             };
             myWorkOrderRES.submit(para).then(function (result1) {
                 $log.info(result1);

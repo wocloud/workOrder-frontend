@@ -50,6 +50,9 @@
         var params={
             linkId:$stateParams.id
         };
+        $scope.backToMain=function(){
+            window.history.go(-1);
+        }
         var flag = $stateParams.flag;
         if(flag=="my") {
             params.ownerId = $rootScope.userInfo.userId;
