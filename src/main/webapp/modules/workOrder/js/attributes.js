@@ -109,11 +109,11 @@ $(function(){
      * workOrder attributes controller
      */
     app.controller('WorkOrderAttrsViewCtrl', AttrViewCtrl);
-    AttrViewCtrl.$inject = ['$scope', '$modal', 'ngDialog', 'workOrderAttr.RES', 'i18nService'];
-    function AttrViewCtrl($scope, $log, ngDialog, workOrderAttrRES, i18nService) {
+    AttrViewCtrl.$inject = ['$scope', 'ngDialog', 'workOrderAttr.RES', 'i18nService'];
+    function AttrViewCtrl($scope, ngDialog, workOrderAttrRES, i18nService) {
         i18nService.setCurrentLang("zh-cn");
 
-        var render = renderAttrTable($scope, $log, workOrderAttrRES);
+        var render = renderAttrTable($scope, workOrderAttrRES);
 
         //查询重置
         $scope.reset = function(){
