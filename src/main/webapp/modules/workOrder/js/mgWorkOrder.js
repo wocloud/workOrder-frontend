@@ -49,8 +49,8 @@
         };
     };
     app.controller('MGworkOrder', MGworkOrder);
-    MGworkOrder.$inject = ['$scope','ngDialog', '$location', '$log', '$cacheFactory', 'MyWorkOrder.RES', '$state','$stateParams'];
-    function MGworkOrder($scope,ngDialog, $location, $log, $cacheFactory, myWorkOrderRES, $state,$stateParams) {
+    MGworkOrder.$inject = ['$rootScope','$scope','ngDialog', '$location', '$log', '$cacheFactory', 'MyWorkOrder.RES', '$state','$stateParams'];
+    function MGworkOrder($rootScope,$scope,ngDialog, $location, $log, $cacheFactory, myWorkOrderRES, $state,$stateParams) {
         var params={
             linkId:$stateParams.id
         };
@@ -71,6 +71,7 @@
         $scope.disposeToMain = function () {
             var properties={};
             properties.id=$scope.mgworkorder.linkId;
+            properties.loginUserId =$rootScope.userInfo.userId;
             properties.remark=$scope.mgworkorder.remark;
             properties.instanceLinkPropertyList=JSON.stringify($scope.mgworkorder.instanceLinkPropertyList);
             $log.info($scope.mgworkorder.instanceLinkPropertyList);
@@ -79,7 +80,6 @@
                     className:'ngdialog-theme-default ngdialog-theme-dadao',
                     scope:$scope,
                     controller:function($scope){
-                        $state.go("app.unworkOrder");
                         if(result.code==0){
                             $scope.titel="成功";
                             $scope.content="处理成功";
@@ -89,6 +89,7 @@
                         }
                         $scope.ok = function(){
                             $scope.closeThisDialog(); //关闭弹窗
+                            $state.go("app.unworkOrder");
                         };
                         $scope.close=function(){
                             $scope.closeThisDialog();

@@ -58,8 +58,8 @@ function performerStatus (){
         }
     };
 };
-UNworkOrder.$inject = ['$scope','ngDialog', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
-function UNworkOrder($scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nService) {
+UNworkOrder.$inject = ['$rootScope','$scope','ngDialog', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
+function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nService) {
     i18nService.setCurrentLang("zh-cn");
     $scope.search={};
     $scope.singflag=true;
@@ -267,7 +267,8 @@ function UNworkOrder($scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nServ
     $scope.signItem = function () {
         var params={
             id:$scope.selectedRows.linkId,
-            performerId:$rootScope.userInfo.userId
+            performerId:$rootScope.userInfo.userId,
+            loginUserId :$rootScope.userInfo.userId
         };
         myWorkOrderRES.sign(params).then(function (result) {
             ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html

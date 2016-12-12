@@ -252,6 +252,7 @@
             var instanceLinkPropertyList=$scope.properties;
             $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
             $scope.search.page=page!=undefined?page:1;
+            $scope.search.loginUserId =$rootScope.userInfo.userId;
             $scope.search.size=pageSize!=undefined?pageSize:10;
             $scope.search.ownerId = $rootScope.userInfo.userId;
             myWorkOrderRES.list_work($scope.search).then(function (result) {
@@ -283,6 +284,7 @@
                 if (a[i].propertyType == "select") {
                     a[i].propertyOptions = jQuery.parseJSON(a[i].propertyOptions);
                 }
+                a[i].propertyValue = a[i].propertyDefaultValue;
             }
             $scope.properties = [];
             $scope.allproperties = a;
@@ -298,7 +300,8 @@
 
         $scope.putItem = function () {
             var para={
-                id:$scope.selectedRows.id
+                id:$scope.selectedRows.id,
+                loginUserId :$rootScope.userInfo.userId
             };
             myWorkOrderRES.submit(para).then(function (result1) {
                 $log.info(result1);
@@ -306,6 +309,7 @@
                     className:'ngdialog-theme-default ngdialog-theme-dadao',
                     scope:$scope,
                     controller:function($scope){
+                        $scope.queryByCondition();
                         if(result1.code==0){
                             $scope.titel="成功";
                             $scope.content="提交成功";
@@ -315,7 +319,6 @@
                         }
                         $scope.ok = function(){
                             $scope.closeThisDialog(); //关闭弹窗
-                            $scope.queryByCondition();
                         };
                         $scope.close=function(){
                             $scope.closeThisDialog();
@@ -415,6 +418,7 @@
                 }
                 $scope.currentValue.properties=JSON.stringify($scope.properties);
             }
+            $scope.currentValue.loginUserId =$rootScope.userInfo.userId;
             $scope.currentValue.ownerId = $rootScope.userInfo.userId;
             $scope.currentValue.contactId=$rootScope.userInfo.userId;
             $scope.currentValue.typeId = $scope.workorderType;
@@ -433,9 +437,9 @@
                 $log.info(result);
                 ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html
                     className:'ngdialog-theme-default ngdialog-theme-dadao',
+                    scope:$scope,
                     controller:function($scope){
                         $scope.yn=true;
-                        $state.go("app.myWorkOrder");
                         if(result.code==0){
                             $scope.titel="成功";
                             $scope.content="保存成功,是否提交？";
@@ -449,14 +453,17 @@
                         };
                         $scope.close=function(){
                             $scope.closeThisDialog();
+                            $state.go("app.myWorkOrder");
                         }
                         $scope.ok = function(){
                             $scope.closeThisDialog();
+                            $scope.paramss.loginUserId=$scope.currentValue.loginUserId;
                             myWorkOrderRES.submit($scope.paramss).then(function (result1) {
                                 $log.info(result1);
                                 ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html
                                     className:'ngdialog-theme-default ngdialog-theme-dadao',
                                     controller:function($scope){
+                                        $state.go("app.myWorkOrder");
                                         if(result1.code==0){
                                             $scope.titel="成功";
                                             $scope.content="提交成功";
