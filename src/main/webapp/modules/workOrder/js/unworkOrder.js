@@ -9,6 +9,19 @@ function status (){
         }
     };
 };
+app.filter('workorderStatus', workorderStatus);
+function workorderStatus (){
+    return function(input){
+        if ( input == 0) {
+            return  "已保存";
+        } else if(input == 1) {
+            return "已提交";
+        }
+        else {
+            return "处理完成";
+        }
+    };
+};
 app.filter('dit', dit);
 function dit (){
     return function(input){
@@ -58,10 +71,17 @@ function performerStatus (){
         }
     };
 };
-UNworkOrder.$inject = ['$rootScope','$scope','ngDialog', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
-function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nService) {
+UNworkOrder.$inject = ['storeService','$rootScope','$scope','ngDialog', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
+function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$state,i18nService) {
     i18nService.setCurrentLang("zh-cn");
-    $scope.search={};
+    $scope.paginationCurrentPage=storeService.getObject('unStore').paginationCurrentPage!=undefined?storeService.getObject('unStore').paginationCurrentPage:1;
+    $scope.search=storeService.getObject('unStore').search!=undefined?storeService.getObject('unStore').search:{};
+    $scope.properties = storeService.getObject('unStore').properties!=undefined?storeService.getObject('unStore').properties:[];
+    $scope.unStore={
+        search:$scope.search,
+        properties:$scope.properties||[],
+        paginationCurrentPage:$scope.paginationCurrentPage
+    }
     $scope.singflag=true;
     $scope.disposeflag=true;
     $scope.yel=false;
@@ -105,6 +125,11 @@ function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$sta
                 field: "status",
                 displayName: '受理状态',
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.status|performerStatus}}</div>'
+            },
+            {
+                field: "workorderStatus",
+                displayName: '工单状态',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.workorderStatus|workorderStatus}}</div>'
             },
             {
                 field: "contactName",
@@ -157,6 +182,7 @@ function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$sta
             //分页按钮事件
             gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                 if (getPage) {
+                    $scope.unStore.paginationCurrentPage=newPage;
                     $scope.sreach(newPage,pageSize)
                 }
             });
@@ -219,10 +245,16 @@ function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$sta
         if($scope.search.endTime==""){
             delete $scope.search.endTime;
         }*/
+        var unStore={
+            search:$scope.search,
+            properties:$scope.properties||[]
+        }
+        storeService.setObject('unStore',$scope.unStore);
         var instanceLinkPropertyList=$scope.properties
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.performerId=$rootScope.userInfo.userId;
         $scope.search.page=page!=undefined?page:1;
+        $scope.myGridOptions.paginationCurrentPage=$scope.search.page;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         myWorkOrderRES.list_unwork($scope.search).then(function (result) {
             var workOrders = result.data.content;  //每次返回结果都是最新的
@@ -242,7 +274,7 @@ function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$sta
     };
 
     //the list of flows
-    $scope.sreach();
+    $scope.sreach($scope.paginationCurrentPage);
     // callback function
     $scope.callFn = function (item) {
         $scope.rowItem = item;
@@ -257,7 +289,6 @@ function UNworkOrder($rootScope,$scope,ngDialog, $rootScope, myWorkOrderRES,$sta
             a[i].propertyValue = a[i].propertyDefaultValue;
         }
         var arr = [];
-        $scope.properties = arr;
         $scope.allproperties = a;
     });
 

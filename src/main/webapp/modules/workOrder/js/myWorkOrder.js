@@ -86,11 +86,19 @@
      * myWorkOrder list controller defined
      */
     app.controller('MyWorkOrderCtrl', MyWorkOrderViewCtrl);
-    MyWorkOrderViewCtrl.$inject = ['$scope', '$rootScope', 'ngDialog', '$log', 'MyWorkOrder.RES', '$state','i18nService'];
-    function MyWorkOrderViewCtrl($scope, $rootScope, ngDialog, $log, myWorkOrderRES, $state,i18nService) {
+    MyWorkOrderViewCtrl.$inject = ['storeService','$scope', '$rootScope', 'ngDialog', '$log', 'MyWorkOrder.RES', '$state','i18nService'];
+    function MyWorkOrderViewCtrl(storeService,$scope, $rootScope, ngDialog, $log, myWorkOrderRES, $state,i18nService) {
     	i18nService.setCurrentLang("zh-cn");
+
     	$scope.status;
-        $scope.search={};
+        $scope.paginationCurrentPage=storeService.getObject('myStore').paginationCurrentPage!=undefined?storeService.getObject('myStore').paginationCurrentPage:1;
+        $scope.search=storeService.getObject('myStore').search!=undefined?storeService.getObject('myStore').search:{};
+        $scope.properties = storeService.getObject('myStore').properties!=undefined?storeService.getObject('myStore').properties:[];
+        $scope.myStore={
+            search:$scope.search,
+            properties:$scope.properties||[],
+            paginationCurrentPage:$scope.paginationCurrentPage
+        }
         $scope.yel=true;
         var index = 0;//默认选中行，下标置为0
         $scope.myGridOptions = {
@@ -188,6 +196,7 @@
                 //分页按钮事件
                 gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                     if (getPage) {
+                        $scope.myStore.paginationCurrentPage=newPage;
                         $scope.queryByCondition(newPage,pageSize)
                     }
                 });
@@ -249,9 +258,11 @@
             return a;
         }
         $scope.queryByCondition = function (page,pageSize) {
+            storeService.setObject('myStore',$scope.myStore);
             var instanceLinkPropertyList=$scope.properties;
             $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
             $scope.search.page=page!=undefined?page:1;
+            $scope.myGridOptions.paginationCurrentPage=$scope.search.page;
             $scope.search.loginUserId =$rootScope.userInfo.userId;
             $scope.search.size=pageSize!=undefined?pageSize:10;
             $scope.search.ownerId = $rootScope.userInfo.userId;
@@ -273,7 +284,7 @@
         };
 
         //the list of flows
-        $scope.queryByCondition();
+        $scope.queryByCondition($scope.paginationCurrentPage);
         // callback function
         $scope.callFn = function (item) {
             $scope.rowItem = item;
@@ -286,7 +297,6 @@
                 }
                 a[i].propertyValue = a[i].propertyDefaultValue;
             }
-            $scope.properties = [];
             $scope.allproperties = a;
         });
 

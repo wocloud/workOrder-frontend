@@ -9,6 +9,19 @@ function dit (){
         }
     };
 };
+app.filter('workorderStatus', workorderStatus);
+function workorderStatus (){
+    return function(input){
+        if ( input == 0) {
+            return  "已保存";
+        } else if(input == 1) {
+            return "已提交";
+        }
+        else {
+            return "处理完成";
+        }
+    };
+};
 app.filter('priorityStatus', priorityStatus);
 function priorityStatus (){
     return function(input){
@@ -48,10 +61,17 @@ function performerStatus (){
         }
     };
 };
-DisworkOrder.$inject = ['$scope', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
-function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
+DisworkOrder.$inject = ['storeService','$scope', '$rootScope', 'MyWorkOrder.RES','$state','i18nService'];
+function DisworkOrder(storeService,$scope, $rootScope, myWorkOrderRES,$state,i18nService) {
     i18nService.setCurrentLang("zh-cn");
-    $scope.search={};
+    $scope.paginationCurrentPage=storeService.getObject('disStore').paginationCurrentPage!=undefined?storeService.getObject('disStore').paginationCurrentPage:1;
+    $scope.search=storeService.getObject('disStore').search!=undefined?storeService.getObject('disStore').search:{};
+    $scope.properties = storeService.getObject('disStore').properties!=undefined?storeService.getObject('disStore').properties:[];
+    $scope.disStore={
+        search:$scope.search,
+        properties:$scope.properties||[],
+        paginationCurrentPage:$scope.paginationCurrentPage
+    }
     $scope.yel=false;
     var index = 0;//默认选中行，下标置为0
     $scope.myGridOptions = {
@@ -93,6 +113,11 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
                 field: "status",
                 displayName: '受理状态',
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.status|performerStatus}}</div>'
+            },
+            {
+                field: "workorderStatus",
+                displayName: '工单状态',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.workorderStatus|workorderStatus}}</div>'
             },
             {
                 field: "contactName",
@@ -144,6 +169,7 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
             //分页按钮事件
             gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                 if (getPage) {
+                    $scope.disStore.paginationCurrentPage=newPage;
                     $scope.sreach(newPage,pageSize);
                 }
             });
@@ -182,9 +208,11 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
         if($scope.search.endTime==""){
             delete $scope.search.endTime;
         }*/
+        storeService.setObject('disStore',$scope.disStore);
         var instanceLinkPropertyList=$scope.properties;
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.page=page!=undefined?page:1;
+        $scope.myGridOptions.paginationCurrentPage=$scope.search.page;
         $scope.search.loginUserId =$rootScope.userInfo.userId;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         $scope.search.performerId = $rootScope.userInfo.userId;
@@ -215,7 +243,7 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
         $scope.searchParams.productTypeList= result.data;  //每次返回结果都是最新的
     });
     //the list of flows
-    $scope.sreach();
+    $scope.sreach($scope.paginationCurrentPage);
     // callback function
     $scope.callFn = function (item) {
         $scope.rowItem = item;
@@ -230,7 +258,6 @@ function DisworkOrder($scope, $rootScope, myWorkOrderRES,$state,i18nService) {
             a[i].propertyValue = a[i].propertyDefaultValue;
         }
         var arr = [];
-        $scope.properties = arr;
         $scope.allproperties = a;
     });
 

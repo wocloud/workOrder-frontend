@@ -171,6 +171,7 @@
         <div class="text-danger text-center">注：*为必填字段，输入边框为红色时，请按提示正确输入！</div>
     </div>
     <div class="modal-footer" style="text-align: center;background:#fff;">
-        <button type="button" class="btn btn-default" ng-click="backToMain()">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="backToMain()">取消</button>
+        <button type="button" class="btn btn-primary" ng-disabled="createWorkOrder.$invalid" ng-click="saveItem()">提交</button>
     </div>
 </div>

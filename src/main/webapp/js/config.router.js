@@ -31,17 +31,22 @@ angular.module('app')
         }
     }
 }).run(
-    ['$rootScope', '$state', '$stateParams','User', '$location',
-        function ($rootScope, $state, $stateParams,User, $location) {
+    ['$rootScope', '$state', '$stateParams','User', '$location','storeService',
+        function ($rootScope, $state, $stateParams,User, $location,storeService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             User.getUserInfo().then(function(userInfo){
                 $rootScope.userInfo=userInfo;
             });
             $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-                if (fromState.name == "app.business_resource"||fromState.name == "app.index2") {
+                if (fromState.name == "app.business_resource"||fromState.name == "app.index") {
                     window.clearTimeout(window.timeId1);
                     window.clearTimeout(window.timeId2);
+                }
+                if(fromState.name=="app.disworkOrder"||fromState.name=="app.unworkOrder"||fromState.name=="app.lkworkOrder"||fromState.name=="app.myWorkOrder"){
+                    if(toState.name!="app.workOrderInfo"){
+                        storeService.delObject();
+                    }
                 }
             });
         }
