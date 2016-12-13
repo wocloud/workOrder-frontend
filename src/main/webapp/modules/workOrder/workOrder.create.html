@@ -13,7 +13,7 @@
                         <label class="control-label" >分类</label>
                         <div class="col-md-9 col-sm-9">
                             <select class="form-control" name="typeCode" ng-model="workorderType" required >
-                                <option ng-repeat="item in typeCodeList" value="{{item.id}}">{{item.typeName}}</option>
+                                <option ng-repeat="item in typeCodeList" value="{{item.id}}" ng-selected="item.id==workorderType">{{item.typeName}}</option>
                             </select>
                             <span  class="no-null" >*</span>
                             <div  class="no-null-message " ng-messages="createWorkOrder.typeCode.$error" ng-if="createWorkOrder.typeCode.$touched" >
@@ -41,7 +41,7 @@
                         <label class="control-label">优先级</label>
                         <div class="col-md-9 col-sm-9"  >
                             <select class="form-control"  name="priority" ng-model="priority" required >
-                                <option ng-repeat="item in priorityList" value="{{item.priorityValue}}">{{item.priorityName}}</option>
+                                <option ng-repeat="item in priorityList" value="{{item.priorityValue}}" ng-selected="item.priorityValue==priority">{{item.priorityName}}</option>
                             </select>
                             <span  class="no-null" >*</span>
                             <div class="no-null-message "  ng-messages="createWorkOrder.priority.$error" ng-if="createWorkOrder.priority.$touched" >
@@ -56,7 +56,7 @@
                         <label class="control-label">问题分类</label>
                         <div class="col-md-9 col-sm-9"  >
                             <select class="form-control"  name="productType" ng-model="productType" required >
-                                <option ng-repeat="item in productTypeList" value="{{item.productType}}">{{item.productName}}</option>
+                                <option ng-repeat="item in productTypeList" value="{{item.productType}}" ng-selected="item.productType==productType">{{item.productName}}</option>
                             </select>
                             <span  class="no-null" >*</span>
                             <div class="no-null-message " ng-messages="createWorkOrder.productType.$error" ng-if="createWorkOrder.productType.$touched" >
