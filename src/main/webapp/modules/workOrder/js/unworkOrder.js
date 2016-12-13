@@ -253,6 +253,7 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
         var instanceLinkPropertyList=$scope.properties
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.performerId=$rootScope.userInfo.userId;
+        $scope.search.loginUserId =$rootScope.userInfo.userId;
         $scope.search.page=page!=undefined?page:1;
         $scope.myGridOptions.paginationCurrentPage=$scope.search.page;
         $scope.search.size=pageSize!=undefined?pageSize:10;

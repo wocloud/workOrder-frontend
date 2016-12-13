@@ -48,7 +48,8 @@
 
         //查询工单详情
         var params={
-            linkId:$stateParams.id
+            linkId:$stateParams.id,
+            loginUserId:$rootScope.userInfo.userId
         };
         $scope.backToMain=function(){
             window.history.go(-1);
@@ -56,7 +57,6 @@
         var flag = $stateParams.flag;
         if(flag=="my") {
             params.ownerId = $rootScope.userInfo.userId;
-            params.loginUserId =$rootScope.userInfo.userId;
             myWorkOrderRES.listMyWorkOrderById(params).then(function (result) {
                 $scope.workOrder = result.data[0];
                 processData();
