@@ -53,7 +53,7 @@
         };
         $scope.backToMain=function(){
             window.history.go(-1);
-        }
+        };
         var flag = $stateParams.flag;
         if(flag=="my") {
             params.ownerId = $rootScope.userInfo.userId;
@@ -134,6 +134,14 @@
                 $scope.instanceLinkPropertyList.push(item);
             });
         }
+
+        $scope.attchmentDown = function(){
+            var fileName = $scope.workOrder.attachmentName;
+            if(fileName && fileName!="" && $scope.workOrderInstanceId!=""){
+                var params = "instanceId="+$scope.workOrderInstanceId+"&userId="+$rootScope.userInfo.userId+"&fileName="+fileName;
+                myWorkOrderRES.downloadFile(params);
+            }
+        };
 
         //显示隐藏
         $scope.isShow=true;

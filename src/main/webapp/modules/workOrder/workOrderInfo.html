@@ -88,6 +88,14 @@
                         </div>
                     </div>
                 </div>
+                <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                    <div class="form-group">
+                        <label class="col-sm-4 col-md-4 col-lg-4 control-label">附件</label>
+                        <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">
+                            <a class="text-info" href="" ng-click="attchmentDown()">{{workOrder.attachmentName}}</a>
+                        </div>
+                    </div>
+                </div>
                 <div ng-show="instanceLinkPropertyList.length > 0">
                     <div class="col-sm-6 col-md-6 col-lg-6 no-padder" ng-repeat="item in instanceLinkPropertyList">
                         <div class="form-group">

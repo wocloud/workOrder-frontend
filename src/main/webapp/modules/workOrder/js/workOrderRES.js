@@ -314,4 +314,19 @@ function ServiceMyWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
         });
         return task.promise;
     };
+    //下载附件
+    this.downloadFile = function(params) {
+        var api_downloadFile = '/wocloud-workorder-restapi/instanceLink/downloadAttachment?'+params;
+        var res_downloadFile = $resource(api_downloadFile,{},{post:{
+            method : 'POST',
+            headers : {'Content-Type' : 'application/x-www-form-urlencoded'}
+        }});
+        var task = $q.defer();
+        res_downloadFile.post({}, function(response){
+            task.resolve(response.toJSON());
+        }, function(response){
+            task.reject(response);
+        });
+        return task.promise;
+    };
 }
