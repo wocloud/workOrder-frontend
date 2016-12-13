@@ -65,9 +65,14 @@ angular.module('app')
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
-                                return $ocLazyLoad.load([
-                                    'modules/workOrder/js/workOrderRES.js',
-                                    'modules/workOrder/js/myWorkOrder.js']);
+                                return $ocLazyLoad.load('angularFileUpload').then(
+                                    function(){
+                                        return $ocLazyLoad.load([
+                                            'modules/workOrder/js/workOrderRES.js',
+                                            'modules/workOrder/js/myWorkOrder.js'
+                                        ]);
+                                    }
+                                );
                             }]
                     }
                 })

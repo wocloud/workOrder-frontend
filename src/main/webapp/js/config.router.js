@@ -8,7 +8,7 @@ angular.module('app')
     var userInfo,
         loading,
         deferred = $q.defer();
-        var api_user = window.location.pathname +"getUserInfo";
+        var api_user = window.location.pathname.split(";")[0] +"/getUserInfo";
         var res_user = $resource(api_user, {}, {
             get:{
                 method : 'GET'

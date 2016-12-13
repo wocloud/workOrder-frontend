@@ -343,8 +343,8 @@
      * myWorkOrder list controller defined
      */
     app.controller('WorkOrderCreateOrUpdateCtrl', CreateOrUpdateViewCtrl);
-    CreateOrUpdateViewCtrl.$inject = ['ngDialog','$scope', '$rootScope', '$log', 'MyWorkOrder.RES', '$state', '$stateParams', 'toaster'];
-    function CreateOrUpdateViewCtrl(ngDialog,$scope, $rootScope, $log, myWorkOrderRES, $state, $stateParams, toaster) {
+    CreateOrUpdateViewCtrl.$inject = ['ngDialog','$scope', '$rootScope', '$log', 'MyWorkOrder.RES', '$state', '$stateParams', 'toaster', 'FileUploader'];
+    function CreateOrUpdateViewCtrl(ngDialog,$scope, $rootScope, $log, myWorkOrderRES, $state, $stateParams, toaster, FileUploader) {
         $scope.id = $stateParams.id;
         $scope.linkId = $stateParams.linkId;
         $scope.currentValue = {};
@@ -440,6 +440,25 @@
             return $scope.currentValue;
         }
 
+        var api_uploader = '/wocloud-workorder-restapi/instanceLink/uploadAttachment';
+        var uploader = $scope.uploader = new FileUploader({
+            url: api_uploader,
+            alias: 'files',
+            queueLimit: 1,  //file number limit
+            removeAfterUpload: true, //delete file after uploaded
+            autoUpload: false
+        });
+        //file type
+        $scope.fileTypes = ".csv," +
+            "application/msexcel," +
+            "application/msword," +
+            "application/pdf," +
+            "application/rtf," +
+            "application/x-zip-compressed," +
+            "image/*,text/plain";
+
+        $scope.uploadSucceed = false;
+
         //create new workOrder
         $scope.saveItem = function () {
             var params=data();
@@ -451,8 +470,29 @@
                     controller:function($scope){
                         $scope.yn=true;
                         if(result.code==0){
-                            $scope.titel="成功";
-                            $scope.content="保存成功,是否提交？";
+                            if(!result.data.id) {
+                                $scope.titel="失败";
+                                $scope.content="工单保存成功, 附件上传失败!";
+                                return;
+                            }
+                            //保存表单成功,调附件文件
+                            //upload files
+                            uploader.onBeforeUploadItem = function(item) {
+                                item.formData = [{'instanceId': result.data.id, 'userId': $rootScope.userInfo.userId}];
+                            };
+
+                            uploader.onCompleteItem = function(fileItem, response, status, headers) {
+                                //console.info('onCompleteItem', fileItem, response, status, headers);
+                                if(response.code=='0') {
+                                    $scope.titel="成功";
+                                    $scope.uploadSucceed = true;
+                                    $scope.content="工单和附件均保存成功,是否提交？";
+                                } else {
+                                    $scope.titel="失败";
+                                    $scope.content="工单保存成功, 附件上传失败!";
+                                }
+                            };
+                            uploader.uploadAll();
                         }else{
                             $scope.titel="失败";
                             $scope.content="保存失败:"+result.msg;
@@ -497,6 +537,7 @@
                 });
             });
         };
+
         //return to the main page
         $scope.backToMain = function () {
             history.back();
