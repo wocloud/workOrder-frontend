@@ -45,6 +45,7 @@
         $scope.records = [];
         $scope.instanceLinkPropertyList = [];
         $scope.workOrderInstanceId = "";
+        $scope.downloadParams = "#";
 
         //查询工单详情
         var params={
@@ -112,6 +113,12 @@
             if($scope.workOrder==undefined){
                 return;
             }
+            var fileName = $scope.workOrder.attachmentName;
+            if(fileName && fileName!="" && $scope.workOrder.id!=""){
+                var params = "instanceId="+$scope.workOrder.id+"&userId="+$rootScope.userInfo.userId+"&fileName="+fileName;
+                var api_downloadFile = "/wocloud-workorder-restapi/instanceLink/downloadAttachment?";
+                $scope.downloadUrl = api_downloadFile + params;
+            }
             angular.forEach($scope.workOrder.instanceLinkPropertyList, function(data, index, array) {
                 var item = {
                     'name' : data.propertyName,
@@ -134,14 +141,6 @@
                 $scope.instanceLinkPropertyList.push(item);
             });
         }
-
-        $scope.attchmentDown = function(){
-            var fileName = $scope.workOrder.attachmentName;
-            if(fileName && fileName!="" && $scope.workOrderInstanceId!=""){
-                var params = "instanceId="+$scope.workOrderInstanceId+"&userId="+$rootScope.userInfo.userId+"&fileName="+fileName;
-                myWorkOrderRES.downloadFile(params);
-            }
-        };
 
         //显示隐藏
         $scope.isShow=true;

@@ -92,7 +92,9 @@
                     <div class="form-group">
                         <label class="col-sm-4 col-md-4 col-lg-4 control-label">附件</label>
                         <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">
-                            <a class="text-info" href="" ng-click="attchmentDown()">{{workOrder.attachmentName}}</a>
+                            <form method="post" name="downloadForm" accept-charset="utf-8" action="{{downloadUrl}}">
+                                <button type="submit" class="text-info" style="background-color: inherit;">{{workOrder.attachmentName}}</button>
+                            </form>
                         </div>
                     </div>
                 </div>
