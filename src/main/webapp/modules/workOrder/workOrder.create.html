@@ -1,3 +1,17 @@
+<style>
+    .choose-book{
+        width: 60px;
+        text-align: center;
+        position: relative;
+        cursor: pointer;
+        overflow:hidden;
+        display: inline-block;
+    }
+    .choose-book input{
+        position: absolute;
+        opacity: 0;
+    }
+</style>
 <div class="panel panel-default" >
     <div class="panel-heading" ng-show="id==undefined">
         新建工单
@@ -22,7 +36,7 @@
                     </div>
                 </div>
             </div>
-        <!--主题-->
+            <!--主题-->
             <div  class="col-sm-6 m-t-xs m-b-xs">
                 <div class="form-group">
                     <label class="control-label">主题</label>
@@ -35,7 +49,7 @@
                     </div>
                 </div>
             </div>
-        <!--优先级-->
+            <!--优先级-->
             <div  class="col-sm-6 m-t-xs m-b-xs">
                 <div class="form-group">
                     <label class="control-label">优先级</label>
@@ -50,7 +64,7 @@
                     </div>
                 </div>
             </div>
-        <!--产品分类-->
+            <!--产品分类-->
             <div  class="col-sm-6 m-t-xs m-b-xs">
                 <div class="form-group">
                     <label class="control-label">问题分类</label>
@@ -65,7 +79,7 @@
                     </div>
                 </div>
             </div>
-        <!--联系人-->
+            <!--联系人-->
             <div  class="col-sm-6 m-t-xs m-b-xs">
                 <div class="form-group">
                     <label class="control-label">联系人</label>
@@ -78,7 +92,7 @@
                     </div>
                 </div>
             </div>
-        <!--联系电话-->
+            <!--联系电话-->
             <div  class="col-sm-6 m-t-xs m-b-xs">
                 <div class="form-group">
                     <label class="control-label">联系电话</label>
@@ -92,7 +106,7 @@
                     </div>
                 </div>
             </div>
-        <!--描述-->
+            <!--描述-->
             <div  class="col-sm-12 m-t-xs m-b-xs" >
                 <div class="form-group">
                     <label class="control-label" >描述</label>
@@ -110,11 +124,18 @@
                 <div class="form-group">
                     <label class="control-label">附件上传</label>
                     <div class="col-md-7 col-sm-7">
-                        <input type="file" nv-file-select="" name="files" uploader="uploader" style="width: 100%;"
-                               filters="queueLimit" accept="fileTypes"/>
+                        <!--<input type="file" nv-file-select="" name="files" uploader="uploader" style="width: 100%;"-->
+                        <!--filters="queueLimit" accept="fileTypes"/>-->
+                        <input class="form-control" type="text" readonly="readonly" ng-model="attachmentName" style="width: 80%;"/>
+                        <button class="choose-book operate-btn on">
+                            <input type="file" nv-file-select uploader="uploader" accept="fileTypes" nv-file-max-size="5MB" ng-click="uploader.clearQueue()"/>浏览
+                        </button>
                     </div>
                     <div class="col-md-2 col-sm-2" ng-hide="!uploader.getNotUploadedItems().length">
-                        <span>({{ Number.toFixed(uploader.queue[0].file.size/1024/1024)|number:5 }} MB)</span>
+                        <span>({{ uploader.queue[0].file.size/1024/1024|number:2 }} MB)</span>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        <span class="tip">文件支持.xls,xlsx,doc,docx,zip,png,jpg,text格式，文件大小5M以内</span>
                     </div>
                 </div>
             </div>

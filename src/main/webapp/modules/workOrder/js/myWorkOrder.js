@@ -348,6 +348,7 @@
         $scope.id = $stateParams.id;
         $scope.linkId = $stateParams.linkId;
         $scope.currentValue = {};
+        $scope.attachmentName = "";
 
         myWorkOrderRES.list_typeCode().then(function (result) {
             $scope.typeCodeList = result.data;
@@ -379,6 +380,7 @@
                 var workOrder = result.data;
                 if(workOrder) {
                     $scope.currentValue = workOrder[0];
+                    $scope.attachmentName = $scope.currentValue.attachmentName;
                     if($scope.currentValue.workorderTypeId) {
                         $scope.workorderType = $scope.currentValue.workorderTypeId;
                     }
@@ -444,9 +446,8 @@
         var uploader = $scope.uploader = new FileUploader({
             url: api_uploader,
             alias: 'files',
-            queueLimit: 1,  //file number limit
-            removeAfterUpload: true, //delete file after uploaded
-            autoUpload: false
+            headers: {'Content-Transfer-Encoding': 'utf-8'},
+            removeAfterUpload: true
         });
         //file type
         $scope.fileTypes = ".csv," +
@@ -456,6 +457,18 @@
             "application/rtf," +
             "application/x-zip-compressed," +
             "image/*,text/plain";
+
+        //add failed
+        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
+            console.info('添加文件失败', item, filter, options);
+        };
+
+        //after add
+        uploader.onAfterAddingFile = function(fileItem) {
+            console.log("onAfterAddingFile");
+            $scope.attachmentName = fileItem.file.name;
+            console.log(uploader.queue);
+        };
 
         $scope.uploadSucceed = false;
 
@@ -482,7 +495,6 @@
                             };
 
                             uploader.onCompleteItem = function(fileItem, response, status, headers) {
-                                //console.info('onCompleteItem', fileItem, response, status, headers);
                                 if(response.code=='0') {
                                     $scope.titel="成功";
                                     $scope.uploadSucceed = true;
