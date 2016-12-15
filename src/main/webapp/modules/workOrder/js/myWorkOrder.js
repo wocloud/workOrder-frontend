@@ -465,9 +465,9 @@
 
         //after add
         uploader.onAfterAddingFile = function(fileItem) {
-            console.log("onAfterAddingFile");
+            //console.log("onAfterAddingFile");
             $scope.attachmentName = fileItem.file.name;
-            console.log(uploader.queue);
+            //console.log(uploader.queue);
         };
 
         $scope.uploadSucceed = false;
@@ -493,7 +493,15 @@
                             uploader.onBeforeUploadItem = function(item) {
                                 item.formData = [{'instanceId': result.data.id, 'userId': $rootScope.userInfo.userId}];
                             };
-
+                            uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                                $scope.titel="成功";
+                                $scope.uploadSucceed = true;
+                                $scope.content="工单和附件均保存成功,是否提交？";
+                            };
+                            uploader.onErrorItem = function(fileItem, response, status, headers) {
+                                $scope.titel="失败";
+                                $scope.content="工单保存成功, 附件上传失败!";
+                            };
                             uploader.onCompleteItem = function(fileItem, response, status, headers) {
                                 if(response.code=='0') {
                                     $scope.titel="成功";

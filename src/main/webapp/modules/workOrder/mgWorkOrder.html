@@ -1,145 +1,205 @@
-
-<form  class="file-brief file-brief-show form-validation" name="disposeWorkOrder" id="form-new-style">
+<style>
+    h4{
+        font-size: 16px;
+        font-weight: bolder;
+        line-height: 30px;
+    }
+    .border {
+        border: 1px solid;
+        margin: 2px -15px;
+        box-shadow: 2px 2px #d4d4d4;
+    }
+    ul{
+        padding: 0 15px;
+    }
+    ul li{
+        list-style-type: none;
+    }
+</style>
+<form  class="form-validation" name="disposeWorkOrder">
     <div class="panel panel-default"  style="width:100%">
         <div class="bg-light lter b-b wrapper-md" >
-            <h1 class="m-n font-thin h3"> <span>{{mgworkorder.workorderType}}#{{mgworkorder.id}}</span></h1>
+            <a   style="color:#333333" ng-click="backToMain()">返回</a>
+            <h1 class="m-n font-thin h4"> <span>{{mgworkorder.workorderType}}#{{mgworkorder.id}}</span></h1>
         </div>
         <div class="panel-body">
-            <h4>基本详情</h4>
-            <div class="form-group ">
-                <div class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label">主题</label>
-                        <div class="col-md-9 col-sm-9">{{mgworkorder.title}}
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder border">
+                <h4>基本详情</h4>
+                <div class="form-group ">
+                    <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">主题</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{mgworkorder.title}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label">优先级</label>
-                        <div class="col-md-9 col-sm-9">{{mgworkorder.priority|priorityStatus}}
+                    <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">优先级</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{mgworkorder.priority|priorityStatus}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label">问题分类</label>
-                        <div class="col-md-9 col-sm-9">{{mgworkorder.productType|productTypeStatus}}
+                    <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">问题分类</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{mgworkorder.productType|productTypeStatus}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label">受理状态</label>
-                        <div class="col-md-9 col-sm-9">{{mgworkorder.status|performerStatus}}
+                    <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">受理状态</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{mgworkorder.status|performerStatus}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label">受理人</label>
-                        <div class="col-md-9 col-sm-9">{{mgworkorder.performerName}}
+                    <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">受理人</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{mgworkorder.performerName}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label">创建人</label>
-                        <div class="col-md-9 col-sm-9">{{mgworkorder.ownerName}}
+                    <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">创建人</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{mgworkorder.ownerName}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label">当前环节</label>
-                        <div class="col-md-9 col-sm-9">{{mgworkorder.linkName}}
+                    <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">所属环节</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{mgworkorder.linkName}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label">联系人</label>
-                        <div class="col-md-9 col-sm-9">{{mgworkorder.contactName}}
+                    <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">联系人</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{mgworkorder.contactName}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label">联系电话</label>
-                        <div class="col-md-9 col-sm-9">{{mgworkorder.contactPhone}}
+                    <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">联系电话</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{mgworkorder.contactPhone}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-4 col-lg-4 control-label">附件</label>
+                            <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">
+                                <form method="post" name="downloadForm" accept-charset="utf-8" action="{{downloadUrl}}">
+                                    <button type="submit" class="text-info" style="background-color: inherit;">{{mgworkorder.attachmentName}}</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-md-2 col-lg-2 control-label">描述</label>
+                            <div class="col-sm-10 col-md-10 col-lg-10 no-padder-sm">{{mgworkorder.description}}</div>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg"></div>
+                    <div ng-repeat="items in mgworkorder.instanceLinkPropertyList" ng-show="mgworkorder.instanceLinkPropertyList.length>0">
+                        <div ng-if="items.propertyType=='select'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 col-lg-4 control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
+                                <div class="col-sm-7 col-md-7 col-lg-7 no-padder-sm">
+                                    <select class="form-control" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}"
+                                            ng-model="items.propertyValue" ng-required="items.isRequired|dit">
+                                        <option value="" ng-if="items.propertyValue==null || items.propertyValue==''" >-请选择-</option>
+                                        <option ng-repeat="item in items.propertyOptions" value="{{item.optionValue}}">{{item.optionName}}</option>
+                                    </select>
+                                </div>
+                                <div ng-if="items.isRequired|dit" >
+                                    <span  class="no-null" >*</span>
+                                    <div class="no-null-message " ng-messages="disposeWorkOrder[items.propertyKey].$error" ng-if="disposeWorkOrder[items.propertyKey].$touched" >
+                                        <div ng-message="required" >必填项不能为空</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="items.propertyType=='text'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 col-lg-4 control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
+                                <div class="col-sm-7 col-md-7 col-lg-7 no-padder-sm">
+                                    <input class="form-control" type="text"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}"
+                                           ng-model="items.propertyValue" value="{{items.propertyDefaultValue}}" ng-required="items.isRequired|dit"/>
+                                </div>
+                                <div ng-if="items.isRequired|dit" >
+                                    <span class="no-null" >*</span>
+                                    <div class="no-null-message " ng-messages="disposeWorkOrder[items.propertyKey].$error" ng-if="disposeWorkOrder[items.propertyKey].$touched">
+                                        <div ng-message="required" >必填项不能为空</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="items.propertyType=='textarea'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 col-lg-4 control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
+                                <div class="col-sm-7 col-md-7 col-lg-7 no-padder-sm">
+                                    <textarea class="form-control" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" style="width: 98%; margin-left: 1%;"
+                                      ng-model="items.propertyValue" ng-required="items.isRequired|dit">{{items.propertyDefaultValue}}</textarea>
+                                </div>
+                                <div ng-if="items.isRequired|dit" >
+                                    <span class="no-null" >*</span>
+                                    <div class="no-null-message " ng-messages="disposeWorkOrder[items.propertyKey].$error" ng-if="disposeWorkOrder[items.propertyKey].$touched" >
+                                        <div ng-message="required" >必填项不能为空</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="items.propertyType=='datetime'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 col-lg-4 control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
+                                <div class="col-sm-7 col-md-7 col-lg-7 no-padder-sm">
+                                    <input class="form-control laydate-icon"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" def-laydate  type="text"  ng-model="items.propertyValue"  ng-required="items.isRequired|dit" />
+                                </div>
+                                <div class="no-null-message " ng-if="items.isRequired|dit" >
+                                    <span class="no-null">*</span>
+                                    <div ng-messages="disposeWorkOrder[items.propertyKey].$error" ng-if="disposeWorkOrder[items.propertyKey].$touched" >
+                                        <div ng-message="required" >必填项不能为空</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="line line-dashed b-b line-lg pull-in"></div>
-            <div class="form-group" ng-repeat="items in mgworkorder.instanceLinkPropertyList" ng-show="mgworkorder.instanceLinkPropertyList.length>0">
-                <div ng-if="items.propertyType=='select'" class="col-sm-6 m-t-xs m-b-xs" >
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
-                        <div class="col-md-9 col-sm-9">
-                            <select class="form-control" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}"
-                                    ng-model="items.propertyValue" ng-required="items.isRequired|dit">
-                                <option value="" ng-if="items.propertyValue==null || items.propertyValue==''" >-请选择-</option>
-                                <option ng-repeat="item in items.propertyOptions" value="{{item.optionValue}}">{{item.optionName}}</option>
-                            </select>
-                            <div ng-if="items.isRequired|dit" >
-                                <span  class="no-null" >*</span>
-                                <div class="no-null-message " ng-messages="disposeWorkOrder[items.propertyKey].$error" ng-if="disposeWorkOrder[items.propertyKey].$touched" >
-                                    <div ng-message="required" >必填项不能为空</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder border">
+                <div ng-click="folder1()">
+                    <h4>处理记录
+                        <i class="fa fa-caret-down" ng-show="isShow1"></i>
+                        <i class="fa fa-caret-right" ng-hide="isShow1"></i>
+                    </h4>
                 </div>
-                <div ng-if="items.propertyType=='text'" class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
-                        <div class="col-md-9 col-sm-9">
-                            <input class="form-control" type="text"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}"
-                                   ng-model="items.propertyValue" value="{{items.propertyDefaultValue}}" ng-required="items.isRequired|dit"/>
-                            <div ng-if="items.isRequired|dit" >
-                                <span class="no-null" >*</span>
-                                <div class="no-null-message " ng-messages="disposeWorkOrder[items.propertyKey].$error" ng-if="disposeWorkOrder[items.propertyKey].$touched">
-                                    <div ng-message="required" >必填项不能为空</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <ul ng-hide="isShow1">
+                    <li ng-repeat="item in records">
+                        <p>{{item.performerName}},{{item.completeTime}},{{item.name}},{{item.performResult}},{{item.remark}}<p>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder border">
+                <div ng-click="folder2()">
+                    <h4>流程记录
+                        <i class="fa fa-caret-down" ng-show="isShow2"></i>
+                        <i class="fa fa-caret-right" ng-hide="isShow2"></i>
+                    </h4>
                 </div>
-                <div ng-if="items.propertyType=='textarea'" class="col-sm-12 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
-                        <div class="col-md-10 col-sm-10">
-                            <textarea class="form-control" ng-disabled="items.readOnly|dit"  name="{{items.propertyKey}}"
-                                       ng-model="items.propertyValue" ng-required="items.isRequired|dit">{{items.propertyDefaultValue}}</textarea>
-                            <div ng-if="items.isRequired|dit" >
-                                <span class="no-null" >*</span>
-                                <div class="no-null-message " ng-messages="disposeWorkOrder[items.propertyKey].$error" ng-if="disposeWorkOrder[items.propertyKey].$touched" >
-                                    <div ng-message="required" >必填项不能为空</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div ng-if="items.propertyType=='datetime'" class="col-sm-6 m-t-xs m-b-xs">
-                    <div class="form-group">
-                        <label class="col-md-3 col-sm-2 control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
-                        <div class="col-md-9 col-sm-9">
-                            <input class="form-control laydate-icon"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" def-laydate  type="text"  ng-model="items.propertyValue"  ng-required="items.isRequired|dit" />
-                            <div class="no-null-message " ng-if="items.isRequired|dit" >
-                                <span class="no-null">*</span>
-                                <div ng-messages="disposeWorkOrder[items.propertyKey].$error" ng-if="disposeWorkOrder[items.propertyKey].$touched" >
-                                    <div ng-message="required" >必填项不能为空</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div ng-hide="isShow2">
+                    <img style="max-width: 100%; min-width: 50%;" src="{{imageSrc}}">
                 </div>
             </div>
-        </div>
-        <div class="panel-body">
-            <h4>处理意见</h4>
-            <textarea  class="form-control" style="width:100%;margin-top: -10px;height: 90px" ng-model="mgworkorder.remark"></textarea>
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padder border">
+                <h4>处理意见</h4>
+                <textarea  class="form-control" ng-model="mgworkorder.remark"></textarea>
+            </div>
         </div>
         <div class="panel-body">
             <div class="modal-footer" style="text-align: center;background:#fff;">
@@ -148,5 +208,4 @@
             </div>
         </div>
     </div>
-</div>
 </form>

@@ -1,57 +1,63 @@
-<div class="pane">
-	<div class="panel panel-default" ng-controller="WorkOrderAttrsViewCtrl">
-	    <!-- tip pop -->
-	    <toaster-container></toaster-container>
-		<div class="content-query clear workorder">
-			<div class="form-group col-sm-3 col-md-3">
-				<label class="col-md-3 col-sm-3 control-label">编码</label>
-				<div class="col-md-8 col-sm-8 no-padder-sm">
-					<input type="text" name="propertyKey" class="form-control" ng-model="query.propertyKey" ng-maxlength="256" ng-focus>
+<div ng-controller="WorkOrderViewCtrl" class="content-container">
+	<tabset class="tab-container">
+		<tab ng-repeat="tab in configTabs track by tab.index" heading="{{tab.title}}" active="tab.active" ng-click="tabChange(tab)">
+			<div class="pane">
+				<div class="panel panel-default" ng-controller="WorkOrderAttrsViewCtrl">
+					<!-- tip pop -->
+					<toaster-container></toaster-container>
+					<div class="content-query clear workorder">
+						<div class="form-group col-sm-3 col-md-3">
+							<label class="col-md-3 col-sm-3 control-label">编码</label>
+							<div class="col-md-8 col-sm-8 no-padder-sm">
+								<input type="text" name="propertyKey" class="form-control" ng-model="query.propertyKey" ng-maxlength="256" ng-focus>
+							</div>
+						</div>
+						<div class="form-group col-sm-3 col-md-3">
+							<label class="col-md-3 col-sm-3 control-label">名称</label>
+							<div class="col-md-8 col-sm-8 no-padder-sm">
+								<input type="text" name="propertyName" class="form-control" ng-model="query.propertyName" ng-maxlength="256" ng-focus>
+							</div>
+						</div>
+						<div class="form-group col-sm-3 col-md-3">
+							<button type="button" class="operate-btn on" ng-click="loadData()"><i class="fa fa-search"></i><span>查询</span></button>
+							<button type="button" class="operate-btn on" ng-click="reset()"><i class="fa fa-back"></i><span>重置</span></button>
+						</div>
+					</div>
+					<!--- attributes -->
+					<div class="content-list">
+						<div class="row">
+							<button class="operate-btn on" ng-click="createItem()">
+								<i class="fa fa-plus"></i>
+								<span>新建</span>
+							</button>
+							<button class="operate-btn on btn-disabled-{{selectedRows.length!=1}}" ng-click="updateItem()" ng-disabled="selectedRows.length!=1">
+								<i class="fa fa-edit"></i>
+								<span>编辑</span>
+							</button>
+							<button class="operate-btn on btn-disabled-{{selectedRows.length!=1}}" ng-click="deleteItem()" ng-disabled="selectedRows.length!=1">
+								<i class="fa fa-remove"></i>
+								<span>删除</span>
+							</button>
+						</div>
+						<div ui-grid="attrGridOptions" ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="form-group col-sm-3 col-md-3">
-				<label class="col-md-3 col-sm-3 control-label">名称</label>
-				<div class="col-md-8 col-sm-8 no-padder-sm">
-					<input type="text" name="propertyName" class="form-control" ng-model="query.propertyName" ng-maxlength="256" ng-focus>
-				</div>
-			</div>
-			<div class="form-group col-sm-3 col-md-3">
-				<button type="button" class="operate-btn on" ng-click="loadData()"><i class="fa fa-search"></i><span>查询</span></button>
-				<button type="button" class="operate-btn on" ng-click="reset()"><i class="fa fa-back"></i><span>重置</span></button>
-			</div>
-		</div>
-	    <!--- attributes -->
-	    <div class="content-list">
-			<div class="row">
-				<button class="operate-btn on" ng-click="createItem()">
-					<i class="fa fa-plus"></i>
-					<span>新建</span>
-				</button>
-				<button class="operate-btn on btn-disabled-{{selectedRows.length!=1}}" ng-click="updateItem()" ng-disabled="selectedRows.length!=1">
-					<i class="fa fa-edit"></i>
-					<span>编辑</span>
-				</button>
-				<button class="operate-btn on btn-disabled-{{selectedRows.length!=1}}" ng-click="deleteItem()" ng-disabled="selectedRows.length!=1">
-					<i class="fa fa-remove"></i>
-					<span>删除</span>
-				</button>
-			</div>
-			<div ui-grid="attrGridOptions" ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
-			</div>
-		</div>
-	</div>
-</div>
 
-<script type="text/ng-template" id="deleteTemplate.html">
-	<div class="wocloud-dialog-header">
-		<button type="button" class="close" ng-click="close()"><span aria-hidden="true">×</span></button>
-		<span>删除自定义属性</span>
-	</div>
-	<div class="wocloud-dialog-body">
-		<p>你确定要删除 {{items[0].propertyName}} 吗?</p>
-	</div>
-	<div class="wocloud-dialog-footer">
-		<button type="button" class="btn btn-primary" ng-click="removeItem()">确定</button>
-		<button type="button" class="btn" ng-click="close()">取消</button>
-	</div>
-</script>
+			<script type="text/ng-template" id="deleteTemplate.html">
+				<div class="wocloud-dialog-header">
+					<button type="button" class="close" ng-click="close()"><span aria-hidden="true">×</span></button>
+					<span>删除自定义属性</span>
+				</div>
+				<div class="wocloud-dialog-body">
+					<p>你确定要删除 {{items[0].propertyName}} 吗?</p>
+				</div>
+				<div class="wocloud-dialog-footer">
+					<button type="button" class="btn btn-primary" ng-click="removeItem()">确定</button>
+					<button type="button" class="btn" ng-click="close()">取消</button>
+				</div>
+			</script>
+		</tab>
+	</tabset>
+</div>

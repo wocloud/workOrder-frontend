@@ -6,6 +6,7 @@
         cursor: pointer;
         overflow:hidden;
         display: inline-block;
+        vertical-align: middle;
     }
     .choose-book input{
         position: absolute;
@@ -127,9 +128,9 @@
                         <!--<input type="file" nv-file-select="" name="files" uploader="uploader" style="width: 100%;"-->
                         <!--filters="queueLimit" accept="fileTypes"/>-->
                         <input class="form-control" type="text" readonly="readonly" ng-model="attachmentName" style="width: 80%;"/>
-                        <button class="choose-book operate-btn on">
+                        <div class="choose-book operate-btn on">
                             <input type="file" nv-file-select uploader="uploader" accept="fileTypes" nv-file-max-size="5MB" ng-click="uploader.clearQueue()"/>浏览
-                        </button>
+                        </div>
                     </div>
                     <div class="col-md-2 col-sm-2" ng-hide="!uploader.getNotUploadedItems().length">
                         <span>({{ uploader.queue[0].file.size/1024/1024|number:2 }} MB)</span>

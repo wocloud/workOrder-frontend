@@ -10,7 +10,7 @@ angular.module('app')
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['modules/workOrder/js/attributes.js']);
+                                return $ocLazyLoad.load(['modules/workOrder/js/mainCtrl.js','modules/workOrder/js/attributes.js']);
                             }]
                     }
                 })
@@ -20,7 +20,7 @@ angular.module('app')
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['modules/workOrder/js/types.js']);
+                                return $ocLazyLoad.load(['modules/workOrder/js/mainCtrl.js','modules/workOrder/js/types.js']);
                             }]
                     }
                 })
@@ -34,16 +34,16 @@ angular.module('app')
                             }]
                     }
                 })
-                .state('app.workOrderAttrLinked', {
-                    url: '/workOrderAttrLinked?key',
-                    templateUrl: 'modules/workOrder/attr.linked.html',
-                    resolve: {
-                        deps: ['$ocLazyLoad',
-                            function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['modules/workOrder/js/attributes.js']);
-                            }]
-                    }
-                })
+                //.state('app.workOrderAttrLinked', {
+                //    url: '/workOrderAttrLinked?key',
+                //    templateUrl: 'modules/workOrder/attr.linked.html',
+                //    resolve: {
+                //        deps: ['$ocLazyLoad',
+                //            function( $ocLazyLoad ){
+                //                return $ocLazyLoad.load(['modules/workOrder/js/attributes.js']);
+                //            }]
+                //    }
+                //})
                 .state('app.myWorkOrder', {
                     url: '/myWorkOrder',
                     controller: 'MyWorkOrderCtrl',
@@ -53,6 +53,7 @@ angular.module('app')
                             function( $ocLazyLoad ){
                                 return $ocLazyLoad.load([
                                     'modules/workOrder/js/workOrderRES.js',
+                                    'modules/workOrder/js/mainCtrl.js',
                                     'modules/workOrder/js/myWorkOrder.js']);
                             }]
                     }
@@ -126,6 +127,7 @@ angular.module('app')
                             function( $ocLazyLoad ){
                                 return $ocLazyLoad.load([
                                     'modules/workOrder/js/workOrderRES.js',
+                                    'modules/workOrder/js/mainCtrl.js',
                                     'modules/workOrder/js/unworkOrder.js'
                                 ]);
                             }]
@@ -140,6 +142,7 @@ angular.module('app')
                             function( $ocLazyLoad ){
                                 return $ocLazyLoad.load([
                                     'modules/workOrder/js/workOrderRES.js',
+                                    'modules/workOrder/js/mainCtrl.js',
                                     'modules/workOrder/js/disworkOrder.js']);
                             }]
                     }

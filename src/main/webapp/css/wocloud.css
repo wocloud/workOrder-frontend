@@ -138,24 +138,22 @@ a:hover{
 	height:auto;
 }
 /** form **/
-.file-brief-show{
-	color:#585858;
-}
-.file-brief .form-group label{
+.form-group label{
 	padding-top: 5px!important;
 }
-.file-brief .form-group .no-null{
+.form-group .no-null{
+	color:#CE494E;
+	vertical-align: middle;
+}
+.form-group .no-null-message{
 	color:#CE494E;
 }
-.file-brief .form-group .no-null-message{
-	color:#CE494E;
-}
-.file-brief .form-group label{
+.form-group label{
 	min-width:60px;
 	text-align: right;
 	float: left;
 }
-.file-brief .form-group select {
+.form-group select {
 	border-color: #cfdadd;
 	border-radius: 2px;
 	padding: 2px 5px;
@@ -805,5 +803,19 @@ label.tip, span.tip{
 	border: 1px solid #ccc;
 	margin: 17px 0;
 	padding:10px 17px;
+}
+/** container style**/
+.content-container{
+	padding: 15px 0px;
+}
+.content-container .nav{
+	border-color: #428bca;
+}
+.content-container .nav > li > a:hover, .nav > li > a:focus{
+	background-color:#71cce8;
+	color: #fff;
+}
+.content-container .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover{
+	background-color: #428bca;
 }
 

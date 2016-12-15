@@ -67,6 +67,12 @@
                 }
             }
             $scope.mgworkorder = result.data[0];
+            var fileName = $scope.mgworkorder.attachmentName;
+            if(fileName && fileName!="" && $scope.mgworkorder.id!=""){
+                var params = "instanceId="+$scope.mgworkorder.id+"&userId="+$rootScope.userInfo.userId+"&fileName="+fileName;
+                var api_downloadFile = "/wocloud-workorder-restapi/instanceLink/downloadAttachment?";
+                $scope.downloadUrl = api_downloadFile + params;
+            }
         });
         $scope.disposeToMain = function () {
             var properties={};
