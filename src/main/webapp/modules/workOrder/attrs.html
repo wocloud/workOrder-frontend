@@ -46,14 +46,14 @@
 			</div>
 
 			<script type="text/ng-template" id="deleteTemplate.html">
-				<div class="wocloud-dialog-header">
+				<div class="modal-header">
 					<button type="button" class="close" ng-click="close()"><span aria-hidden="true">×</span></button>
 					<span>删除自定义属性</span>
 				</div>
-				<div class="wocloud-dialog-body">
+				<div class="modal-body">
 					<p>你确定要删除 {{items[0].propertyName}} 吗?</p>
 				</div>
-				<div class="wocloud-dialog-footer">
+				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" ng-click="removeItem()">确定</button>
 					<button type="button" class="btn" ng-click="close()">取消</button>
 				</div>

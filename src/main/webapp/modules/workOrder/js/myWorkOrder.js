@@ -314,17 +314,16 @@
                 loginUserId :$rootScope.userInfo.userId
             };
             myWorkOrderRES.submit(para).then(function (result1) {
-                $log.info(result1);
                 ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html
                     className:'ngdialog-theme-default ngdialog-theme-dadao',
                     scope:$scope,
                     controller:function($scope){
                         $scope.queryByCondition();
                         if(result1.code==0){
-                            $scope.titel="成功";
+                            $scope.titleName="成功";
                             $scope.content="提交成功";
                         }else{
-                            $scope.titel="失败";
+                            $scope.titleName="失败";
                             $scope.content="提交失败"+result1.msg;
                         }
                         $scope.ok = function(){
@@ -410,7 +409,7 @@
                             if (result.data[i].propertyType == "select") {
                                 result.data[i].propertyOptions = jQuery.parseJSON(result.data[i].propertyOptions);
                             }
-                            if (result.data[i].propertyDefaultValue == null) {
+                            if (result.data[i].propertyDefaultValue && result.data[i].propertyDefaultValue == null) {
                                 result.data[i].propertyDefaultValue = '';
                             }
                             result.data[i].propertyValue = result.data[i].propertyDefaultValue;
@@ -449,6 +448,9 @@
             headers: {'Content-Transfer-Encoding': 'utf-8'},
             removeAfterUpload: true
         });
+
+        $scope.uploadError = false;
+
         //file type
         $scope.fileTypes = ".csv," +
             "application/msexcel," +
@@ -466,86 +468,90 @@
         //after add
         uploader.onAfterAddingFile = function(fileItem) {
             //console.log("onAfterAddingFile");
+            if(fileItem.file.size/1024/1024 > 5){
+                //console.log("too big");
+                $scope.uploader.removeFromQueue(fileItem);
+                $scope.uploadError = true;
+                //console.log(uploader.queue);
+                return;
+            }
+            $scope.uploadError = false;
             $scope.attachmentName = fileItem.file.name;
-            //console.log(uploader.queue);
         };
 
-        $scope.uploadSucceed = false;
+        $scope.uploading = false;
 
         //create new workOrder
         $scope.saveItem = function () {
             var params=data();
             myWorkOrderRES.save(params).then(function (result) {
-                $log.info(result);
-                ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html
+                ngDialog.open({
+                    template: 'modules/workOrder/test.html',//模式对话框内容为test.html
                     className:'ngdialog-theme-default ngdialog-theme-dadao',
                     scope:$scope,
                     controller:function($scope){
-                        $scope.yn=true;
+                        $scope.instanceId="";
                         if(result.code==0){
-                            if(!result.data.id) {
-                                $scope.titel="失败";
-                                $scope.content="工单保存成功, 附件上传失败!";
-                                return;
-                            }
+                            $scope.instanceId = result.data.id;
                             //保存表单成功,调附件文件
-                            //upload files
                             uploader.onBeforeUploadItem = function(item) {
-                                item.formData = [{'instanceId': result.data.id, 'userId': $rootScope.userInfo.userId}];
-                            };
-                            uploader.onSuccessItem = function(fileItem, response, status, headers) {
-                                $scope.titel="成功";
-                                $scope.uploadSucceed = true;
-                                $scope.content="工单和附件均保存成功,是否提交？";
-                            };
-                            uploader.onErrorItem = function(fileItem, response, status, headers) {
-                                $scope.titel="失败";
-                                $scope.content="工单保存成功, 附件上传失败!";
+                                console.log("onBeforeUploadItem");
+                                $scope.uploading = true;
+                                item.formData = [{'instanceId': $scope.instanceId, 'userId': $rootScope.userInfo.userId}];
                             };
                             uploader.onCompleteItem = function(fileItem, response, status, headers) {
+                                console.log("onCompleteItem");
+                                $scope.uploading = false;
                                 if(response.code=='0') {
-                                    $scope.titel="成功";
-                                    $scope.uploadSucceed = true;
+                                    $scope.titleName="成功";
                                     $scope.content="工单和附件均保存成功,是否提交？";
                                 } else {
-                                    $scope.titel="失败";
+                                    $scope.titleName="失败";
                                     $scope.content="工单保存成功, 附件上传失败!";
                                 }
                             };
-                            uploader.uploadAll();
-                        }else{
-                            $scope.titel="失败";
-                            $scope.content="保存失败:"+result.msg;
+                            if($scope.uploader.queue.length > 0) {
+                                $scope.titleName="进行中";
+                                $scope.content="工单保存成功, 正在上传附件!";
+                                $scope.uploading = true;
+                                uploader.uploadAll();
+                            } else {
+                                $scope.titleName="成功";
+                                $scope.content="工单保存成功,是否提交？";
+                            }
+                        } else{
+                            $scope.uploading = false;
+                            $scope.titleName="失败";
+                            $scope.content="工单保存失败: "+result.msg;
                         }
                         $scope.paramss={
-                            id:result.data.id,
+                            id:$scope.instanceId,
                             ownerId:result.data.ownerId
                         };
                         $scope.close=function(){
                             $scope.closeThisDialog();
                             $state.go("app.myWorkOrder");
-                        }
+                        };
                         $scope.ok = function(){
                             $scope.closeThisDialog();
                             $scope.paramss.loginUserId=$scope.currentValue.loginUserId;
                             myWorkOrderRES.submit($scope.paramss).then(function (result1) {
-                                $log.info(result1);
                                 ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html
                                     className:'ngdialog-theme-default ngdialog-theme-dadao',
                                     controller:function($scope){
                                         $state.go("app.myWorkOrder");
                                         if(result1.code==0){
-                                            $scope.titel="成功";
+                                            $scope.titleName="成功";
                                             $scope.content="提交成功";
 
                                         }else{
-                                            $scope.titel="失败";
+                                            $scope.titleName="失败";
                                             $scope.content="提交失败:"+result1.msg;
                                         }
 
                                         $scope.ok = function(){
                                             $scope.closeThisDialog(); //关闭弹窗
-                                        }
+                                        };
                                         $scope.close=function(){
                                             $scope.closeThisDialog();
                                         }

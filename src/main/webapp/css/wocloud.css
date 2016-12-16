@@ -263,51 +263,7 @@ form{
 .ui-grid-header-cell-label{
 	font-weight: bold
 }
-/* 模态框 */
-.xcConfirm .popBox .ttBox{
-	background:#2964B4;
-}
-.xcConfirm .popBox{
-	background-color: #2F3243;
-	color:#fff;
-}
-.xcConfirm .popBox .btnArea{
-	border-top:1px solid #2964B4;
-	background-color: #2f3242;
-	color:#fff;
-}
-.xcConfirm .popBox .sgBtn.ok{
-    background-color: #2964B4;
-    	
-}
-.xcConfirm .popBox .txtBox .bigIcon{
-	background-position: 1px 1px !important; 
-	background-image:url("../img/error.png");
-	background-size: 100%;
-}
-.xcConfirm .popBox .ttBox .clsBtn{
-	width: 24px;
-    height: 24px;
-    top: 9px;
-    right: 23px;
-	background:url("../img/cuowu.png") no-repeat;
-}
-.modal-header{
-	background: #22ABD9;
-	border-bottom:none;	
-	
-}
-.modal-footer{
-	border-top:1px solid #22ABD9;
-	background:#fff;
-	height: 50px;
-    line-height:42px;
-    padding: 1px 8px;
-} 
-.modal-dialog{
-	margin: 5% auto;
-}
-.btn-fixed { 
+.btn-fixed {
     bottom: 12px;
 }
 /* 详情选项卡及 颜色变化 */
@@ -664,29 +620,6 @@ abbr[title]{
 .navi ul.nav li a .font-bold{
 	float: none;
 }
-/*modal-content*/
-.modal-content, .modal-content{
-	border-radius: 0;
-}
-.modal-header{
-	padding: 10px 15px;
-	background:#5491de;
-	border-radius: 0;
-}
-.modal-header .close{
-	font-size: 15px;
-}
-.modal-footer{
-	border: 0;
-	padding-right: 50px;;
-}
-.modal-footer .btn{
-	padding: 0px 16px;
-	background:#5490dd;
-	color: #ffffff;
-	font-size: 12px;
-}
-
 /*选择客户*/
 .model-body-second{
 	padding: 0 20px;
@@ -747,13 +680,16 @@ label.tip, span.tip{
 .ngdialog-content{
 	font-size: 14px!important;
 }
-.wocloud-dialog-header span{
+.modal-header{
+	background: inherit;
+}
+.modal-header span{
 	font-size: 16px;
 }
-.wocloud-dialog-footer{
+.modal-footer{
 	text-align: right;
 }
-.wocloud-dialog-footer .btn{
+.modal-footer .btn{
 	color: #fff;
 	background: #4d91dd;
 	border: 1px solid #4d91dd;

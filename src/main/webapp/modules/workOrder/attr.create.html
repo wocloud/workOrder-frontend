@@ -1,9 +1,8 @@
-<div class="wocloud-dialog-header">
-    <button type="button" class="close" ng-click="close()"><span aria-hidden="true">×</span></button>
+<div class="modal-header">
     <span ng-show="createOrUpdate=='C'">新建自定义属性</span>
     <span ng-show="createOrUpdate=='U'">编辑自定义属性</span>
 </div>
-<div class="wocloud-dialog-body">
+<div class="modal-body">
     <form class="form-validation form-horizontal workorder" name="attrForm" novalidate>
         <div class="col-md-12 col-sm-12 m-t-xs m-b-xs">
             <div class="form-group">
@@ -62,7 +61,7 @@
     </form>
     <div class="text-danger text-center">注：*为必填字段，输入边框为红色时，请按提示正确输入！</div>
 </div>
-<div class="wocloud-dialog-footer">
+<div class="modal-footer">
     <button ng-click="saveItem(attrForm.$valid)" type="button" class="btn btn-primary" ng-disabled="attrForm.$invalid">确认</button>
     <button ng-click="close()" type="button" class="btn">取消</button>
 </div>

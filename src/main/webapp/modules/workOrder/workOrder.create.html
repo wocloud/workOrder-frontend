@@ -125,9 +125,7 @@
                 <div class="form-group">
                     <label class="control-label">附件上传</label>
                     <div class="col-md-7 col-sm-7">
-                        <!--<input type="file" nv-file-select="" name="files" uploader="uploader" style="width: 100%;"-->
-                        <!--filters="queueLimit" accept="fileTypes"/>-->
-                        <input class="form-control" type="text" readonly="readonly" ng-model="attachmentName" style="width: 80%;"/>
+                        <input class="form-control" type="text" readonly="readonly" ng-model="attachmentName" style="width: 80%;" ng-class="{'ng-dirty ng-invalid': uploadError, 'ng-valid': uploadError}"/>
                         <div class="choose-book operate-btn on">
                             <input type="file" nv-file-select uploader="uploader" accept="fileTypes" nv-file-max-size="5MB" ng-click="uploader.clearQueue()"/>浏览
                         </div>
@@ -135,7 +133,7 @@
                     <div class="col-md-2 col-sm-2" ng-hide="!uploader.getNotUploadedItems().length">
                         <span>({{ uploader.queue[0].file.size/1024/1024|number:2 }} MB)</span>
                     </div>
-                    <div class="col-md-10 col-sm-10">
+                    <div class="col-md-10 col-sm-10" ng-show="uploadError">
                         <span class="tip">文件支持.xls,xlsx,doc,docx,zip,png,jpg,text格式，文件大小5M以内</span>
                     </div>
                 </div>
@@ -143,11 +141,11 @@
             <div ng-repeat="items in properties" ng-show="items.isVisible|dit">
                 <div ng-if="items.propertyType=='select'" class="col-sm-6 m-t-xs m-b-xs" >
                     <div class="form-group">
-                        <label class="control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
+                        <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9" >
                             <select class="form-control"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit" >
                                 <option  value="" ng-if="items.propertyDefaultValue==''" >-请选择-</option>
-                                <option ng-repeat="item in items.propertyOptions" value="{{item.optionValue}}">{{item.optionName}}</option>
+                                <option ng-repeat="item in items.propertyOptions track by item.optionValue" value="{{item.optionValue}}">{{item.optionName}}</option>
                             </select>
                             <div ng-if="items.isRequired|dit">
                                 <span  class="no-null" >*</span>
@@ -160,7 +158,7 @@
                 </div>
                 <div ng-if="items.propertyType=='text'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
+                        <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9" >
                             <input class="form-control" ng-disabled="items.readOnly|dit" type="text"  name="{{items.propertyKey}}" ng-model="items.propertyValue"  value="{{items.propertyDefaultValue}}" ng-required="items.isRequired|dit"/>
                             <div ng-if="items.isRequired|dit" >
@@ -174,7 +172,7 @@
                 </div>
                 <div ng-if="items.propertyType=='textarea'" class="col-sm-12 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="col-md-offset-1 col-sm-offset-1 col-md-1 col-sm-2 control-label" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" title="{{items.propertyName}}" >{{items.propertyName}}</label>
+                        <label class="col-md-offset-1 col-sm-offset-1 col-md-1 col-sm-2 control-label" title="{{items.propertyName}}" >{{items.propertyName}}</label>
                         <div class="col-md-11 col-sm-10"  >
                             <textarea class="form-control" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit">{{items.propertyDefaultValue}}</textarea>
                             <div ng-if="items.isRequired|dit" >
@@ -188,7 +186,7 @@
                 </div>
                 <div ng-if="items.propertyType=='datetime'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
-                        <label class="control-label" title="{{items.propertyName}}" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{items.propertyName}}</label>
+                        <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9" >
                             <input  class="form-control laydate-icon" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" def-laydate  type="text"  ng-model="items.propertyValue"   ng-required="items.isRequired|dit" />
                             <div ng-if="items.isRequired|dit" >
@@ -205,8 +203,7 @@
         <div class="text-danger text-center">注：*为必填字段，输入边框为红色时，请按提示正确输入！</div>
     </div>
     <div class="modal-footer" style="text-align: center;background:#fff;">
-        <button type="button" class="btn btn-primary" ng-click="backToMain()" ng-hide="uploadSucceed">取消</button>
-        <button type="button" class="btn btn-primary" ng-click="saveItem()" ng-disabled="createWorkOrder.$invalid" ng-hide="uploadSucceed">提交</button>
-        <button type="button" class="btn btn-primary" ng-click="backToMain()" ng-show="uploadSucceed">确定</button>
+        <button type="button" class="btn btn-primary" ng-click="backToMain()">取消</button>
+        <button type="button" class="btn btn-primary" ng-click="saveItem()" ng-disabled="createWorkOrder.$invalid">提交</button>
     </div>
 </div>

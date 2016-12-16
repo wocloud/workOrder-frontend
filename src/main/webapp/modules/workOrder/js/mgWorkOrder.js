@@ -73,6 +73,12 @@
                 var api_downloadFile = "/wocloud-workorder-restapi/instanceLink/downloadAttachment?";
                 $scope.downloadUrl = api_downloadFile + params;
             }
+            if($scope.mgworkorder && $scope.mgworkorder.id) {
+                //查询工单当前处理记录
+                myWorkOrderRES.listWorkOrderProcessResultById({"id": $scope.mgworkorder.id}).then(function (result) {
+                    $scope.records = result.data;
+                });
+            }
         });
         $scope.disposeToMain = function () {
             var properties={};
@@ -104,6 +110,28 @@
                 });
             });
         };
+
+        //显示隐藏
+        $scope.isShow=true;
+        $scope.folder = function(){
+            $scope.isShow=!$scope.isShow;
+        };
+        $scope.isShow1=true;
+        $scope.folder1 = function(){
+            $scope.isShow1=!$scope.isShow1;
+        };
+        $scope.isShow2=true;
+        $scope.folder2 = function(){
+            $scope.isShow2=!$scope.isShow2;
+            if(!$scope.isShow2){
+                myWorkOrderRES.getProcessPicture($scope.mgworkorder.id).then(function (result) {
+                    if(result.data!=undefined && result.data!="") {
+                        $scope.imageSrc = "data:image/png;base64," + result.data;
+                    }
+                });
+            }
+        };
+
         //return to the main page
         $scope.backToMain = function () {
             history.back();
