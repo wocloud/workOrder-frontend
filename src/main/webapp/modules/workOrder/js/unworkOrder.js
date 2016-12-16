@@ -308,10 +308,10 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
                 scope:$scope,
                 controller:function($scope){
                     if(result.code==0){
-                        $scope.titel="成功";
+                        $scope.titleName="提示";
                         $scope.content="签收成功";
                     }else{
-                        $scope.titel="失败";
+                        $scope.titleName="提示";
                         $scope.content="签收失败"+result.msg;
                     }
                     $scope.ok = function(){

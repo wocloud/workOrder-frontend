@@ -107,19 +107,6 @@
                     </div>
                 </div>
             </div>
-            <!--描述-->
-            <div  class="col-sm-12 m-t-xs m-b-xs" >
-                <div class="form-group">
-                    <label class="control-label" >描述</label>
-                    <div class="col-md-11 col-sm-10">
-                        <textarea class="form-control" style="width: 93.5%" name="description" ng-model="currentValue.description"  required ></textarea>
-                        <span class="no-null" >*</span>
-                        <div class="no-null-message " ng-messages="createWorkOrder.description.$error" ng-if="createWorkOrder.description.$touched" >
-                            <div ng-message="required" >必填项不能为空</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- 附件上传 -->
             <div  class="col-sm-12 m-t-xs m-b-xs" >
                 <div class="form-group">
@@ -135,6 +122,19 @@
                     </div>
                     <div class="col-md-10 col-sm-10" ng-show="uploadError">
                         <span class="tip">文件支持.xls,xlsx,doc,docx,zip,png,jpg,text格式，文件大小5M以内</span>
+                    </div>
+                </div>
+            </div>
+            <!--描述-->
+            <div  class="col-sm-12 m-t-xs m-b-xs" >
+                <div class="form-group">
+                    <label class="control-label" >描述</label>
+                    <div class="col-md-11 col-sm-10">
+                        <textarea class="form-control" style="width: 93.5%" name="description" ng-model="currentValue.description"  required ></textarea>
+                        <span class="no-null" >*</span>
+                        <div class="no-null-message " ng-messages="createWorkOrder.description.$error" ng-if="createWorkOrder.description.$touched" >
+                            <div ng-message="required" >必填项不能为空</div>
+                        </div>
                     </div>
                 </div>
             </div>

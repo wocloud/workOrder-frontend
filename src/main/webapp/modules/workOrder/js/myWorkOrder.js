@@ -320,10 +320,10 @@
                     controller:function($scope){
                         $scope.queryByCondition();
                         if(result1.code==0){
-                            $scope.titleName="成功";
+                            $scope.titleName="提示";
                             $scope.content="提交成功";
                         }else{
-                            $scope.titleName="失败";
+                            $scope.titleName="提示";
                             $scope.content="提交失败"+result1.msg;
                         }
                         $scope.ok = function(){
@@ -503,10 +503,10 @@
                                 console.log("onCompleteItem");
                                 $scope.uploading = false;
                                 if(response.code=='0') {
-                                    $scope.titleName="成功";
+                                    $scope.titleName="提示";
                                     $scope.content="工单和附件均保存成功,是否提交？";
                                 } else {
-                                    $scope.titleName="失败";
+                                    $scope.titleName="提示";
                                     $scope.content="工单保存成功, 附件上传失败!";
                                 }
                             };
@@ -516,12 +516,12 @@
                                 $scope.uploading = true;
                                 uploader.uploadAll();
                             } else {
-                                $scope.titleName="成功";
+                                $scope.titleName="提示";
                                 $scope.content="工单保存成功,是否提交？";
                             }
                         } else{
                             $scope.uploading = false;
-                            $scope.titleName="失败";
+                            $scope.titleName="提示";
                             $scope.content="工单保存失败: "+result.msg;
                         }
                         $scope.paramss={
@@ -541,11 +541,11 @@
                                     controller:function($scope){
                                         $state.go("app.myWorkOrder");
                                         if(result1.code==0){
-                                            $scope.titleName="成功";
+                                            $scope.titleName="提示";
                                             $scope.content="提交成功";
 
                                         }else{
-                                            $scope.titleName="失败";
+                                            $scope.titleName="提示";
                                             $scope.content="提交失败:"+result1.msg;
                                         }
 

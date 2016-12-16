@@ -93,10 +93,10 @@
                     scope:$scope,
                     controller:function($scope){
                         if(result.code==0){
-                            $scope.titel="成功";
+                            $scope.titleName="提示";
                             $scope.content="处理成功";
                         }else{
-                            $scope.titel="失败";
+                            $scope.titleName="提示";
                             $scope.content="处理失败"+result.msg;
                         }
                         $scope.ok = function(){
