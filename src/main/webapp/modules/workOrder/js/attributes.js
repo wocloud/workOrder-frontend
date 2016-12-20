@@ -85,6 +85,29 @@ $(function(){
         };
     }
 
+    app.service('storeService',['$window',function($window){
+        return {        //存储单个属性
+            set: function (key, value) {
+                $window.localStorage[key] = value;
+            },        //读取单个属性
+            get: function (key, defaultValue) {
+                return $window.localStorage[key] || defaultValue;
+            },        //存储对象，以JSON格式存储
+            setObject: function (key, value) {
+                $window.localStorage[key] = JSON.stringify(value);
+            },        //读取对象
+            getObject: function (key) {
+                return JSON.parse($window.localStorage[key] || '{}');
+            },
+            delObject:function(){
+                for(var key in $window.localStorage){
+                    delete $window.localStorage[key];
+                }
+                return;
+            }
+        }
+    }]);
+
     /**
      * attr status filter
      * @returns {Function}
@@ -109,16 +132,16 @@ $(function(){
      * workOrder attributes controller
      */
     app.controller('WorkOrderAttrsViewCtrl', AttrViewCtrl);
-    AttrViewCtrl.$inject = ['$scope', 'ngDialog', 'workOrderAttr.RES', 'i18nService'];
-    function AttrViewCtrl($scope, ngDialog, workOrderAttrRES, i18nService) {
+    AttrViewCtrl.$inject = ['$scope', 'ngDialog', 'workOrderAttr.RES', 'storeService', 'i18nService'];
+    function AttrViewCtrl($scope, ngDialog, workOrderAttrRES, storeService, i18nService) {
         i18nService.setCurrentLang("zh-cn");
 
-        var render = renderAttrTable($scope, workOrderAttrRES);
+        renderAttrTable($scope, workOrderAttrRES, storeService);
 
         //查询重置
         $scope.reset = function(){
             $scope.query = {};
-            $scope.loadData();
+            $scope.loadData(1, 10);
         };
 
         //create new attr
@@ -134,7 +157,7 @@ $(function(){
 
         //edit attr
         $scope.updateItem = function() {
-            ngDialog.open({
+            ngDialog.openConfirm({
                 template: 'modules/workOrder/attr.create.html',
                 className:'ngdialog-theme-default wocloud-ngdialog-blue',
                 controller: 'WorkOrderAttrCreateOrUpdateViewCtrl',
@@ -157,8 +180,8 @@ $(function(){
      * workOrder attributes create controller
      */
     app.controller('WorkOrderAttrCreateOrUpdateViewCtrl', AttrCreateOrUpdateViewCtrl);
-    AttrCreateOrUpdateViewCtrl.$inject = ['$scope', 'toaster', 'workOrderAttr.RES'];
-    function AttrCreateOrUpdateViewCtrl($scope, toaster, workOrderAttrRES){
+    AttrCreateOrUpdateViewCtrl.$inject = ['$scope', 'workOrderAttr.RES'];
+    function AttrCreateOrUpdateViewCtrl($scope, workOrderAttrRES){
         var key = "";
         if($scope.selectedRows && $scope.selectedRows.length>0) {
             key = $scope.selectedRows[0].propertyKey;
@@ -201,29 +224,25 @@ $(function(){
             }
             if($scope.createOrUpdate=="C"){
                 workOrderAttrRES.create($scope.attr).then(function(result){
-                    if(result.code=="0"){
-                        toaster.pop('info', "提示", "自定义属性新建成功!");
-                    } else {
-                        toaster.pop('error', "提示", "自定义属性新建失败: " + result.msg);
-                    }
-                    $scope.loadData();
                     $scope.closeThisDialog();
+                    if(result.code=="0"){
+                        window.wxc.xcConfirm("自定义属性新建成功!", window.wxc.xcConfirm.typeEnum.success);
+                        $scope.loadData();
+                    } else {
+                        window.wxc.xcConfirm("自定义属性新建失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                    }
                 });
             } else if($scope.createOrUpdate=="U"){
                 workOrderAttrRES.create($scope.attr).then(function(result){
-                    if(result.code=="0"){
-                        toaster.pop('info', "提示", "自定义属性编辑成功!");
-                    } else {
-                        toaster.pop('error', "提示", "自定义属性编辑失败: " + result.msg);
-                    }
-                    $scope.loadData();
                     $scope.closeThisDialog();
+                    if(result.code=="0"){
+                        window.wxc.xcConfirm("自定义属性编辑成功!", window.wxc.xcConfirm.typeEnum.success);
+                        $scope.loadData();
+                    } else {
+                        window.wxc.xcConfirm("自定义属性编辑失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                    }
                 });
             }
-        };
-
-        $scope.close=function(){
-            $scope.closeThisDialog();
         };
 
         //watch the propertyType change
@@ -246,8 +265,8 @@ $(function(){
      * workOrder attr delete controller
      */
     app.controller('WorkOrderAttrDeleteViewCtrl', AttrDeleteViewCtrl);
-    AttrDeleteViewCtrl.$inject = ['$scope', 'workOrderAttr.RES', 'toaster'];
-    function AttrDeleteViewCtrl($scope, workOrderAttrRES, toaster) {
+    AttrDeleteViewCtrl.$inject = ['$scope', 'workOrderAttr.RES'];
+    function AttrDeleteViewCtrl($scope, workOrderAttrRES) {
         var ids = [];
 
         if($scope.selectedRows) {
@@ -260,18 +279,14 @@ $(function(){
         //remove attr
         $scope.removeItem = function () {
             workOrderAttrRES.removeById(ids[0]).then(function (result) {
-                if(result.code=="0"){
-                    toaster.pop('info', "提示", "自定义属性删除成功!");
-                } else {
-                    toaster.pop('error', "提示", "自定义属性删除失败!");
-                }
-                $scope.loadData();
                 $scope.closeThisDialog();
+                if(result.code=="0"){
+                    window.wxc.xcConfirm("自定义属性删除成功!", window.wxc.xcConfirm.typeEnum.success);
+                    $scope.loadData();
+                } else {
+                    window.wxc.xcConfirm("自定义属性删除失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                }
             });
-        };
-
-        $scope.close=function(){
-            $scope.closeThisDialog();
         };
     }
 
@@ -313,8 +328,16 @@ $(function(){
     /*************************
      * render view
      ************************/
-    function renderAttrTable($scope, workOrderAttrRES){
+    function renderAttrTable($scope, workOrderAttrRES, storeService){
         $scope.selectedRows = [];
+        $scope.paginationCurrentPage=storeService.getObject('attrStore').paginationCurrentPage!=undefined?storeService.getObject('attrStore').paginationCurrentPage:1;
+        $scope.paginationPageSize=storeService.getObject('attrStore').paginationPageSize!=undefined?storeService.getObject('attrStore').paginationPageSize:10;
+        $scope.query=storeService.getObject('attrStore').query!=undefined?storeService.getObject('attrStore').query:{};
+        $scope.attrStore = {
+            query : $scope.query || {},
+            paginationCurrentPage : $scope.paginationCurrentPage,
+            paginationPageSize : $scope.paginationPageSize
+        };
         $scope.attrGridOptions = {
             columnDefs: [
                 {
@@ -357,14 +380,10 @@ $(function(){
                 $scope.gridApi = gridApi;
                 //分页按钮事件
                 gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    var params = {};
-                    params.page=newPage;
-                    params.size=pageSize;
                     if (getPage) {
-                        workOrderAttrRES.list(params).then(function (result) {
-                            attrs=result.content;
-                            getPage(newPage, pageSize, result.totalElements);
-                        });
+                        $scope.paginationCurrentPage = newPage;
+                        $scope.paginationPageSize = pageSize;
+                        $scope.loadData(newPage,pageSize);
                     }
                 });
                 //行选中事件
@@ -384,32 +403,36 @@ $(function(){
         };
         var attrs=[];
 
-        var params={
-            "page"   : $scope.attrGridOptions.paginationCurrentPage,
-            "size"  : $scope.attrGridOptions.paginationPageSize
-        };
-
         var getPage = function (curPage, pageSize,totalSize) {
             $scope.attrGridOptions.paginationCurrentPage = curPage;
             $scope.attrGridOptions.paginationPageSize = pageSize;
             $scope.attrGridOptions.totalItems = totalSize;
             $scope.attrGridOptions.data = attrs;
         };
-        $scope.loadData = function(){
+        $scope.loadData = function(newPage,pageSize){
             $scope.selectedRows = [];
-            if($scope.query){
-                params.propertyKey = $scope.query.propertyKey;
-                params.propertyName = $scope.query.propertyName;
-            }
+            $scope.attrStore = {
+                query : $scope.query || {},
+                paginationCurrentPage : $scope.paginationCurrentPage,
+                paginationPageSize : $scope.paginationPageSize
+            };
+            storeService.setObject('attrStore', $scope.attrStore);
+            var params = {
+                'propertyKey' : $scope.attrStore.query.propertyKey ? $scope.attrStore.query.propertyKey : "",
+                'propertyName' : $scope.attrStore.query.propertyName ? $scope.attrStore.query.propertyName : "",
+                'page' : $scope.attrStore.paginationCurrentPage,
+                'size' : $scope.attrStore.paginationPageSize
+            };
+            console.log(params);
             workOrderAttrRES.list(params).then(function (result) {
                 attrs = result.content;  //每次返回结果都是最新的
-                getPage(1, params.size, result.totalElements);
+                getPage(params.page, params.size, result.totalElements);
             }, function(){
                 attrs = [];
             });
         };
         //the list of attrs
-        $scope.loadData();
+        $scope.loadData(1, 10);
 
         //search function end
         $scope.params = {grid: {}, fun: {}};

@@ -64,6 +64,31 @@ $(function(){
             return task.promise;
         };
 
+        //获取全部用户组信息
+        this.getGroups = function() {
+            var task = $q.defer();
+            var cmd='/wocloud-workorder-restapi/actIdGroup/getAll';
+            $resource(cmd).save({}, function(response){
+                task.resolve(response);
+            }, function(response){
+                task.reject("调用失败,用户组信息查询失败!");
+            });
+            return task.promise;
+        };
+
+        //根据工单类型id获取用户组信息
+        this.getGroupsByWorkOrderTypeId = function(params) {
+            var task = $q.defer();
+            var cmd='/wocloud-workorder-restapi/actIdGroup/getAll';
+            var parameters = params==undefined ? {} : params;
+            $resource(cmd).save(params, function(response){
+                task.resolve(response);
+            }, function(response){
+                task.reject("调用失败,用户组信息查询失败!");
+            });
+            return task.promise;
+        };
+
         this.save = function(params){
             var task = $q.defer();
             var cmd = '/wocloud-workorder-restapi/workorderType/saveWorkorderType';
@@ -190,7 +215,7 @@ $(function(){
         //edit
         $scope.updateItem = function() {
             if(!$scope.selectedItem){
-                toaster.pop('info', "提示", "请选择要操作的条目!");
+                window.wxc.xcConfirm("请选择要操作的条目!", window.wxc.xcConfirm.typeEnum.info);
                 return;
             }
             ngDialog.open({
@@ -242,14 +267,24 @@ $(function(){
                 }
             });
         };
+
+        // bind with role
+        $scope.bindWithRole = function() {
+            ngDialog.open({
+                template: 'bindWithGroupTemplate',
+                className:'ngdialog-theme-default wocloud-ngdialog-blue',
+                controller: 'bindWithGroupViewCtrl',
+                scope: $scope
+            });
+        };
     }
 
     /**
      * workOrder types create controller
      */
     app.controller('WorkOrderTypeCreateOrUpdateViewCtrl', TypeCreateOrUpdateViewCtrl);
-    TypeCreateOrUpdateViewCtrl.$inject = ['$scope', 'toaster', 'workOrderType.RES'];
-    function TypeCreateOrUpdateViewCtrl($scope, toaster, workOrderTypeRES){
+    TypeCreateOrUpdateViewCtrl.$inject = ['$scope', 'workOrderType.RES'];
+    function TypeCreateOrUpdateViewCtrl($scope, workOrderTypeRES){
         var id = "";
         if($scope.selectedItem) {
             id = $scope.selectedItem.id;
@@ -275,26 +310,23 @@ $(function(){
             }
             workOrderTypeRES.save($scope.workOrderType).then(function(result){
                 if($scope.createOrUpdate=="C") {
+                    $scope.closeThisDialog();
                     if(result.code=="0"){
-                        toaster.pop('info', "提示", " 工单类型新建成功!");
+                        window.wxc.xcConfirm("工单类型新建成功!", window.wxc.xcConfirm.typeEnum.success);
+                        $scope.loadData();
                     } else {
-                        toaster.pop('error', "提示", " 工单类型新建失败!");
+                        window.wxc.xcConfirm("工单类型新建失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
                     }
                 } else if($scope.createOrUpdate=="U") {
+                    $scope.closeThisDialog();
                     if(result.code=="0"){
-                        toaster.pop('info', "提示", " 工单类型编辑成功!");
+                        window.wxc.xcConfirm("工单类型编辑成功!", window.wxc.xcConfirm.typeEnum.success);
+                        $scope.loadData();
                     } else {
-                        toaster.pop('error', "提示", " 工单类型编辑失败!");
+                        window.wxc.xcConfirm("工单类型编辑失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
                     }
                 }
-                $scope.loadData();
-                $scope.closeThisDialog();
             });
-        };
-
-        //cancel the modal
-        $scope.cancel = function () {
-            $scope.closeThisDialog();
         };
     }
 
@@ -302,36 +334,31 @@ $(function(){
      * workOrder attr delete controller
      */
     app.controller('WorkOrderTypeDeleteViewCtrl', TypeDeleteViewCtrl);
-    TypeDeleteViewCtrl.$inject = ['$scope', 'toaster', 'workOrderType.RES'];
-    function TypeDeleteViewCtrl($scope, toaster, workOrderTypeRES) {
+    TypeDeleteViewCtrl.$inject = ['$scope', 'workOrderType.RES'];
+    function TypeDeleteViewCtrl($scope, workOrderTypeRES) {
         $scope.currentItem = $scope.selectedItem;
         var id = $scope.currentItem.id;
 
         //remove
         $scope.removeItem = function () {
             workOrderTypeRES.removeById(id).then(function (result) {
-                if(result.code=="0"){
-                    toaster.pop('info', "提示", " 工单类型删除成功!");
-                } else {
-                    toaster.pop('error', "提示", " 工单类型删除失败!");
-                }
-                $scope.loadData();
                 $scope.closeThisDialog();
+                if(result.code=="0"){
+                    window.wxc.xcConfirm("工单类型删除成功!", window.wxc.xcConfirm.typeEnum.success);
+                    $scope.loadData();
+                } else {
+                    window.wxc.xcConfirm("工单类型删除失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                }
             });
         };
-
-        //cancel the modal
-        $scope.cancel = function () {
-            $scope.closeThisDialog();
-        }
     }
 
     /**
      * workOrder bind With Process controller
      */
     app.controller('bindWithProcessViewCtrl', BindWithProcessViewCtrl);
-    BindWithProcessViewCtrl.$inject = ['$scope', 'toaster', 'workOrderType.RES'];
-    function BindWithProcessViewCtrl($scope, toaster, workOrderTypeRES) {
+    BindWithProcessViewCtrl.$inject = ['$scope', 'workOrderType.RES'];
+    function BindWithProcessViewCtrl($scope, workOrderTypeRES) {
         var workorderTypeId = $scope.selectedItem.id;
         $scope.myData = [];
         $scope.flowGridOptions = {
@@ -363,7 +390,6 @@ $(function(){
             }
         };
         $scope.loadData2 = function(){
-            var workorderTypeId = $scope.selectedItem.id;
             $scope.selectedItem = undefined;
             workOrderTypeRES.listWorkFlows().then(function (result) {
                 $scope.myData = result;
@@ -403,43 +429,73 @@ $(function(){
                 "processDeploymentId"   : selectItem.id
             };
             workOrderTypeRES.bind(params).then(function (result) {
-                if(result.code=="0"){
-                    toaster.pop('info', "提示", "工单绑定流程成功!");
-                } else {
-                    toaster.pop('error', "提示", result.msg);
-                }
                 $scope.closeThisDialog();
+                if(result.code=="0"){
+                    window.wxc.xcConfirm("工单类型绑定流程成功!", window.wxc.xcConfirm.typeEnum.success);
+                } else {
+                    window.wxc.xcConfirm("工单类型绑定流程失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                }
             });
         };
-
-        //cancel the modal
-        $scope.cancel = function () {
-            $scope.closeThisDialog();
-        }
     };
 
     /**
      * workOrder unbind With Process controller
      */
     app.controller('unbindWithProcessViewCtrl', UnbindWithProcessViewCtrl);
-    UnbindWithProcessViewCtrl.$inject = ['$scope', 'toaster', 'workOrderType.RES'];
-    function UnbindWithProcessViewCtrl($scope, toaster, workOrderTypeRES) {
+    UnbindWithProcessViewCtrl.$inject = ['$scope', 'workOrderType.RES'];
+    function UnbindWithProcessViewCtrl($scope, workOrderTypeRES) {
         //unbind
         $scope.unbindWorkorderTypeAndProcess = function () {
             workOrderTypeRES.unbind({"id": $scope.relationId}).then(function (result) {
-                if(result.code=="0"){
-                    toaster.pop('info', "提示", "工单解绑流程成功!");
-                } else {
-                    toaster.pop('error', "提示", result.msg);
-                }
                 $scope.closeThisDialog();
+                if(result.code=="0"){
+                    window.wxc.xcConfirm("工单类型解绑流程成功!", window.wxc.xcConfirm.typeEnum.success);
+                    $scope.loadData();
+                } else {
+                    window.wxc.xcConfirm("工单类型解绑流程失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                }
+            });
+        };
+    }
+
+    app.controller('bindWithGroupViewCtrl', BindWithGroupViewCtrl);
+    BindWithGroupViewCtrl.$inject = ['$scope', 'workOrderType.RES'];
+    function BindWithGroupViewCtrl($scope, workOrderTypeRES) {
+        var workorderTypeId = $scope.selectedItem.id;
+        $scope.Groups = [];
+        $scope.selectedGroup = [];
+
+        $scope.loadGroups = function(id){
+            workOrderTypeRES.getGroups({}).then(function(result){
+                if(result.code=="0"){
+                    $scope.allGroups = result.data;
+                    filterGroup(id);
+                }
+            });
+        };
+        $scope.loadGroups(workorderTypeId);
+
+        function filterGroup(id){
+            if(!id || id=="") return;
+            workOrderTypeRES.getGroupsByWorkOrderTypeId({'id': id}).then(function(result){
+                if(result.code=="0"){
+                    var data = result.data;
+                    angular.forEach($scope.allGroups, function (group, index, array) {
+                        if(data.indexOf(group) > -1){
+                            group.checked = true;
+                        } else {
+                            group.checked = false;
+                        }
+                        $scope.Groups.push(group);
+                    })
+                }
             });
         };
 
-        //cancel the modal
-        $scope.cancel = function () {
-            $scope.closeThisDialog();
-        }
+        $scope.bindWorkorderTypeAndGroup = function(){
+            console.log($scope.selectedGroup);
+        };
     }
 
 });

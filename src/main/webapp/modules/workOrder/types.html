@@ -18,6 +18,8 @@
                                 <i class="fa fa-chain"></i>绑定流程</button>
                             <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="unbindWithProcess()" ng-disabled="!selectedItem">
                                 <i class="fa fa-chain-broken"></i>解绑流程</button>
+                            <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="bindWithRole()" ng-disabled="!selectedItem">
+                                <i class="fa fa-user"></i>绑定角色</button>
                         </div>
                         <div ui-grid="myGridOptions"
                              ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
@@ -53,7 +55,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-disabled="typeForm.$invalid" ng-click="saveItem()">确定</button>
-                    <button type="button" class="btn" ng-click="cancel()">取消</button>
+                    <button type="button" class="btn" ng-click="closeThisDialog()">取消</button>
                 </div>
             </script>
 
@@ -66,7 +68,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-click="removeItem()">确定</button>
-                    <button type="button" class="btn" ng-click="cancel()">取消</button>
+                    <button type="button" class="btn" ng-click="closeThisDialog()">取消</button>
                 </div>
             </script>
 
@@ -81,7 +83,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-disabled="!selectedItem" ng-click="bindWorkorderTypeAndProcess()">确定</button>
-                    <button type="button" class="btn" ng-click="cancel()">取消</button>
+                    <button type="button" class="btn" ng-click="closeThisDialog()">取消</button>
                 </div>
             </script>
 
@@ -94,7 +96,25 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" ng-disabled="relationId<0" ng-click="unbindWorkorderTypeAndProcess()">确定</button>
-                    <button type="button" class="btn" ng-click="cancel()">取消</button>
+                    <button type="button" class="btn" ng-click="closeThisDialog()">取消</button>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="bindWithGroupTemplate">
+                <div class="modal-header">
+                    <span class="wocloud-dialog-title">绑定角色</span>
+                </div>
+                <div class="modal-body">
+                    <p>请选择要绑定的角色:</p>
+                    <div class="container-fluid">
+                        <div class="col-sm-12 col-md-6" ng-repeat="group in Groups">
+                            <input type="checkbox" value="{{group.id}}" ng-checked="{{group.checked}}" ng-model="selectedGroup">&nbsp;&nbsp;{{group.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="bindWorkorderTypeAndGroup()">确定</button>
+                    <button type="button" class="btn" ng-click="closeThisDialog()">取消</button>
                 </div>
             </script>
         </tab>

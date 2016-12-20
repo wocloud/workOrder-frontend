@@ -88,26 +88,13 @@
             properties.instanceLinkPropertyList=JSON.stringify($scope.mgworkorder.instanceLinkPropertyList);
             $log.info($scope.mgworkorder.instanceLinkPropertyList);
             myWorkOrderRES.dispose(properties).then(function (result) {
-                ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html
-                    className:'ngdialog-theme-default ngdialog-theme-dadao',
-                    scope:$scope,
-                    controller:function($scope){
-                        if(result.code==0){
-                            $scope.titleName="提示";
-                            $scope.content="处理成功";
-                        }else{
-                            $scope.titleName="提示";
-                            $scope.content="处理失败"+result.msg;
-                        }
-                        $scope.ok = function(){
-                            $scope.closeThisDialog(); //关闭弹窗
-                            $state.go("app.unworkOrder");
-                        };
-                        $scope.close=function(){
-                            $scope.closeThisDialog();
-                        }
-                    }
-                });
+                $scope.closeThisDialog();
+                $state.go("app.unworkOrder");
+                if(result.code=="0"){
+                    window.wxc.xcConfirm("处理成功!", window.wxc.xcConfirm.typeEnum.success);
+                } else {
+                    window.wxc.xcConfirm("处理失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                }
             });
         };
 

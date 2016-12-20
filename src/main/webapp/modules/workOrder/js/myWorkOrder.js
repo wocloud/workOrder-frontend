@@ -314,26 +314,12 @@
                 loginUserId :$rootScope.userInfo.userId
             };
             myWorkOrderRES.submit(para).then(function (result1) {
-                ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html
-                    className:'ngdialog-theme-default ngdialog-theme-dadao',
-                    scope:$scope,
-                    controller:function($scope){
-                        $scope.queryByCondition();
-                        if(result1.code==0){
-                            $scope.titleName="提示";
-                            $scope.content="提交成功";
-                        }else{
-                            $scope.titleName="提示";
-                            $scope.content="提交失败"+result1.msg;
-                        }
-                        $scope.ok = function(){
-                            $scope.closeThisDialog(); //关闭弹窗
-                        };
-                        $scope.close=function(){
-                            $scope.closeThisDialog();
-                        }
-                    }
-                });
+                if(result1.code=="0"){
+                    window.wxc.xcConfirm("提交成功!", window.wxc.xcConfirm.typeEnum.success);
+                    $scope.queryByCondition();
+                } else {
+                    window.wxc.xcConfirm("提交失败: " + result1.msg, window.wxc.xcConfirm.typeEnum.error);
+                }
             });
         };
     };
@@ -486,7 +472,7 @@
             var params=data();
             myWorkOrderRES.save(params).then(function (result) {
                 ngDialog.open({
-                    template: 'modules/workOrder/test.html',//模式对话框内容为test.html
+                    template: 'modules/workOrder/confirmDialog.html',
                     className:'ngdialog-theme-default ngdialog-theme-dadao',
                     scope:$scope,
                     controller:function($scope){
@@ -536,27 +522,13 @@
                             $scope.closeThisDialog();
                             $scope.paramss.loginUserId=$scope.currentValue.loginUserId;
                             myWorkOrderRES.submit($scope.paramss).then(function (result1) {
-                                ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html
-                                    className:'ngdialog-theme-default ngdialog-theme-dadao',
-                                    controller:function($scope){
-                                        $state.go("app.myWorkOrder");
-                                        if(result1.code==0){
-                                            $scope.titleName="提示";
-                                            $scope.content="提交成功";
-
-                                        }else{
-                                            $scope.titleName="提示";
-                                            $scope.content="提交失败:"+result1.msg;
-                                        }
-
-                                        $scope.ok = function(){
-                                            $scope.closeThisDialog(); //关闭弹窗
-                                        };
-                                        $scope.close=function(){
-                                            $scope.closeThisDialog();
-                                        }
-                                    }
-                                });
+                                $scope.closeThisDialog();
+                                $state.go("app.myWorkOrder");
+                                if(result1.code=="0"){
+                                    window.wxc.xcConfirm("提交成功!", window.wxc.xcConfirm.typeEnum.success);
+                                } else {
+                                    window.wxc.xcConfirm("提交失败: " + result1.msg, window.wxc.xcConfirm.typeEnum.error);
+                                }
                             });
                         };
                     }

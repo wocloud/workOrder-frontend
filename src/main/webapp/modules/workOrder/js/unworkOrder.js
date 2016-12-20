@@ -248,7 +248,7 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
         var unStore={
             search:$scope.search,
             properties:$scope.properties||[]
-        }
+        };
         storeService.setObject('unStore',$scope.unStore);
         var instanceLinkPropertyList=$scope.properties
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
@@ -279,7 +279,7 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
     // callback function
     $scope.callFn = function (item) {
         $scope.rowItem = item;
-    }
+    };
     $scope.propertieslist = [];
     myWorkOrderRES.list_attr().then(function (result) {
         var a = result.data;
@@ -303,26 +303,13 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
             loginUserId :$rootScope.userInfo.userId
         };
         myWorkOrderRES.sign(params).then(function (result) {
-            ngDialog.open({ template: 'modules/workOrder/test.html',//模式对话框内容为test.html
-                className:'ngdialog-theme-default ngdialog-theme-dadao',
-                scope:$scope,
-                controller:function($scope){
-                    if(result.code==0){
-                        $scope.titleName="提示";
-                        $scope.content="签收成功";
-                    }else{
-                        $scope.titleName="提示";
-                        $scope.content="签收失败"+result.msg;
-                    }
-                    $scope.ok = function(){
-                        $scope.closeThisDialog(); //关闭弹窗
-                        $scope.sreach();
-                    };
-                    $scope.close=function(){
-                        $scope.closeThisDialog();
-                    }
-                }
-            });
+            $scope.closeThisDialog();
+            $scope.sreach();
+            if(result.code=="0"){
+                window.wxc.xcConfirm("签收成功!", window.wxc.xcConfirm.typeEnum.success);
+            } else {
+                window.wxc.xcConfirm("签收失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+            }
         });
     };
 };
