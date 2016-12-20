@@ -81,7 +81,7 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
         search:$scope.search,
         properties:$scope.properties||[],
         paginationCurrentPage:$scope.paginationCurrentPage
-    }
+    };
     $scope.singflag=true;
     $scope.disposeflag=true;
     $scope.yel=false;
@@ -157,9 +157,7 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
         paginationPageSizes: [10], //每页显示个数可选项
         paginationCurrentPage: 1, //当前页码
         paginationPageSize: 10, //每页显示个数
-        //paginationTemplate:"<div></div>", //自定义底部分页代码
         totalItems: 0, // 总数量
-        useExternalPagination: true,//是否使用分页按钮
         //----------- 选中 ----------------------
         enableFooterTotalSelected: false, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
         enableFullRowSelection: true, //是否点击行任意位置后选中,默认为false,当为true时，checkbox可以显示但是不可选中
@@ -169,6 +167,7 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
         enableSelectionBatchEvent: true, //默认true
         isRowSelectable: function (row) { //GridRow
             index += 1;//下标加1
+            console.log(index);
             if (index == 1) {
                 row.grid.api.selection.selectRow(row.entity);
             }
@@ -183,7 +182,7 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
             gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                 if (getPage) {
                     $scope.unStore.paginationCurrentPage=newPage;
-                    $scope.sreach(newPage,pageSize)
+                    $scope.sreach(newPage,pageSize);
                 }
             });
             //行选中事件
@@ -237,20 +236,10 @@ function UNworkOrder(storeService,$rootScope,$scope,ngDialog, $rootScope, myWork
             a.push(b);
         });
         return a;
-    }
+    };
     $scope.sreach = function (page,pageSize) {
-        /*if($scope.search.startTime==""){
-            delete $scope.search.startTime;
-        }
-        if($scope.search.endTime==""){
-            delete $scope.search.endTime;
-        }*/
-        var unStore={
-            search:$scope.search,
-            properties:$scope.properties||[]
-        };
         storeService.setObject('unStore',$scope.unStore);
-        var instanceLinkPropertyList=$scope.properties
+        var instanceLinkPropertyList=$scope.properties;
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
         $scope.search.performerId=$rootScope.userInfo.userId;
         $scope.search.loginUserId =$rootScope.userInfo.userId;

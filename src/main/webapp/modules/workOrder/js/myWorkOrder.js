@@ -98,8 +98,7 @@
             search:$scope.search,
             properties:$scope.properties||[],
             paginationCurrentPage:$scope.paginationCurrentPage
-        }
-        $scope.yel=true;
+        };
         var index = 0;//默认选中行，下标置为0
         $scope.myGridOptions = {
             columnDefs: [
@@ -256,7 +255,7 @@
                 a.push(b);
             });
             return a;
-        }
+        };
         $scope.queryByCondition = function (page,pageSize) {
             storeService.setObject('myStore',$scope.myStore);
             var instanceLinkPropertyList=$scope.properties;
@@ -293,7 +292,7 @@
             var a = result.data;
             for (var i = 0; i < a.length; i++) {
                 if (a[i].propertyType == "select") {
-                    a[i].propertyOptions = jQuery.parseJSON(a[i].propertyOptions);
+                    a[i].propertyOptions = JSON.parse(a[i].propertyOptions);
                 }
                 a[i].propertyValue = a[i].propertyDefaultValue;
             }
@@ -328,8 +327,8 @@
      * myWorkOrder list controller defined
      */
     app.controller('WorkOrderCreateOrUpdateCtrl', CreateOrUpdateViewCtrl);
-    CreateOrUpdateViewCtrl.$inject = ['ngDialog','$scope', '$rootScope', '$log', 'MyWorkOrder.RES', '$state', '$stateParams', 'toaster', 'FileUploader'];
-    function CreateOrUpdateViewCtrl(ngDialog,$scope, $rootScope, $log, myWorkOrderRES, $state, $stateParams, toaster, FileUploader) {
+    CreateOrUpdateViewCtrl.$inject = ['ngDialog','$scope', '$rootScope', 'MyWorkOrder.RES', '$state', '$stateParams', 'FileUploader'];
+    function CreateOrUpdateViewCtrl(ngDialog,$scope, $rootScope, myWorkOrderRES, $state, $stateParams, FileUploader) {
         $scope.id = $stateParams.id;
         $scope.linkId = $stateParams.linkId;
         $scope.currentValue = {};
@@ -375,11 +374,31 @@
                     if($scope.currentValue.productType) {
                         $scope.productType = $scope.currentValue.productType;
                     }
-                    $scope.properties=$scope.currentValue.instanceLinkPropertyList;
+                    $scope.properties = [];
+                    var propertyList = $scope.currentValue.instanceLinkPropertyList;
+                    for (var i = 0; i < propertyList.length; i++) {
+                        filterProperty(propertyList[i]);
+                        $scope.properties.push(propertyList[i]);
+                    }
+                    console.log($scope.properties);
                 } else {
-                    toaster.pop('error', "错误", "工单查询失败,请稍后再试!");
+                    window.wxc.xcConfirm("工单查询失败,请稍后再试!", window.wxc.xcConfirm.typeEnum.error);
                 }
             });
+        }
+
+        function filterProperty(property) {
+            var options = property.propertyOptions;
+            if (property.propertyType == "select" && typeof(property.propertyOptions)=="string") {
+                options = jQuery.parseJSON(property.propertyOptions);
+            }
+            property.propertyOptions = options;
+            if (property.propertyDefaultValue || property.propertyDefaultValue == null) {
+                property.propertyDefaultValue = '';
+            }
+            if(!property.propertyValue || property.propertyValue == null){
+                property.propertyValue = property.propertyDefaultValue;
+            }
         }
 
         $scope.$watch('workorderType', function(newValue,oldValue, scope){
@@ -388,17 +407,16 @@
                     id: newValue
                 };
                 if($scope.workorderType==$scope.currentValue.workorderTypeId){
-                    $scope.properties=$scope.currentValue.instanceLinkPropertyList;
+                    $scope.properties = [];
+                    var propertyList = $scope.currentValue.instanceLinkPropertyList;
+                    for (var i = 0; i < propertyList.length; i++) {
+                        filterProperty(propertyList[i]);
+                        $scope.properties.push(propertyList[i]);
+                    }
                 }else {
                     myWorkOrderRES.list_create_attr(params).then(function (result) {
                         for (var i = 0; i < result.data.length; i++) {
-                            if (result.data[i].propertyType == "select") {
-                                result.data[i].propertyOptions = jQuery.parseJSON(result.data[i].propertyOptions);
-                            }
-                            if (result.data[i].propertyDefaultValue && result.data[i].propertyDefaultValue == null) {
-                                result.data[i].propertyDefaultValue = '';
-                            }
-                            result.data[i].propertyValue = result.data[i].propertyDefaultValue;
+                            filterProperty(result.data[i]);
                         }
                         $scope.properties = result.data;
                     });
@@ -492,8 +510,8 @@
                                     $scope.titleName="提示";
                                     $scope.content="工单和附件均保存成功,是否提交？";
                                 } else {
-                                    $scope.titleName="提示";
-                                    $scope.content="工单保存成功, 附件上传失败!";
+                                    $scope.closeThisDialog();
+                                    window.wxc.xcConfirm("工单保存成功, 附件上传失败!", window.wxc.xcConfirm.typeEnum.error);
                                 }
                             };
                             if($scope.uploader.queue.length > 0) {
@@ -506,21 +524,20 @@
                                 $scope.content="工单保存成功,是否提交？";
                             }
                         } else{
-                            $scope.uploading = false;
-                            $scope.titleName="提示";
-                            $scope.content="工单保存失败: "+result.msg;
+                            $scope.closeThisDialog();
+                            window.wxc.xcConfirm("工单保存失败: "+result.msg, window.wxc.xcConfirm.typeEnum.error);
                         }
-                        $scope.paramss={
-                            id:$scope.instanceId,
-                            ownerId:result.data.ownerId
-                        };
                         $scope.close=function(){
                             $scope.closeThisDialog();
                             $state.go("app.myWorkOrder");
                         };
                         $scope.ok = function(){
                             $scope.closeThisDialog();
-                            $scope.paramss.loginUserId=$scope.currentValue.loginUserId;
+                            $scope.paramss={
+                                id:$scope.instanceId,
+                                ownerId:result.data.ownerId,
+                                loginUserId:$scope.currentValue.loginUserId
+                            };
                             myWorkOrderRES.submit($scope.paramss).then(function (result1) {
                                 $scope.closeThisDialog();
                                 $state.go("app.myWorkOrder");

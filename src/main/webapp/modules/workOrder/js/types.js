@@ -79,12 +79,25 @@ $(function(){
         //根据工单类型id获取用户组信息
         this.getGroupsByWorkOrderTypeId = function(params) {
             var task = $q.defer();
-            var cmd='/wocloud-workorder-restapi/actIdGroup/getAll';
+            var cmd='/wocloud-workorder-restapi/WorkorderTypeRole/selectByTypeId';
             var parameters = params==undefined ? {} : params;
             $resource(cmd).save(params, function(response){
                 task.resolve(response);
             }, function(response){
                 task.reject("调用失败,用户组信息查询失败!");
+            });
+            return task.promise;
+        };
+
+        //工单类型绑定用户组信息
+        this.bindWithGroups = function(params) {
+            var task = $q.defer();
+            var cmd='/wocloud-workorder-restapi/WorkorderTypeRole/bindRoleByTypeId';
+            var parameters = params==undefined ? {} : params;
+            $resource(cmd).save(params, function(response){
+                task.resolve(response);
+            }, function(response){
+                task.reject("调用失败,绑定用户组信息失败!");
             });
             return task.promise;
         };
@@ -139,8 +152,8 @@ $(function(){
      * workOrder types controller
      */
     app.controller('WorkOrderTypesViewCtrl', TypeViewCtrl);
-    TypeViewCtrl.$inject = ['$scope', 'ngDialog', 'workOrderType.RES', 'toaster','i18nService'];
-    function TypeViewCtrl($scope, ngDialog, workOrderTypeRES, toaster,i18nService) {
+    TypeViewCtrl.$inject = ['$scope', 'ngDialog', 'workOrderType.RES', 'i18nService'];
+    function TypeViewCtrl($scope, ngDialog, workOrderTypeRES, i18nService) {
         i18nService.setCurrentLang("zh-cn");
         $scope.myData = [];
         $scope.myGridOptions = {
@@ -263,7 +276,7 @@ $(function(){
                         scope: $scope
                     });
                 } else {
-                    toaster.pop("info", "提示", "该工单还没有绑定任何流程!");
+                    window.wxc.xcConfirm("该工单还没有绑定任何流程!", window.wxc.xcConfirm.typeEnum.info);
                 }
             });
         };
@@ -464,7 +477,7 @@ $(function(){
     function BindWithGroupViewCtrl($scope, workOrderTypeRES) {
         var workorderTypeId = $scope.selectedItem.id;
         $scope.Groups = [];
-        $scope.selectedGroup = [];
+        $scope.selectedGroups = [];
 
         $scope.loadGroups = function(id){
             workOrderTypeRES.getGroups({}).then(function(result){
@@ -478,23 +491,54 @@ $(function(){
 
         function filterGroup(id){
             if(!id || id=="") return;
-            workOrderTypeRES.getGroupsByWorkOrderTypeId({'id': id}).then(function(result){
+            workOrderTypeRES.getGroupsByWorkOrderTypeId({'typeId': id}).then(function(result){
                 if(result.code=="0"){
-                    var data = result.data;
+                    var datas = result.data;
                     angular.forEach($scope.allGroups, function (group, index, array) {
-                        if(data.indexOf(group) > -1){
-                            group.checked = true;
-                        } else {
-                            group.checked = false;
-                        }
+                        group.checked = false;
+                        angular.forEach(datas, function (data, i, obj) {
+                            if(data.id == group.id){
+                                group.checked = true;
+                            }
+                        });
                         $scope.Groups.push(group);
                     })
                 }
             });
         };
 
+        $scope.selectAll=false;
+
+        $scope.all = function(m){
+            $scope.selectAll=m;
+            var allInputs = $("#groupContainer input[type='checkbox']");
+            for(var i=0; i<allInputs.length; i++){
+                if(m===true){
+                    allInputs[i].checked = true;
+                }else {
+                    allInputs[i].checked = false;
+                }
+            }
+        };
+
         $scope.bindWorkorderTypeAndGroup = function(){
-            console.log($scope.selectedGroup);
+            var selecteds = $("#groupContainer input[type='checkbox']:checked");
+            angular.forEach(selecteds, function(data, index, array){
+               $scope.selectedGroups.push(data.value);
+            });
+            var params = {
+                "typeId": workorderTypeId,
+                "roleIdList": $scope.selectedGroups
+            };
+            $scope.closeThisDialog();
+            workOrderTypeRES.bindWithGroups(params).then(function(result){
+                if(result.code=="0"){
+                    window.wxc.xcConfirm("工单类型绑定角色成功!", window.wxc.xcConfirm.typeEnum.success);
+                } else {
+                    window.wxc.xcConfirm("工单类型绑定角色失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                }
+                $scope.loadData();
+            });
         };
     }
 

@@ -142,10 +142,10 @@
                 <div ng-if="items.propertyType=='select'" class="col-sm-6 m-t-xs m-b-xs" >
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
-                        <div class="col-md-9 col-sm-9" >
+                        <div class="col-md-9 col-sm-9">
                             <select class="form-control"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit" >
-                                <option  value="" ng-if="items.propertyDefaultValue==''" >-请选择-</option>
-                                <option ng-repeat="item in items.propertyOptions track by item.optionValue" value="{{item.optionValue}}">{{item.optionName}}</option>
+                                <option value="" ng-if="items.propertyValue=='' || !items.propertyValue" >-请选择-</option>
+                                <option ng-repeat="item in items.propertyOptions track by item.optionValue" value="{{item.optionValue}}" ng-selected="{{item.optionValue==items.propertyValue}}">{{item.optionName}}</option>
                             </select>
                             <div ng-if="items.isRequired|dit">
                                 <span  class="no-null" >*</span>
@@ -160,7 +160,7 @@
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9" >
-                            <input class="form-control" ng-disabled="items.readOnly|dit" type="text"  name="{{items.propertyKey}}" ng-model="items.propertyValue"  value="{{items.propertyDefaultValue}}" ng-required="items.isRequired|dit"/>
+                            <input class="form-control" ng-disabled="items.readOnly|dit" type="text" name="{{items.propertyKey}}" ng-model="items.propertyValue"  value="{{items.propertyDefaultValue}}" ng-required="items.isRequired|dit"/>
                             <div ng-if="items.isRequired|dit" >
                                 <span class="no-null" >*</span>
                                 <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >

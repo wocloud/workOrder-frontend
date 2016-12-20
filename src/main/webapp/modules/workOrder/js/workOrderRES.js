@@ -62,8 +62,8 @@ function ServiceMyWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
     fakeMapping.scheme(api_creatWorkOrder_attr_list, {
         '':'modules/workOrder/json/create.listattr.json'
     });
-    //查询工单类型
-    var api_creatTypeCode_list = '/wocloud-workorder-restapi/workorderType/listWorkorderTypes',
+    //查询当前登录人的工单类型
+    var api_creatTypeCode_list = '/wocloud-workorder-restapi/WorkorderTypeRole/selectTypeByUserId',
         res_creatTypeCode_list = $resource(api_creatTypeCode_list,{},{post:{
             method : 'POST',
             headers : {
@@ -223,7 +223,9 @@ function ServiceMyWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
     };
     this.list_typeCode=function(params){
         var task = $q.defer();
-        res_creatTypeCode_list.post(params, function (response) {
+        var parameters = params==undefined ? {} : params;
+        parameters.id = $rootScope.userInfo.userId;
+        res_creatTypeCode_list.post(parameters, function (response) {
             task.resolve(response.toJSON());
         });
         return task.promise;
@@ -267,13 +269,6 @@ function ServiceMyWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
         return task.promise;
     };
 
-    /*this.create = function(params){
-        var task = $q.defer();
-        res_createWorkOrder_list.post(params,function(response){
-            task.resolve(response.toJSON());
-        });
-        return task.promise;
-    };*/
     this.save = function(params){
         var task = $q.defer();
         res_saveWorkOrder_list.post(params,function(response){

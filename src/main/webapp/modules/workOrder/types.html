@@ -105,9 +105,9 @@
                     <span class="wocloud-dialog-title">绑定角色</span>
                 </div>
                 <div class="modal-body">
-                    <p>请选择要绑定的角色:</p>
+                    <span>请选择要绑定的角色:</span>&nbsp;&nbsp;<input type="checkbox" ng-model="selectAll" ng-click="all(selectAll)"/>全选/全不选
                     <div class="container-fluid">
-                        <div class="col-sm-12 col-md-6" ng-repeat="group in Groups">
+                        <div class="col-sm-12 col-md-6" id="groupContainer" ng-repeat="group in Groups">
                             <input type="checkbox" value="{{group.id}}" ng-checked="{{group.checked}}" ng-model="selectedGroup">&nbsp;&nbsp;{{group.name}}
                         </div>
                     </div>
