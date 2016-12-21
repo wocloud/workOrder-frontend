@@ -348,11 +348,6 @@
 
         function data(){
             if($scope.properties!=undefined&&$scope.properties.length>0) {
-                for (var i = 0; i < $scope.properties.length; i++) {
-                    if($scope.properties[i].propertyType=="datetime"){
-                        $scope.properties[i].propertyValue = (new Date()).getTime();
-                    }
-                }
                 $scope.currentValue.properties=JSON.stringify($scope.properties);
             }
             $scope.currentValue.loginUserId =$rootScope.userInfo.userId;
