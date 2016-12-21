@@ -49,12 +49,12 @@
         };
     };
     app.controller('MGworkOrder', MGworkOrder);
-    MGworkOrder.$inject = ['$rootScope','$scope','ngDialog', '$location', '$log', '$cacheFactory', 'MyWorkOrder.RES', '$state','$stateParams'];
-    function MGworkOrder($rootScope,$scope,ngDialog, $location, $log, $cacheFactory, myWorkOrderRES, $state,$stateParams) {
+    MGworkOrder.$inject = ['$rootScope','$scope','ngDialog', '$location', '$log', '$cacheFactory', 'WorkOrder.RES', '$state','$stateParams'];
+    function MGworkOrder($rootScope,$scope,ngDialog, $location, $log, $cacheFactory, workOrderRES, $state,$stateParams) {
         var params={
             linkId:$stateParams.id
         };
-        myWorkOrderRES.listById(params).then(function(result) {
+        workOrderRES.listById(params).then(function(result) {
             var linkProperties = result.data[0].instanceLinkPropertyList;
             if (linkProperties.length != 0) {
                 for (var i = 0; i < linkProperties.length; i++) {
@@ -75,7 +75,7 @@
             }
             if($scope.mgworkorder && $scope.mgworkorder.id) {
                 //查询工单当前处理记录
-                myWorkOrderRES.listWorkOrderProcessResultById({"id": $scope.mgworkorder.id}).then(function (result) {
+                workOrderRES.listWorkOrderProcessResultById({"id": $scope.mgworkorder.id}).then(function (result) {
                     $scope.records = result.data;
                 });
             }
@@ -87,8 +87,7 @@
             properties.remark=$scope.mgworkorder.remark;
             properties.instanceLinkPropertyList=JSON.stringify($scope.mgworkorder.instanceLinkPropertyList);
             $log.info($scope.mgworkorder.instanceLinkPropertyList);
-            myWorkOrderRES.dispose(properties).then(function (result) {
-                $scope.closeThisDialog();
+            workOrderRES.dispose(properties).then(function (result) {
                 $state.go("app.unworkOrder");
                 if(result.code=="0"){
                     window.wxc.xcConfirm("处理成功!", window.wxc.xcConfirm.typeEnum.success);
@@ -111,7 +110,7 @@
         $scope.folder2 = function(){
             $scope.isShow2=!$scope.isShow2;
             if(!$scope.isShow2){
-                myWorkOrderRES.getProcessPicture($scope.mgworkorder.id).then(function (result) {
+                workOrderRES.getProcessPicture($scope.mgworkorder.id).then(function (result) {
                     if(result.data!=undefined && result.data!="") {
                         $scope.imageSrc = "data:image/png;base64," + result.data;
                     }

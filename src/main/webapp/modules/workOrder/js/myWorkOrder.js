@@ -5,89 +5,11 @@
 (function(){
 
     /**
-     * flow status filter
-     * @returns {Function}
-     * @constructor
-     */
-    app.filter('status', Status);
-    function Status (){
-        return function(input){
-            if ( input == "open") {
-                return  "启用";
-            } else if(input == "closed") {
-                return "已挂起";
-            }
-        };
-    };
-    app.filter('dit', dit);
-    function dit (){
-        return function(input){
-            if ( input == 1) {
-                return  true;
-            } else if(input == 0) {
-                return false;
-            }
-        };
-    };
-    app.filter('priorityStatus', priorityStatus);
-    function priorityStatus (){
-        return function(input){
-            if ( input == 0) {
-                return  "低";
-            } else if(input == 1) {
-                return "中";
-            }
-            else if(input == 2) {
-                return "高";
-            }
-        };
-    };
-    app.filter('productTypeStatus', productTypeStatus);
-    function productTypeStatus (){
-        return function(input){
-            if ( input == 1001) {
-                return  "云主机";
-            } else if(input == 1002) {
-                return "云存储";
-            }
-            else {
-                return "其他";
-            }
-        };
-    };
-    app.filter('performerStatus', performerStatus);
-    function performerStatus (){
-        return function(input){
-            if ( input == 1) {
-                return  "受理中";
-            } else if(input == 2) {
-                return "已受理";
-            }
-            else {
-                return "未受理";
-            }
-        };
-    };
-    app.filter('workorderStatus', workorderStatus);
-    function workorderStatus (){
-        return function(input){
-            if ( input == 0) {
-                return  "已保存";
-            } else if(input == 1) {
-                return "已提交";
-            }
-            else {
-                return "处理完成";
-            }
-        };
-    };
-
-    /**
      * myWorkOrder list controller defined
      */
     app.controller('MyWorkOrderCtrl', MyWorkOrderViewCtrl);
-    MyWorkOrderViewCtrl.$inject = ['storeService','$scope', '$rootScope', 'ngDialog', '$log', 'MyWorkOrder.RES', '$state','i18nService'];
-    function MyWorkOrderViewCtrl(storeService,$scope, $rootScope, ngDialog, $log, myWorkOrderRES, $state,i18nService) {
+    MyWorkOrderViewCtrl.$inject = ['storeService','$scope', '$rootScope', 'WorkOrder.RES', '$state','i18nService'];
+    function MyWorkOrderViewCtrl(storeService,$scope, $rootScope, workOrderRES, $state,i18nService) {
     	i18nService.setCurrentLang("zh-cn");
 
     	$scope.status;
@@ -214,13 +136,13 @@
             $scope.myGridOptions.data = workOrders;
         };
         $scope.searchParams={};
-        myWorkOrderRES.list_typeCode().then(function (result) {
+        workOrderRES.list_typeCode().then(function (result) {
             $scope.searchParams.workOrderTypeList= result.data;  //每次返回结果都是最新的
         });
-        myWorkOrderRES.list_priority().then(function (result) {
+        workOrderRES.list_priority().then(function (result) {
             $scope.searchParams.priorityList= result.data;
         });
-        myWorkOrderRES.list_ProductType().then(function (result) {
+        workOrderRES.list_ProductType().then(function (result) {
             $scope.searchParams.productTypeList= result.data;  //每次返回结果都是最新的
         });
         $scope.addCms=function(){
@@ -265,7 +187,7 @@
             $scope.search.loginUserId =$rootScope.userInfo.userId;
             $scope.search.size=pageSize!=undefined?pageSize:10;
             $scope.search.ownerId = $rootScope.userInfo.userId;
-            myWorkOrderRES.list_work($scope.search).then(function (result) {
+            workOrderRES.list_work($scope.search).then(function (result) {
                 var workOrders = result.data.content;  //每次返回结果都是最新的
                 getPage($scope.search.page, $scope.search.pageSize, result.data.totalElements,workOrders);
             });
@@ -288,7 +210,7 @@
         $scope.callFn = function (item) {
             $scope.rowItem = item;
         };
-        myWorkOrderRES.list_attr().then(function (result) {
+        workOrderRES.list_attr().then(function (result) {
             var a = result.data;
             for (var i = 0; i < a.length; i++) {
                 if (a[i].propertyType == "select") {
@@ -312,7 +234,7 @@
                 id:$scope.selectedRows.id,
                 loginUserId :$rootScope.userInfo.userId
             };
-            myWorkOrderRES.submit(para).then(function (result1) {
+            workOrderRES.submit(para).then(function (result1) {
                 if(result1.code=="0"){
                     window.wxc.xcConfirm("提交成功!", window.wxc.xcConfirm.typeEnum.success);
                     $scope.queryByCondition();
@@ -327,14 +249,14 @@
      * myWorkOrder list controller defined
      */
     app.controller('WorkOrderCreateOrUpdateCtrl', CreateOrUpdateViewCtrl);
-    CreateOrUpdateViewCtrl.$inject = ['ngDialog','$scope', '$rootScope', 'MyWorkOrder.RES', '$state', '$stateParams', 'FileUploader'];
-    function CreateOrUpdateViewCtrl(ngDialog,$scope, $rootScope, myWorkOrderRES, $state, $stateParams, FileUploader) {
+    CreateOrUpdateViewCtrl.$inject = ['ngDialog','$scope', '$rootScope', 'WorkOrder.RES', '$state', '$stateParams', 'FileUploader'];
+    function CreateOrUpdateViewCtrl(ngDialog,$scope, $rootScope, workOrderRES, $state, $stateParams, FileUploader) {
         $scope.id = $stateParams.id;
         $scope.linkId = $stateParams.linkId;
         $scope.currentValue = {};
         $scope.attachmentName = "";
 
-        myWorkOrderRES.list_typeCode().then(function (result) {
+        workOrderRES.list_typeCode().then(function (result) {
             $scope.typeCodeList = result.data;
             if(!$scope.workorderType) {
                 if(!$scope.id){
@@ -342,13 +264,13 @@
                 }
             }
         });
-        myWorkOrderRES.list_priority().then(function (result) {
+        workOrderRES.list_priority().then(function (result) {
             $scope.priorityList = result.data;
             if(!$scope.priority) {
                 $scope.priority=result.data[0].priorityValue;
             }
         });
-        myWorkOrderRES.list_ProductType().then(function (result) {
+        workOrderRES.list_ProductType().then(function (result) {
             $scope.productTypeList = result.data;
             if(!$scope.productType) {
                 $scope.productType=result.data[0].productType;
@@ -360,7 +282,7 @@
                 "ownerId"   : $rootScope.userInfo.userId,
                 "linkId"        : $scope.linkId
             };
-            myWorkOrderRES.listMyWorkOrderById(parameters).then(function (result) {
+            workOrderRES.listMyWorkOrderById(parameters).then(function (result) {
                 var workOrder = result.data;
                 if(workOrder) {
                     $scope.currentValue = workOrder[0];
@@ -414,7 +336,7 @@
                         $scope.properties.push(propertyList[i]);
                     }
                 }else {
-                    myWorkOrderRES.list_create_attr(params).then(function (result) {
+                    workOrderRES.list_create_attr(params).then(function (result) {
                         for (var i = 0; i < result.data.length; i++) {
                             filterProperty(result.data[i]);
                         }
@@ -488,7 +410,7 @@
         //create new workOrder
         $scope.saveItem = function () {
             var params=data();
-            myWorkOrderRES.save(params).then(function (result) {
+            workOrderRES.save(params).then(function (result) {
                 ngDialog.open({
                     template: 'modules/workOrder/confirmDialog.html',
                     className:'ngdialog-theme-default ngdialog-theme-dadao',
@@ -538,7 +460,7 @@
                                 ownerId:result.data.ownerId,
                                 loginUserId:$scope.currentValue.loginUserId
                             };
-                            myWorkOrderRES.submit($scope.paramss).then(function (result1) {
+                            workOrderRES.submit($scope.paramss).then(function (result1) {
                                 $scope.closeThisDialog();
                                 $state.go("app.myWorkOrder");
                                 if(result1.code=="0"){

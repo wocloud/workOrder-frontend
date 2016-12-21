@@ -3,7 +3,7 @@
         <tab ng-repeat="tab in dealTabs track by tab.index" heading="{{tab.title}}" active="tab.active" ng-click="tabChange(tab)">
             <div class="panel">
                 <!--- workOrders -->
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-controller="DisworkOrder">
                     <div class="row no-padder m-n">
                         <div class="row no-padder m-n">
                             <sreach-button>

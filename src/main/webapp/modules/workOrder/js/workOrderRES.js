@@ -1,6 +1,6 @@
-app.service('MyWorkOrder.RES', ServiceMyWorkOrderRES);
-ServiceMyWorkOrderRES.$inject = ['$q', '$resource', 'fakeMapping', '$rootScope'];
-function ServiceMyWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
+app.service('WorkOrder.RES', ServiceworkOrderRES);
+ServiceworkOrderRES.$inject = ['$q', '$resource', 'fakeMapping', '$rootScope'];
+function ServiceworkOrderRES($q, $resource, fakeMapping, $rootScope) {
     this.CMD = {
         ListWorkOrder    : 'listWorkOrders',
         CreateWorkOrder  : 'createWorkOrder',
@@ -325,3 +325,75 @@ function ServiceMyWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
         return task.promise;
     };
 }
+
+app.filter('status', Status);
+function Status (){
+    return function(input){
+        if ( input == "open") {
+            return  "启用";
+        } else if(input == "closed") {
+            return "已挂起";
+        }
+    };
+};
+app.filter('dit', dit);
+function dit (){
+    return function(input){
+        if ( input == 1) {
+            return  true;
+        } else if(input == 0) {
+            return false;
+        }
+    };
+};
+app.filter('priorityStatus', priorityStatus);
+function priorityStatus (){
+    return function(input){
+        if ( input == 0) {
+            return  "低";
+        } else if(input == 1) {
+            return "中";
+        }
+        else if(input == 2) {
+            return "高";
+        }
+    };
+};
+app.filter('productTypeStatus', productTypeStatus);
+function productTypeStatus (){
+    return function(input){
+        if ( input == 1001) {
+            return  "云主机";
+        } else if(input == 1002) {
+            return "云存储";
+        }
+        else {
+            return "其他";
+        }
+    };
+};
+app.filter('performerStatus', performerStatus);
+function performerStatus (){
+    return function(input){
+        if ( input == 1) {
+            return  "受理中";
+        } else if(input == 2) {
+            return "已受理";
+        } else {
+            return "未受理";
+        }
+    };
+};
+app.filter('workorderStatus', workorderStatus);
+function workorderStatus (){
+    return function(input){
+        if ( input == 0) {
+            return  "已保存";
+        } else if(input == 1) {
+            return "已提交";
+        }
+        else {
+            return "处理完成";
+        }
+    };
+};

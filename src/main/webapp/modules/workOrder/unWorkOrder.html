@@ -1,7 +1,7 @@
 <div ng-controller="WorkOrderViewCtrl" class="content-container">
 	<tabset class="tab-container">
 		<tab ng-repeat="tab in dealTabs track by tab.index" heading="{{tab.title}}" active="tab.active" ng-click="tabChange(tab)">
-			<div class="pane">
+			<div class="pane" ng-controller="UnWorkOrder">
 				<!--- workOrders -->
 				<div class="panel panel-default">
 					<div class="row no-padder m-n">

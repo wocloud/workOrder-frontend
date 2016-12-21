@@ -39,8 +39,8 @@
             }
         };
     };
-    WorkOrderInfo.$inject = ['$scope', '$rootScope', 'MyWorkOrder.RES', '$stateParams'];
-    function WorkOrderInfo($scope, $rootScope, myWorkOrderRES, $stateParams) {
+    WorkOrderInfo.$inject = ['$scope', '$rootScope', 'WorkOrder.RES', '$stateParams'];
+    function WorkOrderInfo($scope, $rootScope, workOrderRES, $stateParams) {
         $scope.imageSrc = "";
         $scope.records = [];
         $scope.instanceLinkPropertyList = [];
@@ -58,50 +58,50 @@
         var flag = $stateParams.flag;
         if(flag=="my") {
             params.ownerId = $rootScope.userInfo.userId;
-            myWorkOrderRES.listMyWorkOrderById(params).then(function (result) {
+            workOrderRES.listMyWorkOrderById(params).then(function (result) {
                 $scope.workOrder = result.data[0];
                 processData();
                 if($scope.workOrder && $scope.workOrder.id) {
                     $scope.workOrderInstanceId = $scope.workOrder.id;
                     //查询工单当前处理记录
-                    myWorkOrderRES.listWorkOrderProcessResultById({"id": $scope.workOrder.id}).then(function (result) {
+                    workOrderRES.listWorkOrderProcessResultById({"id": $scope.workOrder.id}).then(function (result) {
                         $scope.records = result.data;
                     });
                 }
             });
         } else if(flag=="undo"){
-            myWorkOrderRES.listUndoWorkOrderById(params).then(function (result) {
+            workOrderRES.listUndoWorkOrderById(params).then(function (result) {
                 $scope.workOrder = result.data[0];  //每次返回结果都是最新的
                 processData();
                 if($scope.workOrder && $scope.workOrder.id) {
                     $scope.workOrderInstanceId = $scope.workOrder.id;
                     //查询工单当前处理记录
-                    myWorkOrderRES.listWorkOrderProcessResultById({"id": $scope.workOrder.id}).then(function (result) {
+                    workOrderRES.listWorkOrderProcessResultById({"id": $scope.workOrder.id}).then(function (result) {
                         $scope.records = result.data;
                     });
                 }
             });
         } else if(flag=="processed"){
             params.performerId = $rootScope.userInfo.userId;
-            myWorkOrderRES.listProcessedWorkOrderById(params).then(function (result) {
+            workOrderRES.listProcessedWorkOrderById(params).then(function (result) {
                 $scope.workOrder = result.data[0];  //每次返回结果都是最新的
                 processData();
                 if($scope.workOrder && $scope.workOrder.id) {
                     $scope.workOrderInstanceId = $scope.workOrder.id;
                     //查询工单当前处理记录
-                    myWorkOrderRES.listWorkOrderProcessResultById({"id": $scope.workOrder.id}).then(function (result) {
+                    workOrderRES.listWorkOrderProcessResultById({"id": $scope.workOrder.id}).then(function (result) {
                         $scope.records = result.data;
                     });
                 }
             });
         } else if(flag=="all"){
-            myWorkOrderRES.listAllWorkOrderById(params).then(function (result) {
+            workOrderRES.listAllWorkOrderById(params).then(function (result) {
                 $scope.workOrder = result.data[0];  //每次返回结果都是最新的
                 processData();
                 if($scope.workOrder && $scope.workOrder.id) {
                     $scope.workOrderInstanceId = $scope.workOrder.id;
                     //查询工单当前处理记录
-                    myWorkOrderRES.listWorkOrderProcessResultById({"id": $scope.workOrder.id}).then(function (result) {
+                    workOrderRES.listWorkOrderProcessResultById({"id": $scope.workOrder.id}).then(function (result) {
                         $scope.records = result.data;
                     });
                 }
@@ -155,7 +155,7 @@
         $scope.folder2 = function(){
             $scope.isShow2=!$scope.isShow2;
             if(!$scope.isShow2){
-                myWorkOrderRES.getProcessPicture($scope.workOrderInstanceId).then(function (result) {
+                workOrderRES.getProcessPicture($scope.workOrderInstanceId).then(function (result) {
                     if(result.data!=undefined && result.data!="") {
                         $scope.imageSrc = "data:image/png;base64," + result.data;
                     }

@@ -1,58 +1,6 @@
 app.controller('LKworkOrder', LKworkOrder);
-app.filter('priorityStatus', priorityStatus);
-function priorityStatus (){
-    return function(input){
-        if ( input == 0) {
-            return  "低";
-        } else if(input == 1) {
-            return "中";
-        }
-        else if(input == 2) {
-            return "高";
-        }
-    };
-};
-app.filter('workorderStatus', workorderStatus);
-function workorderStatus (){
-    return function(input){
-        if ( input == 0) {
-            return  "已保存";
-        } else if(input == 1) {
-            return "已提交";
-        }
-        else {
-            return "处理完成";
-        }
-    };
-};
-app.filter('productTypeStatus', productTypeStatus);
-function productTypeStatus (){
-    return function(input){
-        if ( input == 1001) {
-            return  "云主机";
-        } else if(input == 1002) {
-            return "云存储";
-        }
-        else {
-            return "其他";
-        }
-    };
-};
-app.filter('performerStatus', performerStatus);
-function performerStatus (){
-    return function(input){
-        if ( input == 1) {
-            return  "受理中";
-        } else if(input == 2) {
-            return "已受理";
-        }
-        else {
-            return "未受理";
-        }
-    };
-};
-LKworkOrder.$inject = ['storeService','$rootScope','$scope', 'MyWorkOrder.RES','$state','i18nService'];
-function LKworkOrder(storeService,$rootScope,$scope, myWorkOrderRES,$state,i18nService) {
+LKworkOrder.$inject = ['storeService','$rootScope','$scope', 'WorkOrder.RES','$state','i18nService'];
+function LKworkOrder(storeService,$rootScope,$scope, workOrderRES,$state,i18nService) {
 	i18nService.setCurrentLang("zh-cn");
     $scope.paginationCurrentPage=storeService.getObject('lkStore').paginationCurrentPage!=undefined?storeService.getObject('lkStore').paginationCurrentPage:1;
     $scope.search=storeService.getObject('lkStore').search!=undefined?storeService.getObject('lkStore').search:{};
@@ -185,13 +133,13 @@ function LKworkOrder(storeService,$rootScope,$scope, myWorkOrderRES,$state,i18nS
         $scope.myGridOptions.data = workOrders;
     };
     $scope.searchParams={};
-    myWorkOrderRES.list_typeCode().then(function (result) {
+    workOrderRES.list_typeCode().then(function (result) {
         $scope.searchParams.workOrderTypeList= result.data;  //每次返回结果都是最新的
     });
-    myWorkOrderRES.list_priority().then(function (result) {
+    workOrderRES.list_priority().then(function (result) {
         $scope.searchParams.priorityList= result.data;
     });
-    myWorkOrderRES.list_ProductType().then(function (result) {
+    workOrderRES.list_ProductType().then(function (result) {
         $scope.searchParams.productTypeList= result.data;  //每次返回结果都是最新的
     });
     $scope.selectInstanceLinkPropertyList=function(instanceLinkPropertyList){
@@ -227,7 +175,7 @@ function LKworkOrder(storeService,$rootScope,$scope, myWorkOrderRES,$state,i18nS
         $scope.myGridOptions.paginationCurrentPage=$scope.search.page;
         $scope.search.loginUserId =$rootScope.userInfo.userId;
         $scope.search.size=pageSize!=undefined?pageSize:10;
-        myWorkOrderRES.list_work($scope.search).then(function (result) {
+        workOrderRES.list_work($scope.search).then(function (result) {
             var workOrders = result.data.content;  //每次返回结果都是最新的
             getPage($scope.search.page, $scope.search.pageSize, result.data.totalElements,workOrders);
         });
@@ -251,7 +199,7 @@ function LKworkOrder(storeService,$rootScope,$scope, myWorkOrderRES,$state,i18nS
         $scope.rowItem = item;
     };
     $scope.propertieslist = [];
-    myWorkOrderRES.list_attr().then(function (result) {
+    workOrderRES.list_attr().then(function (result) {
         var a = result.data;
         for (var i = 0; i < a.length; i++) {
             if (a[i].propertyType == "select") {

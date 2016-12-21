@@ -1,9 +1,9 @@
 <div ng-controller="WorkOrderViewCtrl" class="content-container">
 	<tabset class="tab-container">
 		<tab ng-repeat="tab in dealTabs track by tab.index" heading="{{tab.title}}" active="tab.active" ng-click="tabChange(tab)">
-			<div class="">
+			<div class="pane" ng-controller="MyWorkOrderCtrl">
 				<!--- workOrders -->
-				<div class="">
+				<div class="panel panel-default">
 					<div class="row no-padder m-n">
 						<div class="row no-padder m-n">
 							<sreach-button>

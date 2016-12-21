@@ -146,7 +146,6 @@ $(function(){
 
         //create new attr
         $scope.createItem = function () {
-            $scope.selectedRows = [];
             ngDialog.open({
                 template: 'modules/workOrder/attr.create.html',
                 className:'ngdialog-theme-default wocloud-ngdialog-blue',
@@ -183,8 +182,11 @@ $(function(){
     AttrCreateOrUpdateViewCtrl.$inject = ['$scope', 'workOrderAttr.RES'];
     function AttrCreateOrUpdateViewCtrl($scope, workOrderAttrRES){
         var key = "";
-        if($scope.selectedRows && $scope.selectedRows.length>0) {
-            key = $scope.selectedRows[0].propertyKey;
+        //if($scope.selectedRows && $scope.selectedRows.length>0) {
+        //    key = $scope.selectedRows[0].propertyKey;
+        //}
+        if($scope.selectedItem) {
+            key = $scope.selectedItem.propertyKey;
         }
         $scope.PropertyType = workOrderAttrRES.baseEnum().propertyType;
 
@@ -267,18 +269,22 @@ $(function(){
     app.controller('WorkOrderAttrDeleteViewCtrl', AttrDeleteViewCtrl);
     AttrDeleteViewCtrl.$inject = ['$scope', 'workOrderAttr.RES'];
     function AttrDeleteViewCtrl($scope, workOrderAttrRES) {
-        var ids = [];
+        //var ids = [];
 
-        if($scope.selectedRows) {
-            $scope.items = $scope.selectedRows;
-            angular.forEach($scope.selectedRows, function(data,index,array){
-                ids.push(data.id);
-            });
+        //if($scope.selectedRows) {
+        //    $scope.items = $scope.selectedRows;
+        //    angular.forEach($scope.selectedRows, function(data,index,array){
+        //        ids.push(data.id);
+        //    });
+        //}
+        var id = "";
+        if($scope.selectedItem) {
+            id = $scope.selectedItem.id;
         }
 
         //remove attr
         $scope.removeItem = function () {
-            workOrderAttrRES.removeById(ids[0]).then(function (result) {
+            workOrderAttrRES.removeById(id).then(function (result) {
                 $scope.closeThisDialog();
                 if(result.code=="0"){
                     window.wxc.xcConfirm("自定义属性删除成功!", window.wxc.xcConfirm.typeEnum.success);
@@ -338,6 +344,7 @@ $(function(){
             paginationCurrentPage : $scope.paginationCurrentPage,
             paginationPageSize : $scope.paginationPageSize
         };
+        var index = 0;
         $scope.attrGridOptions = {
             columnDefs: [
                 {
@@ -354,6 +361,7 @@ $(function(){
                     displayName: '格式',
                     cellTemplate:'<div class="ui-grid-cell-contents">{{row.entity.propertyType | propertyTypeFilter}}</div>'
                 }],
+            multiSelect: false, //限制多选
             enableCellEdit: false, // 是否可编辑
             enableSorting: true, //是否排序
             useExternalSorting: false, //是否使用自定义排序规则
@@ -371,10 +379,12 @@ $(function(){
             //----------- 选中 ----------------------
             enableFooterTotalSelected: false, // 是否显示选中的总数，默认为true, 如果显示，showGridFooter 必须为true
             enableFullRowSelection: true, //是否点击行任意位置后选中,默认为false,当为true时，checkbox可以显示但是不可选中
-            enableRowHeaderSelection: true, //是否显示选中checkbox框 ,默认为true
-            enableRowSelection: true, // 行选择是否可用，默认为true;
-            enableSelectAll: true, // 选择所有checkbox是否可用，默认为true;
-            enableSelectionBatchEvent: true, //默认true
+            isRowSelectable: function (row) { //GridRow
+                index += 1;//下标加1
+                if (index == 1) {
+                    row.grid.api.selection.selectRow(row.entity);
+                }
+            },
             useExternalPagination: true, //是否使用客户端分页,默认false
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
@@ -389,28 +399,31 @@ $(function(){
                 //行选中事件
                 $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row, event) {
                     if (row && row.isSelected) {
-                        $scope.selectedRows.push(row.entity);
+                        //$scope.selectedRows.push(row.entity);
+                        $scope.selectedItem=row.entity;
                     }
-                    if(row && !row.isSelected){
-                        angular.forEach($scope.selectedRows, function(data, index, rows){
-                           if(data.propertyKey == row.entity.propertyKey) {
-                               $scope.selectedRows.splice(index, 1);
-                           }
-                        });
-                    }
+                    //if(row && !row.isSelected){
+                    //    angular.forEach($scope.selectedRows, function(data, index, rows){
+                    //       if(data.propertyKey == row.entity.propertyKey) {
+                    //           $scope.selectedRows.splice(index, 1);
+                    //       }
+                    //    });
+                    //}
                 });
             }
         };
         var attrs=[];
 
         var getPage = function (curPage, pageSize,totalSize) {
+            index = 0;
             $scope.attrGridOptions.paginationCurrentPage = curPage;
             $scope.attrGridOptions.paginationPageSize = pageSize;
             $scope.attrGridOptions.totalItems = totalSize;
             $scope.attrGridOptions.data = attrs;
         };
         $scope.loadData = function(newPage,pageSize){
-            $scope.selectedRows = [];
+            //$scope.selectedRows = [];
+            $scope.selectedItem = undefined;
             $scope.attrStore = {
                 query : $scope.query || {},
                 paginationCurrentPage : $scope.paginationCurrentPage,
@@ -423,7 +436,6 @@ $(function(){
                 'page' : $scope.attrStore.paginationCurrentPage,
                 'size' : $scope.attrStore.paginationPageSize
             };
-            console.log(params);
             workOrderAttrRES.list(params).then(function (result) {
                 attrs = result.content;  //每次返回结果都是最新的
                 getPage(params.page, params.size, result.totalElements);

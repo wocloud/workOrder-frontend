@@ -46,7 +46,6 @@ angular.module('app')
                 //})
                 .state('app.myWorkOrder', {
                     url: '/myWorkOrder',
-                    controller: 'MyWorkOrderCtrl',
                     templateUrl: 'modules/workOrder/myWorkOrder.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
@@ -79,7 +78,6 @@ angular.module('app')
                 })
                 .state('app.lkworkOrder', {
                     url: '/lkworkOrder',
-                    controller:'LKworkOrder',
                     templateUrl: 'modules/workOrder/lkWorkOrder.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
@@ -120,7 +118,6 @@ angular.module('app')
                 })
                 .state('app.unworkOrder', {
                     url: '/unworkOrder',
-                    controller:'UNworkOrder',
                     templateUrl: 'modules/workOrder/unWorkOrder.html',
                     resolve: {
                         deps: ['$ocLazyLoad',
@@ -135,7 +132,6 @@ angular.module('app')
                 })
                 .state('app.disworkOrder', {
                     url: '/disworkOrder',
-                    controller:'DisworkOrder',
                     templateUrl: 'modules/workOrder/disWorkOrder.html',
                     resolve: {
                         deps: ['$ocLazyLoad',

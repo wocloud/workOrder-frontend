@@ -156,6 +156,7 @@ $(function(){
     function TypeViewCtrl($scope, ngDialog, workOrderTypeRES, i18nService) {
         i18nService.setCurrentLang("zh-cn");
         $scope.myData = [];
+        var index = 0;
         $scope.myGridOptions = {
             data: 'myData',
             columnDefs: [
@@ -184,6 +185,12 @@ $(function(){
             enableRowSelection: true, // 行选择是否可用，默认为true;
             enableSelectAll: true, // 选择所有checkbox是否可用，默认为true;
             enableSelectionBatchEvent: true, //默认true
+            isRowSelectable: function (row) { //GridRow
+                index += 1;//下标加1
+                if (index == 1) {
+                    row.grid.api.selection.selectRow(row.entity);
+                }
+            },
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
                 //行选中事件
@@ -200,6 +207,7 @@ $(function(){
             $scope.selectedItem = undefined;
             workOrderTypeRES.list().then(function (result) {
                 $scope.myData = result;
+                index = 0;
             }, function(){
                 $scope.myData = [];
             });

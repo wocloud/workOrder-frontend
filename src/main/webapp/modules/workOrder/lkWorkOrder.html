@@ -1,8 +1,4 @@
-<!-- <div class="bg-light lter b-b wrapper-md" >
-    <h1 class="m-n font-thin h3">查看工单</h1>
-</div> -->
-<div class="panel">
-
+<div class="panel" ng-controller="LKworkOrder">
     <!--- workOrders -->
     <div class="panel panel-default">
         <div class="row no-padder m-n">
@@ -14,9 +10,6 @@
                 </sreach-button>
 
             </div>
-            <!--<div>
-                <button class="btn m-b-xs btn-sm btn-primary btn-addon" ng-click="createItem()"><i class="fa fa-plus"></i>新建工单</button>
-            </div>-->
             <div ui-grid="myGridOptions"
                  ui-grid-edit ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
             </div>
