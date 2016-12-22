@@ -1,56 +1,7 @@
 (function() {
-    app.filter('dit', dit);
-    function dit (){
-        return function(input){
-            if ( input == 1) {
-                return  true;
-            } else if(input == 0) {
-                return false;
-            }
-        };
-    };
-    app.filter('priorityStatus', priorityStatus);
-    function priorityStatus (){
-        return function(input){
-            if ( input == 0) {
-                return  "低";
-            } else if(input == 1) {
-                return "中";
-            }
-            else if(input == 2) {
-                return "高";
-            }
-        };
-    };
-    app.filter('productTypeStatus', productTypeStatus);
-    function productTypeStatus (){
-        return function(input){
-            if ( input == 1001) {
-                return  "云主机";
-            } else if(input == 1002) {
-                return "云存储";
-            }
-            else {
-                return "其他";
-            }
-        };
-    };
-    app.filter('performerStatus', performerStatus);
-    function performerStatus (){
-        return function(input){
-            if ( input == 1) {
-                return  "受理中";
-            } else if(input == 2) {
-                return "已受理";
-            }
-            else {
-                return "未受理";
-            }
-        };
-    };
     app.controller('MGworkOrder', MGworkOrder);
-    MGworkOrder.$inject = ['$rootScope','$scope','ngDialog', '$location', '$log', '$cacheFactory', 'WorkOrder.RES', '$state','$stateParams'];
-    function MGworkOrder($rootScope,$scope,ngDialog, $location, $log, $cacheFactory, workOrderRES, $state,$stateParams) {
+    MGworkOrder.$inject = ['$rootScope','$scope','WorkOrder.RES','$state','$stateParams'];
+    function MGworkOrder($rootScope,$scope,workOrderRES,$state,$stateParams) {
         var params={
             linkId:$stateParams.id
         };
@@ -58,10 +9,13 @@
             var linkProperties = result.data[0].instanceLinkPropertyList;
             if (linkProperties.length != 0) {
                 for (var i = 0; i < linkProperties.length; i++) {
-                    if (linkProperties[i].propertyType == "select") {
-                        linkProperties[i].propertyOptions = JSON.parse(linkProperties[i].propertyOptions);
-                        if(linkProperties[i].propertyValue==null || !linkProperties[i].propertyValue){
-                            linkProperties[i].propertyValue="";
+                    if (linkProperties[i].propertyType == "select" && typeof(linkProperties[i].propertyOptions)=="string") {
+                        linkProperties[i].propertyOptions = jQuery.parseJSON(linkProperties[i].propertyOptions);
+                        if(linkProperties[i].propertyDefaultValue==null || !linkProperties[i].propertyDefaultValue){
+                            linkProperties[i].propertyDefaultValue="";
+                        }
+                        if(!linkProperties[i].propertyValue || linkProperties[i].propertyValue == null){
+                            linkProperties[i].propertyValue = linkProperties[i].propertyDefaultValue;
                         }
                     }
                 }
@@ -86,7 +40,6 @@
             properties.loginUserId =$rootScope.userInfo.userId;
             properties.remark=$scope.mgworkorder.remark;
             properties.instanceLinkPropertyList=JSON.stringify($scope.mgworkorder.instanceLinkPropertyList);
-            $log.info($scope.mgworkorder.instanceLinkPropertyList);
             workOrderRES.dispose(properties).then(function (result) {
                 $state.go("app.unworkOrder");
                 if(result.code=="0"){
@@ -120,7 +73,7 @@
 
         //return to the main page
         $scope.backToMain = function () {
-            history.back();
+            $state.go("app.unworkOrder");
         };
     };
-})()
+})();

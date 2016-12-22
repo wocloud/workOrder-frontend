@@ -225,6 +225,7 @@ $(function(){
 
         //create
         $scope.createItem = function () {
+            $scope.selectedItem = undefined;
             ngDialog.open({
                 template: 'createOrUpdateTemplate',
                 className:'ngdialog-theme-default wocloud-ngdialog-blue',
@@ -262,6 +263,7 @@ $(function(){
             ngDialog.open({
                 template: 'bindWithProcessTemplate',
                 className:'ngdialog-theme-default wocloud-ngdialog-blue',
+                width: '70%',
                 controller: 'bindWithProcessViewCtrl',
                 scope: $scope
             });

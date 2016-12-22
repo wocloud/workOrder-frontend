@@ -1,6 +1,6 @@
-app.service('WorkOrder.RES', ServiceworkOrderRES);
-ServiceworkOrderRES.$inject = ['$q', '$resource', 'fakeMapping', '$rootScope'];
-function ServiceworkOrderRES($q, $resource, fakeMapping, $rootScope) {
+app.service('WorkOrder.RES', ServiceWorkOrderRES);
+ServiceWorkOrderRES.$inject = ['$q', '$resource', 'fakeMapping', '$rootScope'];
+function ServiceWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
     this.CMD = {
         ListWorkOrder    : 'listWorkOrders',
         CreateWorkOrder  : 'createWorkOrder',

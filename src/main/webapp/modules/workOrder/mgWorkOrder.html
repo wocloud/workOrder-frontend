@@ -114,7 +114,7 @@
                                     <select class="form-control" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}"
                                             ng-model="items.propertyValue" ng-required="items.isRequired|dit">
                                         <option value="" ng-if="items.propertyValue==null || items.propertyValue==''" >-请选择-</option>
-                                        <option ng-repeat="item in items.propertyOptions" value="{{item.optionValue}}">{{item.optionName}}</option>
+                                        <option ng-repeat="item in items.propertyOptions" value="{{item.optionValue}}" ng-selected="{{item.optionValue==items.propertyValue}}">{{item.optionName}}</option>
                                     </select>
                                 </div>
                                 <div ng-if="items.isRequired|dit" >
@@ -204,8 +204,8 @@
     </div>
     <div class="panel-body">
         <div class="modal-footer" style="text-align: center;background:#fff;">
-            <button type="button" class="btn btn-primary"  ng-click="backToMain()">返回</button>
             <button type="button" class="btn btn-primary" ng-disabled="disposeWorkOrder.$invalid" ng-click="disposeToMain()">保存</button>
+            <button type="button" class="btn btn-primary"  ng-click="backToMain()">返回</button>
         </div>
     </div>
 </div>

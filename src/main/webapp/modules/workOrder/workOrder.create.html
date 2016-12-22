@@ -188,7 +188,7 @@
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9" >
-                            <input  class="form-control laydate-icon" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" def-laydate  type="text"  ng-model="items.propertyValue"   ng-required="items.isRequired|dit" />
+                            <input class="form-control laydate-icon" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" def-laydate  type="text"  ng-model="items.propertyValue" ng-required="items.isRequired|dit" />
                             <div ng-if="items.isRequired|dit" >
                                 <span class="no-null">*</span>
                                 <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >
@@ -203,7 +203,7 @@
         <div class="text-danger text-center">注：*为必填字段，输入边框为红色时，请按提示正确输入！</div>
     </div>
     <div class="modal-footer" style="text-align: center;background:#fff;">
-        <button type="button" class="btn btn-primary" ng-click="backToMain()">取消</button>
         <button type="button" class="btn btn-primary" ng-click="saveItem()" ng-disabled="createWorkOrder.$invalid">提交</button>
+        <button type="button" class="btn btn-primary" ng-click="backToMain()">取消</button>
     </div>
 </div>
