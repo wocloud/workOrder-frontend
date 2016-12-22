@@ -141,14 +141,12 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                     '</div>' +
                 '</div>' +
             '<div class="form-group common-group" style="position: absolute;bottom:19px;right: -100px;">' +
-                '<label class="lable-name" > <a class="__btn__" ng-click="prClick()">' +
-                    ' <i class="glyphicon glyphicon-search"></i> ' +
-                    '<span class="btn-name">查找</span> ' +
-                    '</a>' +
-                ' </label> ' +
+                '<button type="button" class="operate-btn on" ng-click="prClick()">' +
+                    '<i class="glyphicon glyphicon-search"></i>' +
+                    '<span>查找</span> ' +
+                ' </button> ' +
             '</div>'+
         '</div>'+
-           /* '<button ng-click="prClick()" style="position: absolute;bottom:25px;">查询</button>' +*/
         '<div class="col-sm-6 m-t-xs m-b-xs" style="height: 100%">' +
         '<div style="float:right">' +
         '<span>增加过滤器:</span>' +

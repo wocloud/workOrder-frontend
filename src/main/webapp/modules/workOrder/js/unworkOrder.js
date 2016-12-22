@@ -1,8 +1,8 @@
 'use strict';
 (function(){
-    app.controller('UnWorkOrder', UnWorkOrder);
-    UnWorkOrder.$inject = ['storeService','$rootScope','$scope','WorkOrder.RES','$state','i18nService'];
-    function UnWorkOrder(storeService,$rootScope,$scope,workOrderRES,$state,i18nService) {
+    app.controller('UnWorkOrderViewCtrl', UnWorkOrderViewCtrl);
+    UnWorkOrderViewCtrl.$inject = ['storeService','$rootScope','$scope','WorkOrder.RES','$state','i18nService'];
+    function UnWorkOrderViewCtrl(storeService,$rootScope,$scope,workOrderRES,$state,i18nService) {
         i18nService.setCurrentLang("zh-cn");
         $scope.paginationCurrentPage=storeService.getObject('unStore').paginationCurrentPage!=undefined?storeService.getObject('unStore').paginationCurrentPage:1;
         $scope.search=storeService.getObject('unStore').search!=undefined?storeService.getObject('unStore').search:{};

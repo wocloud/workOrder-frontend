@@ -3,9 +3,8 @@
         <tab ng-repeat="tab in configTabs track by tab.index" heading="{{tab.title}}" active="tab.active" ng-click="tabChange(tab)">
             <!--  content -->
             <div class="pane">
-                <div class="panel panel-default" ng-controller="WorkOrderTypesViewCtrl">
+                <div class="panel panel-default">
                     <!-- tip pop -->
-                    <toaster-container></toaster-container>
                     <div class="content-list">
                         <div class="row">
                             <button class="operate-btn on" ng-click="createItem()">

@@ -26,6 +26,5 @@ angular.module('app', [
     'ui.grid.pagination',
     'ui.grid.resizeColumns',
     'ui.grid.autoResize',
-    'ngDialog',
-    'toaster'
+    'ngDialog'
 ]);

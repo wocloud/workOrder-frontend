@@ -134,8 +134,8 @@ $(function(){
     app.controller('WorkOrderAttrsViewCtrl', AttrViewCtrl);
     AttrViewCtrl.$inject = ['$scope', 'ngDialog', 'workOrderAttr.RES', 'storeService', 'i18nService'];
     function AttrViewCtrl($scope, ngDialog, workOrderAttrRES, storeService, i18nService) {
-        i18nService.setCurrentLang("zh-cn");
 
+        i18nService.setCurrentLang("zh-cn");
         renderAttrTable($scope, workOrderAttrRES, storeService);
 
         //查询重置
