@@ -1,26 +1,27 @@
 <div ng-controller="WorkOrderViewCtrl" class="content-container">
 	<tabset class="tab-container">
 		<tab ng-repeat="tab in configTabs track by tab.index" heading="{{tab.title}}" active="tab.active" ng-click="tabChange(tab)">
-			<div class="pane" id="content">
+			<div class="pane">
 				<div class="panel panel-default">
 					<!-- query -->
 					<div class="content-query clearfix">
-						<div class="form-group col-sm-3 col-md-3">
-							<label class="col-md-3 col-sm-3 control-label">编码</label>
-							<div class="col-md-8 col-sm-8 no-padder-sm">
-								<input type="text" name="propertyKey" class="form-control" ng-model="query.propertyKey" ng-maxlength="256" ng-focus>
+						<form role="form">
+							<div class="col-md-12">
+								<div class="form-group common-group">
+									<label class="label-name">编码</label>
+									<input type="text" name="propertyKey" class="form-control" ng-model="query.propertyKey" ng-maxlength="256" ng-focus>
+								</div>
+								<div class="form-group common-group">
+									<label class="label-name">名称</label>
+									<input type="text" name="propertyName" class="form-control" ng-model="query.propertyName" ng-maxlength="256" ng-focus>
+								</div>
+								<div class="form-group common-group text-right">
+									<label class="lable-name"></label>
+									<button type="button" class="operate-btn on" ng-click="loadData()"><i class="glyphicon glyphicon-search"></i><span>查询</span></button>
+									<button type="button" class="operate-btn on" ng-click="reset()"><i class="glyphicon glyphicon-repeat"></i><span>重置</span></button>
+								</div>
 							</div>
-						</div>
-						<div class="form-group col-sm-3 col-md-3">
-							<label class="col-md-3 col-sm-3 control-label">名称</label>
-							<div class="col-md-8 col-sm-8 no-padder-sm">
-								<input type="text" name="propertyName" class="form-control" ng-model="query.propertyName" ng-maxlength="256" ng-focus>
-							</div>
-						</div>
-						<div class="form-group col-sm-3 col-md-3">
-							<button type="button" class="operate-btn on" ng-click="loadData()"><i class="glyphicon glyphicon-search"></i><span>查询</span></button>
-							<button type="button" class="operate-btn on" ng-click="reset()"><i class="glyphicon glyphicon-repeat"></i><span>重置</span></button>
-						</div>
+						</form>
 					</div>
 					<!--- attributes -->
 					<div class="content-list">
@@ -38,7 +39,7 @@
 								<span>删除</span>
 							</button>
 						</div>
-						<div ui-grid="attrGridOptions" ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
+						<div ui-grid="attrGridOptions" style="width: 100%; height:400px; text-align: center;margin-top: 1px;" ui-grid-edit ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
 						</div>
 					</div>
 				</div>
@@ -46,7 +47,7 @@
 
 			<script type="text/ng-template" id="deleteTemplate.html">
 				<div class="modal-header">
-					<span>删除自定义属性</span>
+					<h4 class="modal-title">删除自定义属性</h4>
 				</div>
 				<div class="modal-body">
 					<p>你确定要删除 {{selectedItem.propertyName}} 吗?</p>

@@ -187,12 +187,19 @@ $(function(){
             enableSelectionBatchEvent: true, //默认true
             isRowSelectable: function (row) { //GridRow
                 index += 1;//下标加1
+                if(index==$scope.queryLength){
+                    index=0;
+                }
                 if (index == 1) {
                     row.grid.api.selection.selectRow(row.entity);
                 }
             },
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
+                //分页按钮事件
+                gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                    index =0;
+                });
                 //行选中事件
                 $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row, event) {
                     if (row && row.isSelected) {
@@ -206,8 +213,8 @@ $(function(){
         $scope.loadData = function(){
             $scope.selectedItem = undefined;
             workOrderTypeRES.list().then(function (result) {
+                $scope.queryLength=result.length;
                 $scope.myData = result;
-                index = 0;
             }, function(){
                 $scope.myData = [];
             });

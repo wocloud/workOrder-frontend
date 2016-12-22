@@ -95,17 +95,14 @@ function LKworkOrder(storeService,$rootScope,$scope, workOrderRES,$state,i18nSer
         enableSelectionBatchEvent: true, //默认true
         isRowSelectable: function (row) { //GridRow
             index += 1;//下标加1
+            if(index==$scope.queryLength){
+                index=0;
+            }
             if (index == 1) {
                 row.grid.api.selection.selectRow(row.entity);
             }
         },
         useExternalPagination: true, //是否使用客户端分页,默认false
-        isRowSelectable: function (row) { //GridRow
-            index += 1;//下标加1
-            if (index == 1) {
-                row.grid.api.selection.selectRow(row.entity);
-            }
-        },
         modifierKeysToMultiSelect: true,//默认false,为true时只能 按ctrl或shift键进行多选, multiSelect 必须为true;
         multiSelect: true,// 是否可以选择多个,默认为true;
         noUnselect: true,//默认false,选中后是否可以取消选中
@@ -158,16 +155,10 @@ function LKworkOrder(storeService,$rootScope,$scope, workOrderRES,$state,i18nSer
         return a;
     }
     $scope.sreach = function (page,pageSize) {
-        /*if($scope.search.startTime==""){
-            delete $scope.search.startTime;
-        }
-        if($scope.search.endTime==""){
-            delete $scope.search.endTime;
-        }*/
         var lkStore={
             search:$scope.search,
             properties:$scope.properties||[]
-        }
+        };
         storeService.setObject('lkStore',$scope.lkStore);
         var instanceLinkPropertyList=$scope.properties
         $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
@@ -176,6 +167,7 @@ function LKworkOrder(storeService,$rootScope,$scope, workOrderRES,$state,i18nSer
         $scope.search.loginUserId =$rootScope.userInfo.userId;
         $scope.search.size=pageSize!=undefined?pageSize:10;
         workOrderRES.list_work($scope.search).then(function (result) {
+            $scope.queryLength=result.data.content.length;
             var workOrders = result.data.content;  //每次返回结果都是最新的
             getPage($scope.search.page, $scope.search.pageSize, result.data.totalElements,workOrders);
         });

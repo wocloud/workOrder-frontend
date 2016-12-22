@@ -146,6 +146,7 @@ $(function(){
 
         //create new attr
         $scope.createItem = function () {
+            $scope.selectedItem = undefined;
             ngDialog.open({
                 template: 'modules/workOrder/attr.create.html',
                 className:'ngdialog-theme-default wocloud-ngdialog-blue',
@@ -335,7 +336,6 @@ $(function(){
      * render view
      ************************/
     function renderAttrTable($scope, workOrderAttrRES, storeService){
-        $scope.selectedRows = [];
         $scope.paginationCurrentPage=storeService.getObject('attrStore').paginationCurrentPage!=undefined?storeService.getObject('attrStore').paginationCurrentPage:1;
         $scope.paginationPageSize=storeService.getObject('attrStore').paginationPageSize!=undefined?storeService.getObject('attrStore').paginationPageSize:10;
         $scope.query=storeService.getObject('attrStore').query!=undefined?storeService.getObject('attrStore').query:{};
@@ -381,6 +381,9 @@ $(function(){
             enableFullRowSelection: true, //是否点击行任意位置后选中,默认为false,当为true时，checkbox可以显示但是不可选中
             isRowSelectable: function (row) { //GridRow
                 index += 1;//下标加1
+                if(index==$scope.queryLength){
+                    index=0;
+                }
                 if (index == 1) {
                     row.grid.api.selection.selectRow(row.entity);
                 }
@@ -390,6 +393,7 @@ $(function(){
                 $scope.gridApi = gridApi;
                 //分页按钮事件
                 gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                    index =0;
                     if (getPage) {
                         $scope.paginationCurrentPage = newPage;
                         $scope.paginationPageSize = pageSize;
@@ -401,6 +405,8 @@ $(function(){
                     if (row && row.isSelected) {
                         //$scope.selectedRows.push(row.entity);
                         $scope.selectedItem=row.entity;
+                    } else {
+                        $scope.selectedItem = undefined;
                     }
                     //if(row && !row.isSelected){
                     //    angular.forEach($scope.selectedRows, function(data, index, rows){
@@ -437,6 +443,7 @@ $(function(){
                 'size' : $scope.attrStore.paginationPageSize
             };
             workOrderAttrRES.list(params).then(function (result) {
+                $scope.queryLength=result.content.length;
                 attrs = result.content;  //每次返回结果都是最新的
                 getPage(params.page, params.size, result.totalElements);
             }, function(){

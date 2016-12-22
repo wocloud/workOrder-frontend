@@ -14,18 +14,16 @@
 						</div>
 						<div class="content-list">
 							<div class="row">
-								<div class="col-sm-6 m-t-xs m-b-xs no-padder " >
-									<button class="operate-btn on btn-disabled-{{disposeflag}}" ng-disabled="disposeflag" ng-click="disposeItem()">
-										<i class="fa fa-plus"></i>
-										<span>处理工单</span>
-									</button>
-									<button class="operate-btn on btn-disabled-{{singflag}}" ng-disabled="singflag" ng-click="signItem()">
-										<i class="fa fa-edit"></i>
-										<span>签收工单</span>
-									</button>
-								</div>
+								<button class="operate-btn on btn-disabled-{{disposeflag}}" ng-disabled="disposeflag" ng-click="disposeItem()">
+									<i class="fa fa-plus"></i>
+									<span>处理工单</span>
+								</button>
+								<button class="operate-btn on btn-disabled-{{singflag}}" ng-disabled="singflag" ng-click="signItem()">
+									<i class="fa fa-edit"></i>
+									<span>签收工单</span>
+								</button>
 							</div>
-							<div ui-grid="myGridOptions" ui-grid-edit
+							<div ui-grid="myGridOptions" style="width: 100%; height:400px; text-align: center;margin-top: 1px;" ui-grid-edit
 								 ui-grid-pagination ui-grid-selection ui-grid-exporter ui-grid-resize-columns ui-grid-auto-resize>
 							</div>
 						</div>

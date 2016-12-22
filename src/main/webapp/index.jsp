@@ -17,10 +17,7 @@
   <link rel="stylesheet" href="<%=serviceUrl%>/css/app.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/vendor/jquery/datatables/dataTables.bootstrap.css">
   <link rel="stylesheet" href="<%=serviceUrl%>/css/alert.css">
-  <link rel="stylesheet" href="css/ng-dialog/ngDialog.min.css">
-  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-default.css">
-  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-plain.css">
-  <link rel="stylesheet" href="vendor/modules/angularjs-toaster/toaster.css"/>
+  <link rel="stylesheet" href="css/iconfont.css">
 
 </head>
 <body ng-controller="AppCtrl">
@@ -35,7 +32,6 @@
   <!-- Angular -->
   <script src="<%=serviceUrl%>/vendor/angular/angular.js"></script>
   <script src="<%=serviceUrl%>/vendor/angular/angular-messages/angular-messages.js"></script>
-
   <script src="<%=serviceUrl%>/vendor/angular/angular-animate/angular-animate.js"></script>
   <script src="<%=serviceUrl%>/vendor/angular/angular-cookies/angular-cookies.js"></script>
   <script src="<%=serviceUrl%>/vendor/angular/angular-resource/angular-resource.js"></script>
@@ -80,17 +76,20 @@
   <script src="js/alert.js"></script>
   <script src="js/dateFormat.js"></script>
 
-  <link rel="stylesheet" href="css/wocloud.css" type="text/css" />
+  <%--<link rel="stylesheet" href="css/wocloud.css" type="text/css" />--%>
+  <link rel="stylesheet" href="css/wo_commom.css" type="text/css" />
+  <link rel="stylesheet" href="css/ng-dialog/ngDialog.min.css">
+  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-default.css">
+  <link rel="stylesheet" href="css/ng-dialog/myth/ngDialog-theme-plain.css">
 
   <!-- Lazy loading -->
   <script src="vendor/jquery/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/jquery/datatables/dataTables.bootstrap.js"></script>
   <script src="modules/grid_test/js/ui-grid.min.js"></script>
   <script src="modules/grid_test/js/grid-directive.js"></script>
-  <script src="vendor/modules/angularjs-toaster/toaster.js"></script>
   <script src="js/directives/ui-laydate.js"></script>
   <script src="vendor/jquery/laydate/laydate.js"></script>
-  <script src="modules/workOrder/js/getCurrentUser.js"></script>
+  <%--<script src="modules/workOrder/js/getCurrentUser.js"></script>--%>
   <script src="js/directives/sreach-button.js"></script>
   <script src="js/directives/ui-workSreach.js"></script>
   <script src="js/config.wangpeipei.router.js"></script>

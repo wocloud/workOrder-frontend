@@ -104,6 +104,9 @@
             enableSelectionBatchEvent: true, //默认true
             isRowSelectable: function (row) { //GridRow
                 index += 1;//下标加1
+                if(index==$scope.queryLength){
+                    index=0;
+                }
                 if (index == 1) {
                     row.grid.api.selection.selectRow(row.entity);
                 }
@@ -188,6 +191,7 @@
             $scope.search.size=pageSize!=undefined?pageSize:10;
             $scope.search.ownerId = $rootScope.userInfo.userId;
             workOrderRES.list_work($scope.search).then(function (result) {
+                $scope.queryLength=result.data.content.length;
                 var workOrders = result.data.content;  //每次返回结果都是最新的
                 getPage($scope.search.page, $scope.search.pageSize, result.data.totalElements,workOrders);
             });

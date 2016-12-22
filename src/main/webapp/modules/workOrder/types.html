@@ -20,7 +20,7 @@
                             <button class="operate-btn on btn-disabled-{{!selectedItem}}" ng-click="bindWithRole()" ng-disabled="!selectedItem">
                                 <i class="fa fa-user"></i>绑定角色</button>
                         </div>
-                        <div ui-grid="myGridOptions"
+                        <div ui-grid="myGridOptions" style="width: 100%; height:400px; text-align: center;margin-top: 1px;"
                              ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
                         </div>
                     </div>
@@ -29,8 +29,8 @@
 
             <script type="text/ng-template" id="createOrUpdateTemplate">
                 <div class="modal-header">
-                    <span ng-show="createOrUpdate=='C'">新建工单类型</span>
-                    <span ng-show="createOrUpdate=='U'">编辑工单类型</span>
+                    <h4 class="modal-title" ng-show="createOrUpdate=='C'">新建工单类型</h4>
+                    <h4 class="modal-title" ng-show="createOrUpdate=='U'">编辑工单类型</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal form-validation" name="typeForm" novalidate>
@@ -60,7 +60,7 @@
 
             <script type="text/ng-template" id="deleteTemplate">
                 <div class="modal-header">
-                    <span class="wocloud-dialog-title">删除工单类型</span>
+                    <h4 class="modal-title">删除工单类型</h4>
                 </div>
                 <div class="modal-body">
                     <p>你确定要删除 {{currentItem.typeName}} 吗?</p>
@@ -73,7 +73,7 @@
 
             <script type="text/ng-template" id="bindWithProcessTemplate">
                 <div class="modal-header">
-                    <span class="wocloud-dialog-title">绑定流程</span>
+                    <h4 class="modal-title">绑定流程</h4>
                 </div>
                 <div class="modal-body">
                     <div ui-grid="flowGridOptions" ui-grid-pagination
@@ -88,7 +88,7 @@
 
             <script type="text/ng-template" id="unbindWithProcessTemplate">
                 <div class="modal-header">
-                    <span class="wocloud-dialog-title">解绑流程</span>
+                    <h4 class="modal-title">解绑流程</h4>
                 </div>
                 <div class="modal-body">
                     <p>您确定要解绑该工单的关联流程 {{processDeploymentId}} 吗?</p>
@@ -101,7 +101,7 @@
 
             <script type="text/ng-template" id="bindWithGroupTemplate">
                 <div class="modal-header">
-                    <span class="wocloud-dialog-title">绑定角色</span>
+                    <h4 class="modal-title">绑定角色</h4>
                 </div>
                 <div class="modal-body">
                     <span>请选择要绑定的角色:</span>&nbsp;&nbsp;<input type="checkbox" ng-model="selectAll" ng-click="all(selectAll)"/>全选/全不选

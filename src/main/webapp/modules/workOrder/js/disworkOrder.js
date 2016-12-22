@@ -1,4 +1,4 @@
-$(function(){
+(function(){
     app.controller('DisWorkOrderViewCtrl', DisWorkOrderViewCtrl);
     DisWorkOrderViewCtrl.$inject = ['storeService','$scope', '$rootScope', 'WorkOrder.RES','$state','i18nService'];
     function DisWorkOrderViewCtrl(storeService,$scope, $rootScope, workOrderRES,$state,i18nService) {
@@ -95,6 +95,9 @@ $(function(){
             enableSelectionBatchEvent: true, //默认true
             isRowSelectable: function (row) { //GridRow
                 index += 1;//下标加1
+                if(index==$scope.queryLength){
+                    index=0;
+                }
                 if (index == 1) {
                     row.grid.api.selection.selectRow(row.entity);
                 }
@@ -141,12 +144,6 @@ $(function(){
             return a;
         }
         $scope.sreach = function (page,pageSize) {
-            /*if($scope.search.startTime==""){
-             delete $scope.search.startTime;
-             }
-             if($scope.search.endTime==""){
-             delete $scope.search.endTime;
-             }*/
             storeService.setObject('disStore',$scope.disStore);
             var instanceLinkPropertyList=$scope.properties;
             $scope.search.instanceLinkPropertyList=$scope.selectInstanceLinkPropertyList(instanceLinkPropertyList);
@@ -156,6 +153,7 @@ $(function(){
             $scope.search.size=pageSize!=undefined?pageSize:10;
             $scope.search.performerId = $rootScope.userInfo.userId;
             workOrderRES.list_work($scope.search).then(function (result) {
+                $scope.queryLength=result.data.content.length;
                 var workOrders = result.data.content;  //每次返回结果都是最新的
                 getPage($scope.search.page, $scope.search.pageSize, result.data.totalElements,workOrders);
             });

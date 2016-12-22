@@ -1,30 +1,15 @@
-<style>
-    h4{
-        font-size: 16px;
-        font-weight: bolder;
-        line-height: 30px;
-    }
-    .border {
-        border: 1px solid;
-        margin: 2px -15px;
-        box-shadow: 2px 2px #d4d4d4;
-    }
-    ul{
-        padding: 0 15px;
-    }
-    ul li{
-        list-style-type: none;
-    }
-</style>
-<div class="panel panel-default"  style="width:100%">
-    <div class="bg-light lter b-b wrapper-md" >
-        <a   style="color:#333333" ng-click="backToMain()">返回</a>
+<div class="panel panel-default" style="width:100%">
+    <div class="breadcrumb" >
+        <a class="pull-right back" ng-click="backToMain()">
+            <i class="fa fa-arrow-circle-o-left" aria-hidden="true" style="font-size: 22px; vertical-align: middle; padding-right: 5px;"></i>返回</a>
         <h1 class="m-n font-thin h4"> <span>{{mgworkorder.workorderType}}#{{mgworkorder.id}}</span></h1>
     </div>
-    <div class="panel-body">
+    <div>
         <div class="col-sm-12 col-md-12 col-lg-12 no-padder border">
-            <h4>基本详情</h4>
-            <div class="form-group ">
+            <div class="box-title">
+                <h4>基本详情</h4>
+            </div>
+            <div class="form-group box-content">
                 <div  class="col-sm-6 col-md-6 col-lg-6 no-padder">
                     <div class="form-group">
                         <label class="col-sm-4 col-md-4 col-lg-4 control-label">主题</label>
@@ -175,12 +160,14 @@
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 no-padder border">
             <div ng-click="folder1()">
-                <h4>处理记录
-                    <i class="fa fa-caret-down" ng-show="isShow1"></i>
-                    <i class="fa fa-caret-right" ng-hide="isShow1"></i>
-                </h4>
+                <div class="box-title">
+                    <h4>处理记录
+                        <i class="fa fa-caret-down" ng-show="isShow1"></i>
+                        <i class="fa fa-caret-right" ng-hide="isShow1"></i>
+                    </h4>
+                </div>
             </div>
-            <ul ng-hide="isShow1">
+            <ul class="box-content" ng-hide="isShow1">
                 <li ng-repeat="item in records">
                     <p>{{item.performerName}},{{item.completeTime}},{{item.name}},{{item.performResult}},{{item.remark}}<p>
                 </li>
@@ -188,24 +175,28 @@
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 no-padder border">
             <div ng-click="folder2()">
-                <h4>流程记录
-                    <i class="fa fa-caret-down" ng-show="isShow2"></i>
-                    <i class="fa fa-caret-right" ng-hide="isShow2"></i>
-                </h4>
+                <div class="box-title">
+                    <h4>流程记录
+                        <i class="fa fa-caret-down" ng-show="isShow2"></i>
+                        <i class="fa fa-caret-right" ng-hide="isShow2"></i>
+                    </h4>
+                </div>
             </div>
             <div ng-hide="isShow2">
                 <img style="max-width: 100%; min-width: 50%;" src="{{imageSrc}}">
             </div>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 no-padder border">
-            <h4>处理意见</h4>
-            <textarea  class="form-control" ng-model="mgworkorder.remark"></textarea>
+            <div class="box-title">
+                <h4>处理意见</h4>
+            </div>
+            <div class="box-content">
+                <textarea  class="form-control" ng-model="mgworkorder.remark"></textarea>
+            </div>
         </div>
-    </div>
-    <div class="panel-body">
-        <div class="modal-footer" style="text-align: center;background:#fff;">
-            <button type="button" class="btn btn-primary" ng-disabled="disposeWorkOrder.$invalid" ng-click="disposeToMain()">保存</button>
-            <button type="button" class="btn btn-primary"  ng-click="backToMain()">返回</button>
+        <div class="col-sm-12 col-md-12 col-lg-12 no-padder" style="text-align: center;">
+            <button type="button" class="operate-btn on" ng-disabled="disposeWorkOrder.$invalid" ng-click="disposeToMain()">保存</button>
+            <button type="button" class="operate-btn on"  ng-click="backToMain()">返回</button>
         </div>
     </div>
 </div>
