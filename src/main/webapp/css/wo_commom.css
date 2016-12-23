@@ -1055,10 +1055,10 @@ ul.nav.nav-sub.dk >li a
 .tab-container-source.ng-isolate-scope .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover,
 .tab-container-source.ng-isolate-scope .nav > li > a:hover, .nav > li > a:focus,
 .tab-container-source.ng-isolate-scope .nav > li > a:hover, .nav > li > a:visited{
-	color: #fff;
-	background: -webkit-linear-gradient(left,rgba(255,255,255,0), rgba(255,255,255,.2),rgba(255,255,255,0));
-	border: none!important;
-	padding: 0;
+	/*color: #fff;*/
+	/*background: -webkit-linear-gradient(left,rgba(255,255,255,0), rgba(255,255,255,.2),rgba(255,255,255,0));*/
+	/*border: none!important;*/
+	/*padding: 0;*/
 }
 .tab-container-source.ng-isolate-scope ul li a{
 	width: 150px;

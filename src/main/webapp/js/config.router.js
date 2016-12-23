@@ -39,15 +39,57 @@ angular.module('app')
                 $rootScope.userInfo=userInfo;
             });
             $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-                if (fromState.name == "app.business_resource"||fromState.name == "app.index") {
-                    window.clearTimeout(window.timeId1);
-                    window.clearTimeout(window.timeId2);
-                }
+                var index=1;
                 if(fromState.name=="app.disworkOrder"||fromState.name=="app.unworkOrder"||fromState.name=="app.lkworkOrder"||fromState.name=="app.myWorkOrder"){
                     if(toState.name!="app.workOrderInfo"){
                         storeService.delObject();
                     }
                 }
+                //angular.forEach($rootScope.logicalResourceTabs,function(a,b,c){
+                //    if(a.name==toState.name){
+                //        $rootScope.tabs=$rootScope.logicalResourceTabs;
+                //        $rootScope.asideFolded=true;
+                //        $rootScope.haveArray=true;
+                //        index=0;
+                //    }
+                //});
+                //angular.forEach($rootScope.basicResourceTabs,function(a,b,c){
+                //    if(a.name==toState.name){
+                //        $rootScope.tabs=$rootScope.basicResourceTabs;
+                //        $rootScope.asideFolded=true;
+                //        $rootScope.haveArray=true;
+                //        index=0;
+                //    }
+                //});
+                //angular.forEach($rootScope.softResourceTabs,function(a,b,c){
+                //    if(a.name==toState.name){
+                //        $rootScope.tabs=$rootScope.softResourceTabs;
+                //        $rootScope.asideFolded=true;
+                //        $rootScope.haveArray=true;
+                //        index=0;
+                //    }
+                //});
+                //angular.forEach($rootScope.configTabs,function(a,b,c){
+                //    if(a.name==toState.name){
+                //        $rootScope.tabs=$rootScope.configTabs;
+                //        $rootScope.asideFolded=true;
+                //        $rootScope.haveArray=true;
+                //        index=0;
+                //    }
+                //});
+                //angular.forEach($rootScope.dealTabs,function(a,b,c){
+                //    if(a.name==toState.name){
+                //        $rootScope.tabs=$rootScope.dealTabs;
+                //        $rootScope.asideFolded=true;
+                //        $rootScope.haveArray=true;
+                //        index=0;
+                //    }
+                //});
+                //
+                //if(index==1){
+                //    $rootScope.haveArray=false;
+                //    $rootScope.tabs=[];
+                //}
             });
         }
     ]

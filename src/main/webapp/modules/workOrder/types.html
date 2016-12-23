@@ -1,7 +1,6 @@
-<div ng-controller="WorkOrderViewCtrl" class="content-container">
+<div class="content-container">
     <tabset class="tab-container">
         <tab ng-repeat="tab in configTabs track by tab.index" heading="{{tab.title}}" active="tab.active" ng-click="tabChange(tab)">
-            <!--  content -->
             <div class="pane">
                 <div class="panel panel-default">
                     <!-- tip pop -->
@@ -33,22 +32,22 @@
                     <h4 class="modal-title" ng-show="createOrUpdate=='U'">编辑工单类型</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal form-validation" name="typeForm" novalidate>
+                    <form class="file-brief file-brief-show form-validation" name="typeForm" novalidate id="form-new-style">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">编码</label>
                             <div class="col-sm-7">
                                 <input type="number" name="typeCode" class="form-control" ng-model="workOrderType.typeCode" required ng-maxlength="256" ng-focus>
                             </div>
-                            <span class="tip">*</span>
-                            <span class="tip" ng-show='typeForm.typeCode.$error.required'>必填项,数字类型</span>
+                            <span class="no-null">*</span>
+                            <span class="error-message" ng-show='typeForm.typeCode.$error.required'>必填项,数字类型</span>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">名称</label>
                             <div class="col-sm-7">
                                 <input type="text" name="typeName" class="form-control" ng-model="workOrderType.typeName" required ng-maxlength="256" ng-focus>
                             </div>
-                            <span class="tip">*</span>
-                            <span class="tip" ng-show='typeForm.typeName.$error.required'>必填项</span>
+                            <span class="no-null">*</span>
+                            <span class="error-message" ng-show='typeForm.typeName.$error.required'>必填项</span>
                         </div>
                     </form>
                 </div>
