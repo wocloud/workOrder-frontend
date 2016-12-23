@@ -1,15 +1,12 @@
-<style>
-    .form-horizontal .control-label {
-        padding-top: 0!important;
-    }
-</style>
 <!-- create new attribute -->
 <div class="panel panel-default" ng-controller="WorkOrderAttrInfoViewCtrl">
-    <div class="panel-heading">
-        自定义属性详情
+    <div class="breadcrumb">
+        <a class="pull-right back" ng-click="backToMain()">
+            <i class="fa fa-arrow-circle-o-left" aria-hidden="true" style="font-size: 22px; vertical-align: middle; padding-right: 5px;"></i>返回</a>
+        <h1 class="m-n font-thin h4"><span>自定义属性详情</span></h1>
     </div>
-    <div class="panel-body">
-        <form class="form-horizontal">
+    <div>
+        <form class="form-group box-content">
             <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
                 <label class="col-sm-2 col-md-2 col-lg-2 control-label">编码</label>
                 <p class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{attr.propertyKey}}</p>
@@ -37,11 +34,6 @@
             <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
                 <label class="col-sm-2 col-md-2 col-lg-2 control-label">描述</label>
                 <p class="col-sm-10 col-md-10 col-lg-10 no-padder-sm">{{attr.propertyDescription}}</p>
-            </div>
-
-            <div class="line line-dashed b-b line-lg pull-in"></div>
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                <button type="button" class="btn btn-primary" style="margin-left: 45%;" ng-click="backToMain()">返回</button>
             </div>
         </form>
     </div>

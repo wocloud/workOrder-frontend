@@ -140,7 +140,7 @@ at.directive("myWorkOrderSreach", ['ngDialog','$q','$resource',function (ngDialo
                         '</div>'+
                     '</div>' +
                 '</div>' +
-            '<div class="form-group common-group" style="position: absolute;bottom:19px;right: -100px;">' +
+            '<div class="form-group common-group" style="position: absolute;bottom:5px;right: -100px;">' +
                 '<button type="button" class="operate-btn on" ng-click="prClick()">' +
                     '<i class="glyphicon glyphicon-search"></i>' +
                     '<span>查找</span> ' +

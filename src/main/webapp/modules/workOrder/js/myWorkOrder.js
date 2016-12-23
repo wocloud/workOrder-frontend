@@ -306,7 +306,6 @@
                         filterProperty(propertyList[i]);
                         $scope.properties.push(propertyList[i]);
                     }
-                    console.log($scope.properties);
                 } else {
                     window.wxc.xcConfirm("工单查询失败,请稍后再试!", window.wxc.xcConfirm.typeEnum.error);
                 }

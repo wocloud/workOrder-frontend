@@ -64,7 +64,7 @@ span.hidden-sm.hidden-md:hover{
 }
 .bg-black .nav .open > a{
 	color: #585858;
-	background-color:none;
+	background: none;
 }
 .bg-black .dropdown-menu li a{
 	padding: 23px 4px;
@@ -162,20 +162,6 @@ span.hidden-sm.hidden-md:hover{
 .panel-default{
 	height:auto;
 }
-
-/* */
-
-
-/*.col-sm-1{*/
-/*width: auto;*/
-/*}*/
-/*.col-sm-2 {*/
-/*width: 11.666667%;*/
-/*}*/
-/*.col-sm-3 {*/
-/*width: 20%;*/
-/*margin-top: 0.8%;*/
-/*}*/
 .file-brief-show{
 	color:#585858;
 }
@@ -192,6 +178,7 @@ span.hidden-sm.hidden-md:hover{
 }
 .file-brief .form-group select{
 	border-color:#232323;
+	border-radius: 0px;
 }
 /* 查询按钮 */
 .search-btn{
@@ -334,7 +321,7 @@ form{
 .detail{
 	cursor:pointer;
 	margin:0 1%;
-	background-color: none;
+	background: none;
 }
 .grey{
 	color:#9ca1b2;
@@ -454,7 +441,7 @@ form{
 }
 /*left*/
 .navi ul.nav li a {
-	width: 200px;
+	width: 100%;
 }
 .navi ul.nav li a .font-bold{
 	width: 90px;
@@ -673,7 +660,6 @@ form{
 .search-box{
 	margin: 0px;
 	border: 1px solid #232323;
-	padding: 10px 0;
 }
 .form-control{
 	height:25px;
@@ -703,10 +689,6 @@ label.label-name {
 	width: 24% !important;
 	display: inline-block !important;
 	margin-bottom: 5px !important;
-}
-.common-group select option{
-	background:#293a47;
-	color:#fff;
 }
 .__btn__{
 	padding-left: 6px;
@@ -843,7 +825,7 @@ abbr[title]{
 	line-height: 14px;
 }
 #form-new-style label{
-	min-width:60px;
+	width:60px;
 	text-align: right;
 	float: left;
 	padding: 8px 0 0 0 !important;
@@ -856,9 +838,10 @@ abbr[title]{
 	font-size: 12px;
 	color: #f48d8d;
 }
-#form-new-style .col-md-10{
-	padding: 0 0 0 15px;
-	width: 87.333333%;
+.error-message {
+	font-size: 12px;
+	color: #f48d8d;
+	margin-left: 8px;
 }
 #form-new-style .no-null{
 	font-size: 20px;
@@ -908,12 +891,6 @@ abbr[title]{
 .pad{
 	padding: 0 20px 0 0;
 }
-.ngdialog-close{
-	display: none;
-}
-/* .ui-grid-pager-panel abbr {
-    float: left;
-} */
 /*分页对齐*/
 .ui-grid-pager-container .ui-grid-pager-control abbr{
 	float: left;
@@ -1027,15 +1004,71 @@ abbr[title]{
 }
 .tab-container-source{
 	background-color: #fff;
-	border: 1px solid #dee5e7;
 	border-top-width: 0;
 	border-radius: 0 0 2px 2px;
 }
 .tab-container-source > ul.nav-tabs {
-	width:10%;
+	width:100%;
 	height:100%;
 	float:left;
 	border: none;
+}
+.tab-container-source.ng-isolate-scope  ul li a:focus{
+	background: transparent!important;
+}
+.dk li.nav-sub-header a{
+	height: 42px;
+	line-height: 42px;
+	padding: 0!important;
+}
+ul.nav.nav-sub.dk{
+	width:150px!important;
+}
+ul.nav.nav-sub.dk >li,
+ul.nav.nav-sub.dk >li a
+{
+	width:150px!important;
+}
+.dk li.nav-sub-header{
+	width:150px !important;
+}
+/*.dk, .dk li,.dk, .dk li:hover{
+	width:200px!important;
+}*/
+.dk li.active a{
+	color: #fff;
+	background: transparent;
+}
+.bg-black .nav>li>a{
+	color: rgba(225,225,225,.5);
+	line-height: 42px;
+	height: 42px;
+	padding: 0;
+	width:200px;
+}
+.bg-black .nav>li>a:hover{
+	color: #fff;
+	padding-top: 0;
+	padding-bottom: 0;
+	background: -webkit-linear-gradient(left,rgba(255,255,255,0), rgba(255,255,255,.2),rgba(255,255,255,0));
+}
+.tab-container-source.ng-isolate-scope .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover,
+.tab-container-source.ng-isolate-scope .nav > li > a:hover, .nav > li > a:focus,
+.tab-container-source.ng-isolate-scope .nav > li > a:hover, .nav > li > a:visited{
+	color: #fff;
+	background: -webkit-linear-gradient(left,rgba(255,255,255,0), rgba(255,255,255,.2),rgba(255,255,255,0));
+	border: none!important;
+	padding: 0;
+}
+.tab-container-source.ng-isolate-scope ul li a{
+	width: 150px;
+	background: -webkit-linear-gradient(left,rgba(255,255,255,0), rgba(255,255,255,.2),rgba(255,255,255,0));
+	color: rgba(255,255,255,.5);
+	border: 0!important;
+	/* background: #ff0; */
+	text-align: center;
+	line-height: 42px;
+	padding: 0;
 }
 .tab-container-source > ul.nav-tabs > li {
 	width:100%;
@@ -1100,6 +1133,32 @@ abbr[title]{
 .pool-dir {
 	margin:17px;
 }
+.three_nav_app{
+	margin-left:200px !important;
+}
+.three_nav_app1{
+	margin-left:350px !important;
+}
+.three_nav_header{
+	margin-left:200px !important;
+}
+.three_nav_nav{
+	width:200px !important;
+}
+.three_nav_header1{
+	margin-left:350px !important;
+}
+.three_nav_nav3{
+	width:350px !important;
+}
+.three_nav_nav1{
+	float:left;
+	width:25%;
+}
+.three_nav_nav2 {
+	float: left;
+	width: 60%;
+}
 .sub-zyc-right ul li a{
 	font-size: 13px;
 	color: #232323;
@@ -1113,11 +1172,11 @@ abbr[title]{
 	margin: 17px;
 }
 .sub-zyc-left{
-	width: 12.5%;
-	height: 72px;
-	border-left: 1px solid #fff;
-	background: #f8f9f9 url("../../oss/img/sub-pool2.png") right center no-repeat;
-	background-size: 110%;
+	width: 12%;
+	height: 74px;
+	border-left: 1px solid #232323;
+	background: url("../../oss/img/sub-pool2.png") right center no-repeat;
+	background-size: cover;
 	float: left;
 	padding-left: 2.5%;
 	font-size: 23px;
@@ -1127,12 +1186,12 @@ abbr[title]{
 .sub-zyc-right{
 	width: 87.3%;
 	height: 72px;
-	border: 1px solid #fff;
-	background: #f8f9f9 url("../../oss/img/sub-pool1.png") -1px center no-repeat;
+	border: 1px solid #232323;
+	background: url("../../oss/img/sub-pool1.png") -1px center no-repeat;
 	float: left;
 	border-left: 0;
 	margin-bottom: 11px;
-	color:#232323;
+	color: #232323;
 }
 .sub-zyc-right ul{
 	width: 88%;
