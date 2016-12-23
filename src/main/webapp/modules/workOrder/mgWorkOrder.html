@@ -92,7 +92,7 @@
                 <div class="line line-dashed b-b line-lg"></div>
                 <form  class="form-validation" novalidate name="disposeWorkOrder">
                     <div ng-repeat="items in mgworkorder.instanceLinkPropertyList" ng-show="mgworkorder.instanceLinkPropertyList.length>0">
-                        <div ng-if="items.propertyType=='select'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div ng-if="items.propertyType=='select' && items.propertyKey!='office_select'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
                             <div class="form-group">
                                 <label class="col-sm-4 col-md-4 col-lg-4 control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                                 <div class="col-sm-7 col-md-7 col-lg-7 no-padder-sm">
@@ -106,6 +106,33 @@
                                     <span  class="no-null" >*</span>
                                     <div class="no-null-message " ng-messages="disposeWorkOrder[items.propertyKey].$error" ng-if="disposeWorkOrder[items.propertyKey].$touched" >
                                         <div ng-message="required" >必填项不能为空</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--机构选择-->
+                        <div ng-if="items.propertyType=='select' && items.propertyKey=='office_select'" class="col-sm-6 m-t-xs m-b-xs" >
+                            <div class="form-group">
+                                <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
+                                <div class="col-md-9 col-sm-9">
+                                    <select class="form-control" style="width: 44%;" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}"
+                                            ng-model="departmentValue" ng-change="change(departmentValue)" ng-required="items.isRequired|dit">
+                                        <option value="" ng-if='departmentValue=="" || !departmentValue'>-请选择-</option>
+                                        <option value="internal">本机构</option>
+                                        <option value="external">非本机构</option>
+                                    </select>
+
+                                    <select class="form-control" style="width: 50%;margin-left: 5px;" ng-disabled="items.readOnly|dit"
+                                            ng-show="departmentValue=='external'" ng-model="externalValue">
+                                        <option value="" ng-selected="externalValue==''">-不指定-</option>
+                                        <option ng-repeat="item in departments track by item.officeId" value="item.officeId" ng-selected="item.officeId==externalValue">{{item.officeName}}</option>
+                                    </select>
+
+                                    <div ng-if="items.isRequired|dit" style="display: inline-block;">
+                                        <span  class="no-null">*</span>
+                                        <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >
+                                            <div ng-message="required" >必填项不能为空</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

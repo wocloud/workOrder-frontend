@@ -5,12 +5,29 @@
         var params={
             linkId:$stateParams.id
         };
+        workOrderRES.getAllDepartment().then(function (result) {
+            $scope.departments = result.data.result;
+            if(!$scope.externalValue){
+                $scope.externalValue = "";
+            }
+        });
+
         workOrderRES.listById(params).then(function(result) {
             var linkProperties = result.data[0].instanceLinkPropertyList;
             if (linkProperties.length != 0) {
                 for (var i = 0; i < linkProperties.length; i++) {
+                    var property = linkProperties[i];
                     if (linkProperties[i].propertyType == "select" && typeof(linkProperties[i].propertyOptions)=="string") {
                         linkProperties[i].propertyOptions = jQuery.parseJSON(linkProperties[i].propertyOptions);
+                        if(property.propertyKey=="office_select") {
+                            var depart = property.propertyValue.split(":");
+                            $scope.departmentValue = depart[0];
+                            if(depart.length > 0) {
+                                $scope.externalValue = depart[1];
+                            } else {
+                                $scope.externalValue = "";
+                            }
+                        }
                         if(linkProperties[i].propertyDefaultValue==null || !linkProperties[i].propertyDefaultValue){
                             linkProperties[i].propertyDefaultValue="";
                         }
@@ -34,12 +51,39 @@
                 });
             }
         });
+
+        $scope.change = function(value){
+            $scope.departmentValue = value;
+        };
+
+        $scope.change2 = function(value){
+            $scope.externalValue = value;
+        };
+
         $scope.disposeToMain = function () {
             var properties={};
             properties.id=$scope.mgworkorder.linkId;
             properties.loginUserId =$rootScope.userInfo.userId;
             properties.remark=$scope.mgworkorder.remark;
-            properties.instanceLinkPropertyList=JSON.stringify($scope.mgworkorder.instanceLinkPropertyList);
+            if($scope.mgworkorder.instanceLinkPropertyList!=undefined && $scope.mgworkorder.instanceLinkPropertyList.length>0) {
+                angular.forEach($scope.mgworkorder.instanceLinkPropertyList, function(property, index, array){
+                    if(property.propertyKey=="office_select"){
+                        var officeValue = "internal";
+                        if($scope.departmentValue=="internal"){
+                            officeValue = "internal";
+                        } else if($scope.departmentValue=="external"){
+                            if($scope.externalValue=="" || !$scope.externalValue){
+                                officeValue = "external";
+                            } else {
+                                officeValue = "external:" + $scope.externalValue;
+                            }
+                        }
+                        property.propertyValue = officeValue;
+                        return;
+                    }
+                });
+                properties.instanceLinkPropertyList=JSON.stringify($scope.properties);
+            }
             workOrderRES.dispose(properties).then(function (result) {
                 $state.go("app.unworkOrder");
                 if(result.code=="0"){

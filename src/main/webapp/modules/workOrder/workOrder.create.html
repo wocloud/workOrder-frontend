@@ -121,7 +121,7 @@
                         <span>({{ uploader.queue[0].file.size/1024/1024|number:2 }} MB)</span>
                     </div>
                     <div class="col-md-10 col-sm-10" ng-show="uploadError">
-                        <span class="tip">文件支持.xls,xlsx,doc,docx,zip,png,jpg,text格式，文件大小5M以内</span>
+                        <span class="error-message">文件支持.xls,xlsx,doc,docx,zip,png,jpg,text格式，文件大小5M以内</span>
                     </div>
                 </div>
             </div>
@@ -140,14 +140,42 @@
             </div>
             <!----自定义属性---->
             <div ng-repeat="items in properties" ng-show="items.isVisible|dit">
-                <div ng-if="items.propertyType=='select'" class="col-sm-6 m-t-xs m-b-xs" >
+                <!--非机构选择-->
+                <div ng-if="items.propertyType=='select' && items.propertyKey!='office_select'" class="col-sm-6 m-t-xs m-b-xs" >
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9">
                             <select class="form-control"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit" >
                                 <option value="" ng-if="items.propertyValue=='' || !items.propertyValue" >-请选择-</option>
-                                <option ng-repeat="item in items.propertyOptions track by item.optionValue" value="{{item.optionValue}}" ng-selected="{{item.optionValue==items.propertyValue}}">{{item.optionName}}</option>
+                                <option ng-repeat="item in items.propertyOptions track by item.optionValue" value="item.optionValue" ng-selected="item.optionValue==items.propertyValue">{{item.optionName}}</option>
                             </select>
+                            <div ng-if="items.isRequired|dit" style="display: inline-block;">
+                                <span  class="no-null">*</span>
+                                <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >
+                                    <div ng-message="required" >必填项不能为空</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--机构选择-->
+                <div ng-if="items.propertyType=='select' && items.propertyKey=='office_select'" class="col-sm-6 m-t-xs m-b-xs" >
+                    <div class="form-group">
+                        <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
+                        <div class="col-md-9 col-sm-9">
+                            <select class="form-control" style="width: 44%;" name="{{items.propertyKey}}"
+                                    ng-model="departmentValue" ng-change="change(departmentValue)" ng-required="items.isRequired|dit">
+                                <option value="" ng-if='departmentValue=="" || !departmentValue'>-请选择-</option>
+                                <option value="internal">本机构</option>
+                                <option value="external">非本机构</option>
+                            </select>
+
+                            <select class="form-control" style="width: 50%;margin-left: 5px;"
+                                    ng-show="departmentValue=='external'" ng-model="externalValue">
+                                <option value="" ng-selected="externalValue==''">-不指定-</option>
+                                <option ng-repeat="item in departments track by item.officeId" value="item.officeId" ng-selected="item.officeId==externalValue">{{item.officeName}}</option>
+                            </select>
+
                             <div ng-if="items.isRequired|dit" style="display: inline-block;">
                                 <span  class="no-null">*</span>
                                 <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >

@@ -281,6 +281,13 @@
             }
         });
 
+        workOrderRES.getAllDepartment().then(function (result) {
+            $scope.departments = result.data.result;
+            if(!$scope.externalValue){
+                $scope.externalValue = "";
+            }
+        });
+
         if($scope.id) {
             var parameters = {
                 "ownerId"   : $rootScope.userInfo.userId,
@@ -316,6 +323,15 @@
             var options = property.propertyOptions;
             if (property.propertyType == "select" && typeof(property.propertyOptions)=="string") {
                 options = jQuery.parseJSON(property.propertyOptions);
+                if(property.propertyKey=="office_select") {
+                    var depart = property.propertyValue.split(":");
+                    $scope.departmentValue = depart[0];
+                    if(depart.length > 0) {
+                        $scope.externalValue = depart[1];
+                    } else {
+                        $scope.externalValue = "";
+                    }
+                }
             }
             property.propertyOptions = options;
             if (property.propertyDefaultValue || property.propertyDefaultValue == null) {
@@ -349,8 +365,32 @@
             }
         });
 
+        $scope.change = function(value){
+            $scope.departmentValue = value;
+        };
+
+        $scope.change2 = function(value){
+            $scope.externalValue = value;
+        };
+
         function data(){
             if($scope.properties!=undefined&&$scope.properties.length>0) {
+                angular.forEach($scope.properties, function(property, index, array){
+                    if(property.propertyKey=="office_select"){
+                        var officeValue = "internal";
+                        if($scope.departmentValue=="internal"){
+                            officeValue = "internal";
+                        } else if($scope.departmentValue=="external"){
+                            if($scope.externalValue=="" || !$scope.externalValue){
+                                officeValue = "external";
+                            } else {
+                                officeValue = "external:" + $scope.externalValue;
+                            }
+                        }
+                        property.propertyValue = officeValue;
+                        return;
+                    }
+                });
                 $scope.currentValue.properties=JSON.stringify($scope.properties);
             }
             $scope.currentValue.loginUserId =$rootScope.userInfo.userId;
@@ -408,6 +448,7 @@
         //create new workOrder
         $scope.saveItem = function () {
             var params=data();
+            console.log(params);
             workOrderRES.save(params).then(function (result) {
                 ngDialog.open({
                     template: 'modules/workOrder/confirmDialog.html',

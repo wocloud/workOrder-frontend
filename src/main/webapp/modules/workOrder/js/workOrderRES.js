@@ -324,6 +324,17 @@ function ServiceWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
         });
         return task.promise;
     };
+    //获取所有部门
+    this.getAllDepartment = function(){
+        var api_department_list = '/wocloud-workorder-restapi/office/getAllDepartment';
+        var task = $q.defer();
+        $resource(api_department_list).save({}, function(response){
+            task.resolve(response.toJSON());
+        }, function(response){
+            task.reject(response);
+        });
+        return task.promise;
+    };
 }
 
 app.filter('status', Status);
