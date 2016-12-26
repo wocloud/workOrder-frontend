@@ -152,6 +152,13 @@
             $scope.search.loginUserId =$rootScope.userInfo.userId;
             $scope.search.size=pageSize!=undefined?pageSize:10;
             $scope.search.performerId = $rootScope.userInfo.userId;
+            $scope.search.status = "2";
+            if($scope.search.startTime=="" || $scope.search.startTime==null){
+                delete $scope.search.startTime;
+            }
+            if($scope.search.endTime=="" || $scope.search.endTime==null){
+                delete $scope.search.endTime;
+            }
             workOrderRES.list_work($scope.search).then(function (result) {
                 $scope.queryLength=result.data.content.length;
                 var workOrders = result.data.content;  //每次返回结果都是最新的

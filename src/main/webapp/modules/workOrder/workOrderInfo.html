@@ -85,7 +85,7 @@
                 </div>
                 <div ng-show="instanceLinkPropertyList.length > 0">
                     <div class="col-sm-6 col-md-6 col-lg-6 no-padder" ng-repeat="item in instanceLinkPropertyList">
-                        <div class="form-group">
+                        <div class="form-group" ng-if="item.propertyKey!='upload_enable'">
                             <label class="col-sm-4 col-md-4 col-lg-4 control-label">{{item.name}}</label>
                             <div class="col-sm-8 col-md-8 col-lg-8 no-padder-sm">{{item.value}}</div>
                         </div>

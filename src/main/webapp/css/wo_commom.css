@@ -808,6 +808,7 @@ abbr[title]{
 	padding: 10px 15px;
 	background:#293a47;
 	border-radius: 0;
+	color: #ffffff;
 }
 .modal-header .close{
 	font-size: 15px;
@@ -1246,4 +1247,18 @@ ul.nav.nav-sub.dk >li a
 /***工单详情页\处理页  end**/
 .tab-content{
 	padding: 0!important;
+}
+/***附件上传样式**/
+.choose-book{
+	width: 60px;
+	text-align: center;
+	position: relative;
+	cursor: pointer;
+	overflow:hidden;
+	display: inline-block;
+	vertical-align: middle;
+}
+.choose-book input{
+	position: absolute;
+	opacity: 0;
 }

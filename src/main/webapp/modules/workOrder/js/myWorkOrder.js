@@ -8,8 +8,8 @@
      * myWorkOrder list controller defined
      */
     app.controller('MyWorkOrderCtrl', MyWorkOrderViewCtrl);
-    MyWorkOrderViewCtrl.$inject = ['storeService','$scope', '$rootScope', 'WorkOrder.RES', '$state','i18nService'];
-    function MyWorkOrderViewCtrl(storeService,$scope, $rootScope, workOrderRES, $state,i18nService) {
+    MyWorkOrderViewCtrl.$inject = ['storeService','$scope', '$rootScope', 'WorkOrder.RES', '$state','i18nService','ngDialog'];
+    function MyWorkOrderViewCtrl(storeService,$scope, $rootScope, workOrderRES, $state,i18nService,ngDialog) {
     	i18nService.setCurrentLang("zh-cn");
 
     	$scope.status;
@@ -190,6 +190,12 @@
             $scope.search.loginUserId =$rootScope.userInfo.userId;
             $scope.search.size=pageSize!=undefined?pageSize:10;
             $scope.search.ownerId = $rootScope.userInfo.userId;
+            if($scope.search.startTime=="" || $scope.search.startTime==null){
+                delete $scope.search.startTime;
+            }
+            if($scope.search.endTime=="" || $scope.search.endTime==null){
+                delete $scope.search.endTime;
+            }
             workOrderRES.list_work($scope.search).then(function (result) {
                 $scope.queryLength=result.data.content.length;
                 var workOrders = result.data.content;  //每次返回结果都是最新的
@@ -233,18 +239,16 @@
             $state.go("app.workOrderCreateOrUpdate", {'id' : $scope.selectedRows.id, 'linkId': $scope.selectedRows.linkId});
         };
 
-        $scope.putItem = function () {
-            var para={
-                id:$scope.selectedRows.id,
-                loginUserId :$rootScope.userInfo.userId
-            };
-            workOrderRES.submit(para).then(function (result1) {
-                if(result1.code=="0"){
-                    window.wxc.xcConfirm("提交成功!", window.wxc.xcConfirm.typeEnum.success);
-                    $scope.queryByCondition();
-                } else {
-                    window.wxc.xcConfirm("提交失败: " + result1.msg, window.wxc.xcConfirm.typeEnum.error);
-                }
+        $scope.updateItem = function () {
+            $state.go("app.workOrderCreateOrUpdate", {'id' : $scope.selectedRows.id, 'linkId': $scope.selectedRows.linkId});
+        };
+
+        $scope.deleteItem = function () {
+            ngDialog.open({
+                template: 'deleteTemplate.html',
+                className:'ngdialog-theme-default wocloud-ngdialog-blue',
+                controller: 'WorkOrderDeleteViewCtrl',
+                scope: $scope
             });
         };
     };
@@ -259,11 +263,13 @@
         $scope.linkId = $stateParams.linkId;
         $scope.currentValue = {};
         $scope.attachmentName = "";
+        $scope.attachName = "";
+        $scope.uploadEnable = false;
 
         workOrderRES.list_typeCode().then(function (result) {
             $scope.typeCodeList = result.data;
             if(!$scope.workorderType) {
-                if(!$scope.id){
+                if(!$scope.id && result.data.length>0){
                     $scope.workorderType=result.data[0].id;
                 }
             }
@@ -298,6 +304,12 @@
                 if(workOrder) {
                     $scope.currentValue = workOrder[0];
                     $scope.attachmentName = $scope.currentValue.attachmentName;
+                    $scope.attachName = $scope.currentValue.attachmentName;
+                    if($scope.attachName!="" && $scope.attachName!=null){
+                        var params = "instanceId="+$scope.id+"&userId="+$rootScope.userInfo.userId+"&fileName="+$scope.attachName;
+                        var api_downloadFile = "/wocloud-workorder-restapi/instanceLink/downloadAttachment?";
+                        $scope.downloadUrl = api_downloadFile + params;
+                    }
                     if($scope.currentValue.workorderTypeId) {
                         $scope.workorderType = $scope.currentValue.workorderTypeId;
                     }
@@ -339,6 +351,10 @@
             }
             if(!property.propertyValue || property.propertyValue == null){
                 property.propertyValue = property.propertyDefaultValue;
+            }
+            //筛选出上传下载控制开关
+            if(property.propertyKey == "upload_enable" && (property.propertyValue || property.propertyDefaultValue)) {
+                $scope.uploadEnable = true;
             }
         }
 
@@ -405,6 +421,7 @@
             return $scope.currentValue;
         }
 
+        $scope.uploading = false;
         var api_uploader = '/wocloud-workorder-restapi/instanceLink/uploadAttachment';
         var uploader = $scope.uploader = new FileUploader({
             url: api_uploader,
@@ -443,12 +460,9 @@
             $scope.attachmentName = fileItem.file.name;
         };
 
-        $scope.uploading = false;
-
         //create new workOrder
         $scope.saveItem = function () {
             var params=data();
-            console.log(params);
             workOrderRES.save(params).then(function (result) {
                 ngDialog.open({
                     template: 'modules/workOrder/confirmDialog.html',
@@ -519,4 +533,30 @@
             history.back();
         };
     };
+
+    /**
+     * workOrder delete controller
+     */
+    app.controller('WorkOrderDeleteViewCtrl', DeleteViewCtrl);
+    DeleteViewCtrl.$inject = ['$scope', 'WorkOrder.RES'];
+    function DeleteViewCtrl($scope, workOrderRES) {
+        var id = "";
+        if($scope.selectedRows) {
+            id = $scope.selectedRows.id;
+        }
+
+        //remove workOrde
+        $scope.removeItem = function () {
+            var params = {"id" : id};
+            workOrderRES.removeWorkOrderById(params).then(function (result) {
+                $scope.closeThisDialog();
+                if(result.code=="0"){
+                    window.wxc.xcConfirm("删除成功!", window.wxc.xcConfirm.typeEnum.success);
+                    $scope.queryByCondition();
+                } else {
+                    window.wxc.xcConfirm("删除失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                }
+            });
+        };
+    }
 })();

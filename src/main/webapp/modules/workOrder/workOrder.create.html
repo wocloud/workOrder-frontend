@@ -1,18 +1,3 @@
-<style>
-    .choose-book{
-        width: 60px;
-        text-align: center;
-        position: relative;
-        cursor: pointer;
-        overflow:hidden;
-        display: inline-block;
-        vertical-align: middle;
-    }
-    .choose-book input{
-        position: absolute;
-        opacity: 0;
-    }
-</style>
 <div class="panel panel-default" >
     <div class="panel-heading" ng-show="id==undefined">
         新建工单
@@ -21,7 +6,7 @@
         编辑工单
     </div>
     <div class="modal-body">
-        <form  class="file-brief file-brief-show form-validation" name="createWorkOrder"  id="form-new-style">
+        <form  class="file-brief file-brief-show form-validation" name="createWorkOrder" id="form-new-style">
             <!--分类-->
             <div  class="col-sm-6 m-t-xs m-b-xs ">
                 <div class="form-group">
@@ -107,30 +92,12 @@
                     </div>
                 </div>
             </div>
-            <!-- 附件上传 -->
-            <div  class="col-sm-12 m-t-xs m-b-xs" >
-                <div class="form-group">
-                    <label class="control-label">附件上传</label>
-                    <div class="col-md-7 col-sm-7">
-                        <input class="form-control" type="text" readonly="readonly" ng-model="attachmentName" style="width: 80%;" ng-class="{'ng-dirty ng-invalid': uploadError, 'ng-valid': uploadError}"/>
-                        <div class="choose-book operate-btn on">
-                            <input type="file" nv-file-select uploader="uploader" accept="fileTypes" nv-file-max-size="5MB" ng-click="uploader.clearQueue()"/>浏览
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-sm-2" ng-hide="!uploader.getNotUploadedItems().length">
-                        <span>({{ uploader.queue[0].file.size/1024/1024|number:2 }} MB)</span>
-                    </div>
-                    <div class="col-md-10 col-sm-10" ng-show="uploadError">
-                        <span class="error-message">文件支持.xls,xlsx,doc,docx,zip,png,jpg,text格式，文件大小5M以内</span>
-                    </div>
-                </div>
-            </div>
             <!--描述-->
             <div  class="col-sm-12 m-t-xs m-b-xs" >
                 <div class="form-group">
                     <label class="control-label" >描述</label>
                     <div class="col-md-11 col-sm-10">
-                        <textarea class="form-control" style="width: 93.5%" name="description" ng-model="currentValue.description"  required ></textarea>
+                        <textarea class="form-control" style="width: 93.5%" name="description" ng-model="currentValue.description"  required maxlength="800"></textarea>
                         <span class="no-null" >*</span>
                         <div class="no-null-message " ng-messages="createWorkOrder.description.$error" ng-if="createWorkOrder.description.$touched" >
                             <div ng-message="required" >必填项不能为空</div>
@@ -141,13 +108,13 @@
             <!----自定义属性---->
             <div ng-repeat="items in properties" ng-show="items.isVisible|dit">
                 <!--非机构选择-->
-                <div ng-if="items.propertyType=='select' && items.propertyKey!='office_select'" class="col-sm-6 m-t-xs m-b-xs" >
+                <div ng-if="items.propertyType=='select' && items.propertyKey!='office_select' && items.propertyKey!='upload_enable'" class="col-sm-6 m-t-xs m-b-xs" >
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9">
                             <select class="form-control"  ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit" >
                                 <option value="" ng-if="items.propertyValue=='' || !items.propertyValue" >-请选择-</option>
-                                <option ng-repeat="item in items.propertyOptions track by item.optionValue" value="item.optionValue" ng-selected="item.optionValue==items.propertyValue">{{item.optionName}}</option>
+                                <option ng-repeat="item in items.propertyOptions track by item.optionValue" value="{{item.optionValue}}" ng-selected="{{item.optionValue==items.propertyValue}}">{{item.optionName}}</option>
                             </select>
                             <div ng-if="items.isRequired|dit" style="display: inline-block;">
                                 <span  class="no-null">*</span>
@@ -173,7 +140,7 @@
                             <select class="form-control" style="width: 50%;margin-left: 5px;"
                                     ng-show="departmentValue=='external'" ng-model="externalValue">
                                 <option value="" ng-selected="externalValue==''">-不指定-</option>
-                                <option ng-repeat="item in departments track by item.officeId" value="item.officeId" ng-selected="item.officeId==externalValue">{{item.officeName}}</option>
+                                <option ng-repeat="item in departments track by item.officeId" value="item.officeId" ng-selected="{{item.officeId==externalValue}}">{{item.officeName}}</option>
                             </select>
 
                             <div ng-if="items.isRequired|dit" style="display: inline-block;">
@@ -185,6 +152,7 @@
                         </div>
                     </div>
                 </div>
+                <!--文本-->
                 <div ng-if="items.propertyType=='text'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
@@ -199,11 +167,12 @@
                         </div>
                     </div>
                 </div>
+                <!--文本域-->
                 <div ng-if="items.propertyType=='textarea'" class="col-sm-12 m-t-xs m-b-xs">
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}" >{{items.propertyName}}</label>
                         <div class="col-md-11 col-sm-10">
-                            <textarea class="form-control" style="width: 93.5%" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit">{{items.propertyDefaultValue}}</textarea>
+                            <textarea class="form-control" style="width: 93.5%" maxlength="800" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" ng-model="items.propertyValue" ng-required="items.isRequired|dit">{{items.propertyDefaultValue}}</textarea>
                             <div ng-if="items.isRequired|dit" style="display: inline-block;">
                                 <span class="no-null" >*</span>
                                 <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >
@@ -213,14 +182,15 @@
                         </div>
                     </div>
                 </div>
+                <!--日期选择-->
                 <div ng-if="items.propertyType=='datetime'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
-                        <div class="col-md-9 col-sm-9" >
-                            <input class="form-control laydate-icon" ng-disabled="items.readOnly|dit" name="{{items.propertyKey}}" def-laydate  type="text"  ng-model="items.propertyValue" ng-required="items.isRequired|dit" />
+                        <div class="col-md-9 col-sm-9">
+                            <input class="form-control laydate-icon" ng-disabled="items.readOnly|dit" type="text" name="{{items.propertyKey}}" def-laydate ng-model="items.propertyValue" value="{{items.propertyDefaultValue}}" ng-required="items.isRequired|dit"/>
                             <div ng-if="items.isRequired|dit" style="display: inline-block;">
                                 <span class="no-null">*</span>
-                                <div class="no-null-message " ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched" >
+                                <div class="no-null-message" ng-messages="createWorkOrder[items.propertyKey].$error" ng-if="createWorkOrder[items.propertyKey].$touched">
                                     <div ng-message="required" >必填项不能为空</div>
                                 </div>
                             </div>
@@ -228,7 +198,38 @@
                     </div>
                 </div>
             </div>
+            <!-- 附件上传 -->
+            <div  class="col-sm-12 m-t-xs m-b-xs" ng-if="uploadEnable">
+                <div class="form-group">
+                    <label class="control-label">附件上传</label>
+                    <div class="col-md-7 col-sm-7">
+                        <input class="form-control" type="text" readonly="readonly" ng-model="attachmentName" style="width: 80%;" ng-class="{'ng-dirty ng-invalid': uploadError, 'ng-valid': uploadError}"/>
+                        <div class="choose-book operate-btn on">
+                            <input type="file" nv-file-select uploader="uploader" accept="fileTypes" nv-file-max-size="5MB" ng-click="uploader.clearQueue()"/>浏览
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2" ng-hide="!uploader.getNotUploadedItems().length">
+                        <span>({{ uploader.queue[0].file.size/1024/1024|number:2 }} MB)</span>
+                    </div>
+                    <div class="col-md-10 col-sm-10" ng-show="uploadError">
+                        <span class="error-message">文件支持.xls,xlsx,doc,docx,zip,png,jpg,text格式，文件大小5M以内</span>
+                    </div>
+                </div>
+            </div>
         </form>
+        <!-- 附件下载 -->
+        <div  class="file-brief file-brief-show form-validation" name="createWorkOrder" id="form-new-style" ng-if="attachName!=''">
+            <div  class="col-sm-12 m-t-xs m-b-xs">
+                <div class="form-group">
+                    <label class="control-label">附件下载</label>
+                    <div class="col-md-9 col-sm-9">
+                        <form method="post" name="downloadForm" accept-charset="utf-8" action="{{downloadUrl}}">
+                            <button type="submit" class="text-info" style="background-color: inherit;">{{attachName}}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="text-danger text-center">注：*为必填字段，输入边框为红色时，请按提示正确输入！</div>
     </div>
     <div class="modal-footer" style="text-align: center;background:#fff;">

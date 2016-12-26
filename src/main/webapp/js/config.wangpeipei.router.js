@@ -98,9 +98,14 @@ angular.module('app')
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
-                                return $ocLazyLoad.load([
-                                    'modules/workOrder/js/workOrderRES.js',
-                                    'modules/workOrder/js/mgWorkOrder.js']);
+                                return $ocLazyLoad.load('angularFileUpload').then(
+                                    function(){
+                                        return $ocLazyLoad.load([
+                                            'modules/workOrder/js/workOrderRES.js',
+                                            'modules/workOrder/js/mgWorkOrder.js'
+                                        ]);
+                                    }
+                                );
                             }]
                     }
                 })
@@ -122,6 +127,7 @@ angular.module('app')
                     url: '/unworkOrder',
                     templateUrl: 'modules/workOrder/unWorkOrder.html',
                     controller: 'UnWorkOrderViewCtrl',
+                    params:{'workorderTypeId':null},
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){

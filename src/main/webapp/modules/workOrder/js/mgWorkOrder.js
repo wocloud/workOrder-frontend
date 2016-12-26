@@ -1,7 +1,7 @@
 (function() {
     app.controller('MGworkOrder', MGworkOrder);
-    MGworkOrder.$inject = ['$rootScope','$scope','WorkOrder.RES','$state','$stateParams'];
-    function MGworkOrder($rootScope,$scope,workOrderRES,$state,$stateParams) {
+    MGworkOrder.$inject = ['$rootScope','$scope','WorkOrder.RES','$state','$stateParams','FileUploader'];
+    function MGworkOrder($rootScope,$scope,workOrderRES,$state,$stateParams,FileUploader) {
         var params={
             linkId:$stateParams.id
         };
@@ -12,13 +12,51 @@
             }
         });
 
+        $scope.uploadEnable = false;
+        $scope.uploadError = false;
+        var api_uploader = '/wocloud-workorder-restapi/instanceLink/uploadAttachment';
+        var uploader = $scope.uploader = new FileUploader({
+            url: api_uploader,
+            alias: 'files',
+            headers: {'Content-Transfer-Encoding': 'utf-8'},
+            removeAfterUpload: true
+        });
+
+        //file type
+        $scope.fileTypes = ".csv," +
+            "application/msexcel," +
+            "application/msword," +
+            "application/pdf," +
+            "application/rtf," +
+            "application/x-zip-compressed," +
+            "image/*,text/plain";
+
+        //add failed
+        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
+            console.info('添加文件失败', item, filter, options);
+        };
+
+        //after add
+        uploader.onAfterAddingFile = function(fileItem) {
+            //console.log("onAfterAddingFile");
+            if(fileItem.file.size/1024/1024 > 5){
+                //console.log("too big");
+                $scope.uploader.removeFromQueue(fileItem);
+                $scope.uploadError = true;
+                //console.log(uploader.queue);
+                return;
+            }
+            $scope.uploadError = false;
+            $scope.attachmentName = fileItem.file.name;
+        };
+
         workOrderRES.listById(params).then(function(result) {
             var linkProperties = result.data[0].instanceLinkPropertyList;
             if (linkProperties.length != 0) {
                 for (var i = 0; i < linkProperties.length; i++) {
                     var property = linkProperties[i];
-                    if (linkProperties[i].propertyType == "select" && typeof(linkProperties[i].propertyOptions)=="string") {
-                        linkProperties[i].propertyOptions = jQuery.parseJSON(linkProperties[i].propertyOptions);
+                    if (property.propertyType == "select" && typeof(property.propertyOptions)=="string") {
+                        property.propertyOptions = jQuery.parseJSON(property.propertyOptions);
                         if(property.propertyKey=="office_select") {
                             var depart = property.propertyValue.split(":");
                             $scope.departmentValue = depart[0];
@@ -28,12 +66,16 @@
                                 $scope.externalValue = "";
                             }
                         }
-                        if(linkProperties[i].propertyDefaultValue==null || !linkProperties[i].propertyDefaultValue){
-                            linkProperties[i].propertyDefaultValue="";
+                        if(property.propertyDefaultValue==null || !property.propertyDefaultValue){
+                            property.propertyDefaultValue="";
                         }
-                        if(!linkProperties[i].propertyValue || linkProperties[i].propertyValue == null){
-                            linkProperties[i].propertyValue = linkProperties[i].propertyDefaultValue;
+                        if(!property.propertyValue || property.propertyValue == null){
+                            property.propertyValue = property.propertyDefaultValue;
                         }
+                    }
+                    //筛选出上传下载控制开关
+                    if(property.propertyKey == "upload_enable" && (property.propertyValue || property.propertyDefaultValue)) {
+                        $scope.uploadEnable = true;
                     }
                 }
             }
@@ -63,7 +105,7 @@
         $scope.disposeToMain = function () {
             var properties={};
             properties.id=$scope.mgworkorder.linkId;
-            properties.loginUserId =$rootScope.userInfo.userId;
+            properties.loginUserId = $rootScope.userInfo.userId;
             properties.remark=$scope.mgworkorder.remark;
             if($scope.mgworkorder.instanceLinkPropertyList!=undefined && $scope.mgworkorder.instanceLinkPropertyList.length>0) {
                 angular.forEach($scope.mgworkorder.instanceLinkPropertyList, function(property, index, array){
@@ -82,14 +124,35 @@
                         return;
                     }
                 });
-                properties.instanceLinkPropertyList=JSON.stringify($scope.properties);
+                properties.instanceLinkPropertyList=JSON.stringify($scope.mgworkorder.instanceLinkPropertyList);
             }
+            //保存工单
             workOrderRES.dispose(properties).then(function (result) {
                 $state.go("app.unworkOrder");
                 if(result.code=="0"){
-                    window.wxc.xcConfirm("处理成功!", window.wxc.xcConfirm.typeEnum.success);
+                    //保存表单成功,调附件文件
+                    uploader.onBeforeUploadItem = function(item) {
+                        console.log("onBeforeUploadItem");
+                        item.formData = [{'instanceId': $scope.mgworkorder.id, 'userId': $rootScope.userInfo.userId}];
+                    };
+                    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+                        console.log("onCompleteItem");
+                        if(response.code=='0') {
+                            $scope.saveAttachment = true;
+                            window.wxc.xcConfirm("工单和附件处理成功!", window.wxc.xcConfirm.typeEnum.success);
+                        } else {
+                            $scope.saveAttachment = false;
+                            window.wxc.xcConfirm("工单处理成功,附件上传失败: "+ response.msg, window.wxc.xcConfirm.typeEnum.error);
+                        }
+                    };
+                    if($scope.uploader.queue.length > 0) {
+                        uploader.uploadAll();
+                    } else {
+                        window.wxc.xcConfirm("工单处理成功!", window.wxc.xcConfirm.typeEnum.success);
+                    }
                 } else {
-                    window.wxc.xcConfirm("处理失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
+                    $scope.saveOrder = false;
+                    window.wxc.xcConfirm("工单处理失败: " + result.msg, window.wxc.xcConfirm.typeEnum.error);
                 }
             });
         };

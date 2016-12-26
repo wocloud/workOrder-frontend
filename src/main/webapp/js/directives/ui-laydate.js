@@ -37,26 +37,21 @@ uiLaydate.directive('defLaydate', function($timeout) {
                 // 更新模型上的视图值
                 function setViewValue() {
                     var val = element.val();
-                    if (val == "") {
-                        val = undefined;
-                    }
                     ngModel.$setViewValue(val);
                 }
 
                 //监听事件
                  scope.$watch('min',function(a, b,c){
-                 if(a){
-                 scope._config.min=a;
-                 scope._date = laydate(scope._config);
-                 }
-
+                     if(a){
+                         scope._config.min=a;
+                         scope._date = laydate(scope._config);
+                     }
                  });
                  scope.$watch('max',function(a, b,c){
-                 if(a){
-                 scope._config.max=a;
-                 scope._date = laydate(scope._config);
-                 }
-
+                     if(a){
+                         scope._config.max=a;
+                         scope._date = laydate(scope._config);
+                     }
                  });
                 // 监听元素上的事件
                 element.on('blur keyup change', function (e) {

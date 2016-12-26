@@ -1,11 +1,15 @@
 'use strict';
 (function(){
     app.controller('UnWorkOrderViewCtrl', UnWorkOrderViewCtrl);
-    UnWorkOrderViewCtrl.$inject = ['storeService','$rootScope','$scope','WorkOrder.RES','$state','i18nService'];
-    function UnWorkOrderViewCtrl(storeService,$rootScope,$scope,workOrderRES,$state,i18nService) {
+    UnWorkOrderViewCtrl.$inject = ['storeService','$rootScope','$scope','WorkOrder.RES','$state','i18nService','$stateParams'];
+    function UnWorkOrderViewCtrl(storeService,$rootScope,$scope,workOrderRES,$state,i18nService,$stateParams) {
+        var workOrderTypeId = $stateParams.workorderTypeId;
         i18nService.setCurrentLang("zh-cn");
         $scope.paginationCurrentPage=storeService.getObject('unStore').paginationCurrentPage!=undefined?storeService.getObject('unStore').paginationCurrentPage:1;
         $scope.search=storeService.getObject('unStore').search!=undefined?storeService.getObject('unStore').search:{};
+        if(workOrderTypeId) {
+            $scope.search.workorderTypeId = workOrderTypeId;
+        }
         $scope.properties = storeService.getObject('unStore').properties!=undefined?storeService.getObject('unStore').properties:[];
         $scope.unStore={
             search:$scope.search,
@@ -178,6 +182,12 @@
             $scope.search.page=page!=undefined?page:1;
             $scope.myGridOptions.paginationCurrentPage=$scope.search.page;
             $scope.search.size=pageSize!=undefined?pageSize:10;
+            if($scope.search.startTime=="" || $scope.search.startTime==null){
+                delete $scope.search.startTime;
+            }
+            if($scope.search.endTime=="" || $scope.search.endTime==null){
+                delete $scope.search.endTime;
+            }
             workOrderRES.list_unwork($scope.search).then(function (result) {
                 $scope.queryLength=result.data.content.length;
                 var workOrders = result.data.content;  //每次返回结果都是最新的

@@ -284,6 +284,17 @@ function ServiceWorkOrderRES($q, $resource, fakeMapping, $rootScope) {
         });
         return task.promise;
     };
+    this.removeWorkOrderById = function(params) {
+        var api_deleteWorkOrderById_list = '/wocloud-workorder-restapi/instanceService/removeWorkorderInstance';
+        var task = $q.defer();
+        params.loginUserId = $rootScope.userInfo.userId;
+        $resource(api_deleteWorkOrderById_list).save(params, function(response){
+            task.resolve(response.toJSON());
+        }, function(response){
+            task.reject(response);
+        });
+        return task.promise;
+    };
 
     //获取流程列表
     this.listWorkFlows = function(params){
