@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <!--文本-->
-                <div ng-if="items.propertyType=='text'" class="col-sm-6 m-t-xs m-b-xs">
+                <div ng-if="items.propertyType=='text' && items.propertyKey!='office_select'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9" >
@@ -168,7 +168,7 @@
                     </div>
                 </div>
                 <!--文本域-->
-                <div ng-if="items.propertyType=='textarea'" class="col-sm-12 m-t-xs m-b-xs">
+                <div ng-if="items.propertyType=='textarea' && items.propertyKey!='office_select'" class="col-sm-12 m-t-xs m-b-xs">
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}" >{{items.propertyName}}</label>
                         <div class="col-md-11 col-sm-10">
@@ -183,7 +183,7 @@
                     </div>
                 </div>
                 <!--日期选择-->
-                <div ng-if="items.propertyType=='datetime'" class="col-sm-6 m-t-xs m-b-xs">
+                <div ng-if="items.propertyType=='datetime' && items.propertyKey!='office_select'" class="col-sm-6 m-t-xs m-b-xs">
                     <div class="form-group">
                         <label class="control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                         <div class="col-md-9 col-sm-9">

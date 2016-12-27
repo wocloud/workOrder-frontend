@@ -73,8 +73,11 @@
                             property.propertyValue = property.propertyDefaultValue;
                         }
                     }
-                    //筛选出上传下载控制开关
-                    if(property.propertyKey == "upload_enable" && (property.propertyValue || property.propertyDefaultValue)) {
+                    //筛选出上传下载控制开关(暂时默认只要有该属性,就可编辑)
+                    //if(property.propertyKey == "upload_enable" && (property.propertyValue || property.propertyDefaultValue)) {
+                    //    $scope.uploadEnable = true;
+                    //}
+                    if(property.propertyKey == "upload_enable") {
                         $scope.uploadEnable = true;
                     }
                 }

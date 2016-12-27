@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-if="items.propertyType=='text'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div ng-if="items.propertyType=='text' && items.propertyKey!='office_select'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
                             <div class="form-group">
                                 <label class="col-sm-4 col-md-4 col-lg-4 control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                                 <div class="col-sm-7 col-md-7 col-lg-7 no-padder-sm">
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-if="items.propertyType=='textarea'" class="col-sm-12 col-md-12 col-lg-12 no-padder">
+                        <div ng-if="items.propertyType=='textarea' && items.propertyKey!='office_select'" class="col-sm-12 col-md-12 col-lg-12 no-padder">
                             <div class="form-group">
                                 <label class="col-sm-2 col-md-2 col-lg-2 control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                                 <div class="col-sm-10 col-md-10 col-lg-10 no-padder-sm">
@@ -197,7 +197,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-if="items.propertyType=='datetime'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
+                        <div ng-if="items.propertyType=='datetime' && items.propertyKey!='office_select'" class="col-sm-6 col-md-6 col-lg-6 no-padder">
                             <div class="form-group">
                                 <label class="col-sm-4 col-md-4 col-lg-4 control-label" title="{{items.propertyName}}">{{items.propertyName}}</label>
                                 <div class="col-sm-7 col-md-7 col-lg-7 no-padder-sm">
