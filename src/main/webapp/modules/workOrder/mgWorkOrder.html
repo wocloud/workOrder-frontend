@@ -1,4 +1,10 @@
-<div class="panel panel-default" style="width:100%">
+<script>
+    $("#wrapHeight").css("height",$(window).height());
+    window.onresize=function(){
+        $("#wrapHeight").css("height",$(window).height());
+    }
+</script>
+<div class="panel panel-default" id="wrapHeight" style="width:100%">
     <div class="breadcrumb" >
         <a class="pull-right back" ng-click="backToMain()">
             <i class="fa fa-arrow-circle-o-left" aria-hidden="true" style="font-size: 22px; vertical-align: middle; padding-right: 5px;"></i>返回</a>

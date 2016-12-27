@@ -1,4 +1,10 @@
-<div class="content-container">
+<script>
+    $("#wrapHeight").css("height",$(window).height());
+    window.onresize=function(){
+        $("#wrapHeight").css("height",$(window).height());
+    }
+</script>
+<div class="content-container" id="wrapHeight">
     <tabset class="tab-container">
         <tab ng-repeat="tab in configTabs track by tab.index" heading="{{tab.title}}" active="tab.active" ng-click="tabChange(tab)">
             <div class="pane">

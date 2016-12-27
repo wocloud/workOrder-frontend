@@ -1,4 +1,10 @@
-<div class="panel" ng-controller="LKworkOrder">
+<script>
+    $("#wrapHeight").css("height",$(window).height());
+    window.onresize=function(){
+        $("#wrapHeight").css("height",$(window).height());
+    }
+</script>
+<div class="panel" id="wrapHeight" ng-controller="LKworkOrder">
     <!--- workOrders -->
     <div class="panel panel-default">
         <div class="row no-padder m-n">

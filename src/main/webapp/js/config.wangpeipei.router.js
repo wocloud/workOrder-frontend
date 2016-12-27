@@ -11,7 +11,9 @@ angular.module('app')
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['modules/workOrder/js/attributes.js']);
+                                return $ocLazyLoad.load([
+                                    'modules/workOrder/js/workOrderRES.js',
+                                    'modules/workOrder/js/attributes.js']);
                             }]
                     }
                 })
@@ -22,7 +24,9 @@ angular.module('app')
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['modules/workOrder/js/types.js']);
+                                return $ocLazyLoad.load([
+                                    'modules/workOrder/js/workOrderRES.js',
+                                    'modules/workOrder/js/types.js']);
                             }]
                     }
                 })
@@ -32,7 +36,9 @@ angular.module('app')
                     resolve: {
                         deps: ['$ocLazyLoad',
                             function( $ocLazyLoad ){
-                                return $ocLazyLoad.load(['modules/workOrder/js/attributes.js']);
+                                return $ocLazyLoad.load([
+                                    'modules/workOrder/js/workOrderRES.js',
+                                    'modules/workOrder/js/attributes.js']);
                             }]
                     }
                 })
