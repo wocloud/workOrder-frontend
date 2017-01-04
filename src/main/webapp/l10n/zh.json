@@ -1,0 +1,219 @@
+{
+
+    "header" : {
+    "navbar" : {
+        "UPLOAD" : "Upload",
+            "new" : {
+            "NEW" : "Neu",
+                "PROJECT" : "Projekte",
+                "TASK" : "Aufgabe",
+                "USER" : "Benutzer",
+                "EMAIL" : "E-Mail"
+        },
+        "NOTIFICATIONS" : "Benachrichtigungen"
+    }
+},
+    "aside" : {
+    "nav" : {
+        "storage" : "存储",
+            "ebs" : {
+            "title" : "弹性块存储",
+                "describe" : "弹性块存储提供了持久化的、独立于云主机生命周期的、高可用的块存储设备服务，弹性块存储可以挂载在任意一个运行中的云主机上。弹性块存储结合弹性云主机使用，使数据更安全、更具灵活性，特别适合需要建立数据库、文件系统或可访问原始数据块级存储的应用。"
+        },
+        "HEADER" : "Navigation",
+            "DASHBOARD" : "Armaturenbrett",
+            "CALENDAR" : "Kalender",
+            "EMAIL" : "E-Mail",
+            "WIDGETS" : "Widgets",
+            "components" : {
+            "COMPONENTS" : "Komponenten",
+                "ui_kits" : {
+                "UI_KITS" : "UI Kits",
+                    "BUTTONS" : "Kn?pfe",
+                    "ICONS" : "Icons",
+                    "GRID" : "Grid",
+                    "BOOTSTRAP" : "Bootstrap",
+                    "SORTABLE" : "Sortable",
+                    "PORTLET" : "Portlet",
+                    "TIMELINE" : "Timeline",
+                    "VECTOR_MAP" : "Vektorkarte"
+            },
+            "table" : {
+                "TABLE" : "Tabelle",
+                    "TABLE_STATIC" : "Tabelle statisch",
+                    "DATATABLE" : "Datatable",
+                    "FOOTABLE" : "Footable"
+            },
+            "form" : {
+                "FORM" : "Form",
+                    "FORM_ELEMENTS" : "Formularelemente",
+                    "FORM_VALIDATION" : "Best?tigung",
+                    "FORM_WIZARD" : "Form wizard"
+            },
+            "CHART" : "Diagramm",
+                "pages" : {
+                "PAGES" : "Seiten",
+                    "PROFILE" : "Profil",
+                    "POST" : "Post",
+                    "SEARCH" : "Suchen",
+                    "INVOICE" : "Rechnung",
+                    "LOCK_SCREEN" : "Sperrbildschirm",
+                    "SIGNIN" : "Registrieren",
+                    "SIGNUP" : "Anmelden",
+                    "FORGOT_PASSWORD" : "Passwort vergessen",
+                    "404" : "404"
+            }
+        },
+        "your_stuff" : {
+            "YOUR_STUFF": "Ihr Material",
+                "PROFILE" : "Profil",
+                "DOCUMENTS" : "Dokumente"
+        }
+    },
+    "MILESTONE" : "Meilenstein",
+        "RELEASE" : "Freisetzung"
+},
+    "resourcePool": {
+    "langfang":"廊坊",
+        "langfang2":"廊坊 2",
+        "huhehaote":"呼和浩特"
+},
+    "vm": {
+    "state" : {
+        "":"",
+            "running": "就绪",
+            "pending": "待审",
+            "reject": "拒绝",
+            "opening": "正在开通",
+            "changing": "正在变更",
+            "restting": "重置中",
+            "deleting": "正在销毁",
+            "deleted": "已经销毁",
+            "closing": "关机中",
+            "closed": "已关机",
+            "using": "正在使用",
+            "error": "错误",
+            "binding": "正在绑定",
+            "unbinding": "正在解绑",
+            "pwdresetting": "密码重置中",
+            "limiting": "正在限速中",
+            "complete": "执行完成",
+            "scanning": "扫描中",
+            "deploy error": "创建失败",
+            "start error": "开机失败",
+            "stop error": "关机失败",
+            "reboot error": "重启失败",
+            "destory error": "小会失败",
+            "pause error": "暂停失败",
+            "unpause error": "取消暂停失败",
+            "suspend error": "挂起失败r",
+            "resume error": "恢复失败",
+            "changeservice error": "更新配置失败",
+            "migrate error": "迁移失败",
+            "resetpassword error": "重置密码失败",
+            "create error": "创建失败",
+            "delete error": "删除失败",
+            "update error": "更新失败",
+            "attach error": "挂载失败",
+            "detach error": "解挂失败",
+            "add error": "添加失败",
+            "remove error": "移除失败",
+            "bind error": "绑定失败",
+            "unbind error": "解绑失败",
+            "apply error": "应用失败",
+            "change error": "变更失败",
+            "cloud backup error": "云备份失败",
+            "cloud backup path error": "云备份原路径错误",
+            "stopping": "正在关机",
+            "starting": "正在开机",
+            "resetting": "正在重启",
+            "attaching": "正在挂载",
+            "unattaching": "正在卸载",
+            "xkstopping": "信控停机",
+            "snaping": "正在快照",
+            "recovering": "正在恢复",
+            "migrateing": "正在迁移",
+            "copying": "快照创建中",
+            "scanning": "扫描中",
+            "backuping": "云备份中",
+            "copy": "正在恢复",
+            "migrating":"迁移中",
+            "0":"正在挂载",
+            "9":"挂载成功"
+    },
+    "vmLog":{
+        "":"",
+            "start.vm":"开机",
+            "create.vm":"创建",
+            "delete.vm":"销毁",
+            "stop.vm":"关机",
+            "restart.vm":"重启",
+            "resetVmOs.vm":"重置操作系统",
+            "rebuild.vm":"重建",
+            "resetvmpwd.vm":"重置密码",
+            "modifyName.vm":"修改名称",
+            "cloneVm.vm":"克隆云主机",
+            "changevmsg.vm":"更改安全组",
+            "accessvmbyvnc.vm":"访问",
+            "updatebusilabel.vm":"修改业务标签"
+    }
+},
+    "image": {
+    "state" : {
+        "":"",
+            "running": "创建成功",
+            "opening": "创建中",
+            "create error": "创建失败",
+            "deleting": "删除中",
+            "delete error": "删除失败",
+            "update error": "更新失败",
+            "deleted": "已删除",
+            "custom_image":"客户镜像"
+    },
+    "imageLog":{
+        "":"",
+            "image.createImage":"创建镜像",
+            "image.modifyImage":"修改镜像",
+            "image.deleleImage":"删除镜像"
+    }
+},
+    "firewall": {
+    "state" : {
+        "":"",
+            "running": "就绪",
+            "opening": "开通中",
+            "using": "使用中",
+            "deleting": "删除中",
+            "error": "错误",
+            "create error": "创建失败",
+            "deleted": "已删除"
+    },
+    "firewallLog":{
+        "":"",
+            "securityGroup.createSecurityGroup":"创建安全组",
+            "securityGroup.updateSecurityGroupName":"修改安全组",
+            "securityGroup.deleteSecurityGroupOnly":"销毁安全组",
+            "securityGroup.delSecurityGroupRule":"删除安全组规则",
+            "securityGroup.addSecurityGroupRule":"添加安全组规则"
+    }
+},
+    "snap": {
+    "state" : {
+        "":"",
+            "running": "就绪",
+            "creating": "正在创建",
+            "opening": "正在创建",
+            "create error": "创建失败",
+            "deleting": "删除中",
+            "delete error": "删除失败",
+            "deleted": "已删除",
+            "recovering": "正在恢复"
+    },
+    "snapLog":{
+        "":"",
+            "snapshot.createSnap":"创建快照",
+            "snapshot.recover":"从快照中恢复",
+            "snapshot.deleteSnap":"删除快照"
+    }
+}
+}

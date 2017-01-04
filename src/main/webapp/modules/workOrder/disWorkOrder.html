@@ -5,25 +5,21 @@
     }
 </script>
 <div class="content-container" id="wrapHeight">
-    <tabset class="tab-container">
-        <tab ng-repeat="tab in dealTabs track by tab.index" heading="{{tab.title}}" active="tab.active" ng-click="tabChange(tab)">
-            <div class="panel">
-                <!--- workOrders -->
-                <div class="panel panel-default">
-                    <div class="row no-padder m-n">
-                        <div class="row no-padder m-n">
-                            <sreach-button>
-                                <div class="col-sm-12 m-t-xs m-b-xs no-padder " >
-                                    <my-work-order-sreach style="height: 100%;" search-params="searchParams" search="search" flag="yel" status="status" propertiesevent="propertiesevent" allproperties="allproperties" properties="properties" pr-click="sreach()" pr-check="check({$event:$event,items:items})"></my-work-order-sreach>
-                                </div>
-                            </sreach-button>
+    <div class="panel">
+        <!--- workOrders -->
+        <div class="panel panel-default">
+            <div class="row no-padder m-n">
+                <div class="row no-padder m-n">
+                    <sreach-button>
+                        <div class="col-sm-12 m-t-xs m-b-xs no-padder " >
+                            <my-work-order-sreach style="height: 100%;" search-params="searchParams" search="search" flag="yel" status="status" propertiesevent="propertiesevent" allproperties="allproperties" properties="properties" pr-click="sreach()" pr-check="check({$event:$event,items:items})"></my-work-order-sreach>
                         </div>
-                    </div>
-                    <div ui-grid="myGridOptions" style="width: 100%; height:400px; text-align: center;margin-top: 1px;"
-                         ui-grid-edit ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
-                    </div>
+                    </sreach-button>
                 </div>
             </div>
-        </tab>
-    </tabset>
+            <div ui-grid="myGridOptions" style="width: 100%; height:400px; text-align: center;margin-top: 1px;"
+                 ui-grid-edit ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize>
+            </div>
+        </div>
+    </div>
 </div>

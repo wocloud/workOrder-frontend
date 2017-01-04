@@ -11,9 +11,10 @@
   <link rel="stylesheet" href="<%=serviceUrl%>/modules/grid_test/css/ui-grid.min.css"/>
   <link rel="stylesheet" href="<%=serviceUrl%>/css/bootstrap.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/css/animate.css" type="text/css" />
-  <link rel="stylesheet" href="<%=serviceUrl%>/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/css/simple-line-icons.css" type="text/css" />
-  <link rel="stylesheet" href="<%=serviceUrl%>/css/font.css" type="text/css" />
+  <link rel="stylesheet" href="css/font.css" type="text/css" />
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/css/app.css" type="text/css" />
   <link rel="stylesheet" href="<%=serviceUrl%>/vendor/jquery/datatables/dataTables.bootstrap.css">
   <link rel="stylesheet" href="<%=serviceUrl%>/css/alert.css">
@@ -21,10 +22,9 @@
 
 </head>
 <body ng-controller="AppCtrl">
-  <div class="app" id="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}" ui-view></div>
+  <div class="app" id="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded-new':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}" ui-view></div>
 
-
-  <!-- jQuery -->
+<!-- jQuery -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="vendor/jquery/bootstrap.min.js"></script>
