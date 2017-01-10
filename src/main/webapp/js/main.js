@@ -72,7 +72,7 @@ angular.module('app')
           User.getUserMenu(params).then(function(userMenu){
             $scope.userMenu=[];
             angular.forEach(userMenu.result,function(a,b,c){
-              if(a.parentIds.split(',').length==4){
+              if(params.sideid!='400001' && a.parentIds.split(',').length==4 || params.sideid=='400001' && a.parentIds.split(',').length==3){
                 $scope.userMenu.push(a);
               }
             });
@@ -102,13 +102,26 @@ angular.module('app')
 
 
         $scope.workOrderConfigTabs = [
-          {index: 1, title: '自定义属性', content: '自定义属性', url: '#/app/workOrderAttrs', name: 'app.workOrderAttrs'},
+          {index: 1, title: '自定义属性', content: '自定义属性', url: '#/app/workOrderAttrs', name: 'app.workOrderAttrs', node:[
+            {index: 1, title: '详情', content: '详情', url: '#/app/workOrderAttrInfo', name: 'app.workOrderAttrInfo'}
+          ]},
           {index: 2, title: '工单类型', content: '工单类型', url:'#/app/workOrderTypes', name: 'app.workOrderTypes'}];
 
         $scope.workOrderDealTabs = [
-          {index: 1, title: '我的工单', content: '我的工单', url: '#/app/myWorkOrder', name: 'app.myWorkOrder'},
-          {index: 2, title: '未处理工单', content: '未处理工单', url:'#/app/unworkOrder', name: 'app.unworkOrder'},
-          {index: 3, title: '已处理工单', content: '已处理工单', url:'#/app/disworkOrder', name: 'app.disworkOrder'}];
+          {index: 1, title: '我的工单', content: '我的工单', url: '#/app/myWorkOrder', name: 'app.myWorkOrder', node:[
+            {index: 1, title: '详情', content: '详情', url: '#/app/workOrderInfo', name: 'app.workOrderInfo'}
+          ]},
+          {index: 2, title: '未处理工单', content: '未处理工单', url:'#/app/unworkOrder', name: 'app.unworkOrder', node:[
+            {index: 1, title: '详情', content: '详情', url: '#/app/workOrderInfo', name: 'app.workOrderInfo'}
+          ]},
+          {index: 3, title: '已处理工单', content: '已处理工单', url:'#/app/disworkOrder', name: 'app.disworkOrder', node:[
+            {index: 1, title: '详情', content: '详情', url: '#/app/workOrderInfo', name: 'app.workOrderInfo'}
+          ]
+          }];
+        $scope.worklkTabs = [
+          {index: 1, title: '工单查看', content: '工单查看', url: '#/app/lkworkOrder', name: 'app.lkworkOrder', node:[
+            {index: 1, title: '详情', content: '详情', url: '#/app/workOrderInfo', name: 'app.workOrderInfo'}
+          ]}];
 
         angular.forEach($scope.workOrderConfigTabs, function(tab, index, array){
           if(tab.url == $scope.hash)   {
@@ -124,6 +137,7 @@ angular.module('app')
         });
         $rootScope.workOrderConfigTabs=$scope.workOrderConfigTabs;
         $rootScope.workOrderDealTabs=$scope.workOrderDealTabs;
+        $rootScope.worklkTabs=$scope.worklkTabs;
 
         $scope.app.treeNav={};
         $scope.tabChange = function(tab){

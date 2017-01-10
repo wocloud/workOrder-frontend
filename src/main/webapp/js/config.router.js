@@ -39,7 +39,7 @@ angular.module('app')
             },
             getUserMenu: function (params) {
                 if(!params.sideid || params.sideid==''){
-                    params.sideid = 100001;
+                    params.囱fi = 100001;
                 }
                 res_usermenu.get(params, function (response) {
                     deferred2.resolve(response.toJSON());
@@ -65,6 +65,15 @@ angular.module('app')
                         $rootScope.haveArray = true;
                         index = 0;
                     }
+                    angular.forEach(a.node,function(d,e,f){
+                        if (d.name == toState.name) {
+                            a.active = true;
+                            $rootScope.tabs = $rootScope.workOrderConfigTabs;
+                            $rootScope.asideFolded = true;
+                            $rootScope.haveArray = true;
+                            index = 0;
+                        }
+                    })
                 });
                 angular.forEach($rootScope.workOrderDealTabs, function (a, b, c) {
                     if (a.name == toState.name) {
@@ -74,7 +83,28 @@ angular.module('app')
                         $rootScope.haveArray = true;
                         index = 0;
                     }
+                    angular.forEach(a.node,function(d,e,f){
+                        if (d.name == toState.name) {
+                            a.active = true;
+                            $rootScope.tabs = $rootScope.workOrderDealTabs;
+                            $rootScope.asideFolded = true;
+                            $rootScope.haveArray = true;
+                            index = 0;
+                        }
+                    })
                 });
+
+                if(fromState.name == "app.lkworkOrder" || fromState.name == "app.lkworkOrder") {
+                    angular.forEach(a.node,function(d,e,f){
+                        if (d.name == toState.name) {
+                            a.active = true;
+                            $rootScope.tabs = $rootScope.worklkTabs;
+                            $rootScope.asideFolded = true;
+                            $rootScope.haveArray = true;
+                            index = 0;
+                        }
+                    })
+                }
                 if (index == 1) {
                     $rootScope.haveArray = false;
                     $rootScope.tabs = [];

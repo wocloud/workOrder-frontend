@@ -1,11 +1,17 @@
+<script>
+    $("#wrapHeight").css("height",$(window).height());
+    window.onresize=function(){
+        $("#wrapHeight").css("height",$(window).height());
+    }
+</script>
 <!-- create new attribute -->
-<div class="panel panel-default" ng-controller="WorkOrderAttrInfoViewCtrl">
+<div class="panel panel-default" id="wrapHeight" ng-controller="WorkOrderAttrInfoViewCtrl">
     <div class="breadcrumb">
         <a class="pull-right back" ng-click="backToMain()">
             <i class="fa fa-arrow-circle-o-left" aria-hidden="true" style="font-size: 22px; vertical-align: middle; padding-right: 5px;"></i>返回</a>
         <h1 class="m-n font-thin h4"><span>自定义属性详情</span></h1>
     </div>
-    <div>
+    <div class="col-sm-12 col-md-12 col-lg-12 no-padder border">
         <form class="form-group box-content">
             <div class="col-sm-12 col-md-12 col-lg-12 no-padder">
                 <label class="col-sm-2 col-md-2 col-lg-2 control-label">编码</label>
